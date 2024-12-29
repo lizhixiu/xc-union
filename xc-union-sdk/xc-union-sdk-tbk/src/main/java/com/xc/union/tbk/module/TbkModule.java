@@ -104,59 +104,6 @@ public class TbkModule {
     }
 
     /**
-     * 淘宝客商品详情查询(简版)
-     * @param params
-     *
-     */
-    @Comment("淘宝客商品详情查询(简版)")
-    public Map<String, Object> getItemInfo( @Comment(name = "params", value = "参数") Map<String, String> params ) {
-
-        TbkItemInfoGetRequest req = new TbkItemInfoGetRequest();
-
-        if ( params.containsKey( "numIids" ) ) {
-            req.setNumIids( params.get( "numIids" ) );
-        }
-
-        if ( params.containsKey( "platform" ) ) {
-            req.setPlatform( Long.valueOf( params.get( "platform" ) ) );
-        }
-
-        if ( params.containsKey( "ip" ) ) {
-            req.setIp( params.get( "ip" ) );
-        }
-
-        if ( params.containsKey( "bizSceneId" ) ) {
-            req.setBizSceneId( params.get( "bizSceneId" ) );
-        }
-
-        if ( params.containsKey( "promotionType" ) ) {
-            req.setPromotionType( params.get( "promotionType" ) );
-        }
-
-        if ( params.containsKey( "relationId" ) ) {
-            req.setRelationId( params.get( "relationId" ) );
-        }
-
-        if ( params.containsKey( "manageItemPubId" ) ) {
-            req.setManageItemPubId( Long.valueOf( params.get( "manageItemPubId" ) ) );
-        }
-
-        TbkItemInfoGetResponse rsp = null;
-        try {
-            rsp = taobaoClient.execute( req );
-            log.info( JSONUtil.toJsonStr( rsp ) );
-        } catch ( ApiException e ) {
-            throw new RuntimeException( e );
-        }
-        System.out.println( rsp.getBody() );
-
-        Map<String, Object> map = new HashMap<>();
-        map.put( "data", rsp.getResults() );
-
-        return map;
-    }
-
-    /**
      * 淘宝客通用接口
      * @param params
      *
