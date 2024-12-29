@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "b866e6ef56034f8a90bc0be81aed8906",
+  "name" : "淘宝客",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/tbk",
+  "createTime" : null,
+  "updateTime" : 1735202004038,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

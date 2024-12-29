@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+dependencies {
+
+
+    implementation project(":xc-union-sdk:xc-union-sdk-tbk")
+    // 依赖lib目录下的某个jar文件
+    implementation fileTree(dir: 'lib', include: '*.jar', exclude: '*-source.jar')
+
+    implementation 'org.ssssssss:magic-api-spring-boot-starter:2.1.1'
+    implementation 'mysql:mysql-connector-java:8.0.27'
+    implementation 'com.alibaba:druid:1.2.1'
+}

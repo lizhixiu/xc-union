@@ -1,0 +1,59 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+    }
+    configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
+}
+
+subprojects { prj ->
+    apply plugin: 'java-library'
+
+    compileJava.dependsOn(processResources)
+    configurations {
+        developmentOnly
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+
+    /** 打包源码 */
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allJava
+        archiveClassifier.value('sources')
+    }
+
+    group = "com.xc.union"
+    version "1.0." + (new Date()).format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+08:00"))
+
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+    configurations.implementation.setCanBeResolved(true)
+    configurations.api.setCanBeResolved(true)
+
+    dependencies {
+        testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+        testCompileOnly group: 'org.projectlombok', name: 'lombok', version: "$VERSION_LOMBOK"
+        testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "$VERSION_LOMBOK"
+
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: "$VERSION_LOMBOK"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "$VERSION_LOMBOK"
+
+        implementation "cn.hutool:hutool-all:$VERSION_HUTOOL"
+
+        // Logback日志
+        implementation group: 'ch.qos.logback', name: 'logback-classic', version: "${VERSION_LOGBACK}"
+        implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: "${VERSION_SLF4J}"
+        implementation group: 'org.slf4j', name: 'log4j-over-slf4j', version: "${VERSION_SLF4J}"
+        implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: "${VERSION_SLF4J}"
+    }
+
+}

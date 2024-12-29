@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "0e8570345c884f5993e9bac4a0e0de2d",
+  "name" : "公共",
+  "type" : "api",
+  "parentId" : "b866e6ef56034f8a90bc0be81aed8906",
+  "path" : null,
+  "createTime" : 1735210916770,
+  "updateTime" : 1735215145826,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

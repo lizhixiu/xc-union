@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "28fd06f54fa547f3963e1c81e0af58e8",
+  "name" : "演示",
+  "type" : "api",
+  "parentId" : "b866e6ef56034f8a90bc0be81aed8906",
+  "path" : null,
+  "createTime" : 1735406653115,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

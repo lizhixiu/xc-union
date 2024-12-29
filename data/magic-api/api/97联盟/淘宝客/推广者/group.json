@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "27f4afc4c6354c03b7de834ec569415c",
+  "name" : "推广者",
+  "type" : "api",
+  "parentId" : "b866e6ef56034f8a90bc0be81aed8906",
+  "path" : null,
+  "createTime" : 1735210930983,
+  "updateTime" : 1735215148041,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

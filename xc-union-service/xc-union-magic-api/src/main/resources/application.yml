@@ -1,0 +1,30 @@
+server:
+  port: 9999
+  # 配置静态资源启用 gzip 压缩
+  compression:
+    enabled: true
+    min-response-size: 128
+# 配置主数据源
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/xc_union?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+    username: xc_union
+    password: xc_union
+
+magic-api:
+  web: /magic/web
+  resource:
+    location: data/magic-api
+# 其它配置请参考 https://ssssssss.org/magic-api/config/
+
+# 返利联盟配置
+union:
+  # 淘宝客
+  tbk:
+    app-key:
+    api-secret:
+    adzone-id:

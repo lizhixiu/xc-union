@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "a6f49651efa34a019c697cadbea71bca",
+  "name" : "97联盟",
+  "type" : "api",
+  "parentId" : "0",
+  "path" : "/union",
+  "createTime" : 1734364815019,
+  "updateTime" : 1735040259984,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
