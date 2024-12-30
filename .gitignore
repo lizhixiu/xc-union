@@ -134,6 +134,7 @@ http/updata/
 http/downdata/
 *.zip
 /workpath
+target/
 
 *.class
 *-backup-*.chnr.json

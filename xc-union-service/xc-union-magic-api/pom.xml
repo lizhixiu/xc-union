@@ -37,4 +37,35 @@
             <version>1.2.1</version>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>xc-union</finalName>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>2.2.1.RELEASE</version>-->
+<!--                <configuration>-->
+<!--                    <includeSystemScope>true</includeSystemScope>-->
+<!--                    <mainClass>com.xc.union.api.xc</mainClass>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.xc.union.api.XcUnionApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
