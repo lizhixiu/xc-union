@@ -1,7 +1,0 @@
-rootProject.name = 'xc-union'
-
-include 'xc-union-sdk'
-include 'xc-union-sdk:xc-union-sdk-tbk'
-
-include 'xc-union-service'
-include 'xc-union-service:xc-union-magic-api'

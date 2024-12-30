@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.xc.union</groupId>
+    <artifactId>xc-union</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <name>xc-union</name>
+    <description>项目打造一个基于magic-api的多平台返利系统，支持淘宝联盟、京东联盟、拼多多等主流电商平台的返利对接。</description>
+    <url>http://union.demoeg.com</url>
+    <inceptionYear>2024</inceptionYear>
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>https://github.com/lizhixiu/xc-union/blob/main/LICENSE</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>xiuj</name>
+            <email>82015742@qq.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://gitee.com/xc_java/xc-union</url>
+        <connection>scm:git:https://gitee.com/ssssssss-team/magic-api.git</connection>
+        <developerConnection>scm:git:https://gitee.com/xc_java/xc-union.git</developerConnection>
+    </scm>
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring-boot.version>2.7.18</spring-boot.version>
+        <magic-api.version>2.1.1</magic-api.version>
+        <magic-script.version>1.8.8</magic-script.version>
+        <org.projectlombok_lombok.version>1.18.36</org.projectlombok_lombok.version>
+        <cn.hutool_hutool-all.version>5.8.35</cn.hutool_hutool-all.version>
+
+    </properties>
+	<modules>
+		<module>xc-union-sdk</module>
+        <module>xc-union-service</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.ssssssss</groupId>
+                <artifactId>magic-api</artifactId>
+                <version>${magic-api.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${cn.hutool_hutool-all.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok_lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+
+    </build>
+    <profiles>
+
+    </profiles>
+</project>
