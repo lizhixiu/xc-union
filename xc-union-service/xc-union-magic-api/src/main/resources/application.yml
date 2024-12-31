@@ -28,3 +28,7 @@ union:
     app-key:
     api-secret:
     adzone-id:
+  # 淘宝客
+  pdd:
+    client-id:
+    client-secret:

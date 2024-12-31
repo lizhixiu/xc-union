@@ -13,6 +13,8 @@
     <name>xc-union-sdk</name>
     <description>union sdk</description>
     <modules>
+        <module>xc-union-sdk-jd</module>
+        <module>xc-union-sdk-pdd</module>
         <module>xc-union-sdk-tbk</module>
     </modules>
     <dependencies>

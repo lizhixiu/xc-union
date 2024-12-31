@@ -11,7 +11,7 @@
     <artifactId>xc-union-sdk-tbk</artifactId>
     <packaging>jar</packaging>
     <name>xc-union-sdk-tbk</name>
-    <description>xc-union-sdk-tbk</description>
+    <description>淘宝联盟sdk</description>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

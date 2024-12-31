@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xc.union</groupId>
+        <artifactId>xc-union-sdk</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>xc-union-sdk-jd</artifactId>
+    <packaging>jar</packaging>
+    <name>xc-union-sdk-jd</name>
+    <description>京东联盟sdk</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.14.2</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jd.sdk</groupId>
+            <artifactId>open-api-sdk</artifactId>
+            <version>2.0-2024-12-26</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/open-api-sdk-2.0-2024-12-26.jar</systemPath>
+        </dependency>
+    </dependencies>
+</project>

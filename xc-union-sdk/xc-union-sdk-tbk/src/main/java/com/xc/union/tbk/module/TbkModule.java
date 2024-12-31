@@ -5,17 +5,15 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.taobao.api.*;
-import com.taobao.api.request.*;
-import com.taobao.api.response.*;
+import com.taobao.api.request.TbkSpreadGetRequest;
+import com.taobao.api.request.TbkTpwdCreateRequest;
+import com.taobao.api.response.TbkSpreadGetResponse;
+import com.taobao.api.response.TbkTpwdCreateResponse;
 import com.xc.union.tbk.constants.TbkApiConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.ssssssss.magicapi.core.annotation.MagicModule;
 import org.ssssssss.magicapi.core.exception.MagicAPIException;
-import org.ssssssss.magicapi.modules.db.SQLModule;
-import org.ssssssss.magicapi.modules.http.HttpModule;
-import org.ssssssss.magicapi.modules.servlet.RequestModule;
-import org.ssssssss.magicapi.modules.servlet.ResponseModule;
 import org.ssssssss.script.annotation.Comment;
 
 import javax.annotation.Resource;
@@ -24,16 +22,6 @@ import java.util.*;
 /**
  * 淘宝客模块
  * 脚本中使用
- * import custom;    //导入模块
- * custom.println('Custom Module!');
- *
- * https://ssssssss.org/magic-api/pages/senior/module/
- *
- * @see MagicModule
- * @see SQLModule
- * @see HttpModule
- * @see RequestModule
- * @see ResponseModule
  */
 @Component
 @MagicModule("tbk")
@@ -43,6 +31,11 @@ public class TbkModule {
     @Resource
     private TaobaoClient taobaoClient;
 
+    /**
+     * 获取淘口令
+     * @param params 参数
+     *
+     */
     @Comment("获取淘口令")
     public Map<String, Object> getTpwd( @Comment(name = "params", value = "参数") Map<String, String> params ) {
         TbkTpwdCreateRequest req = new TbkTpwdCreateRequest();
@@ -59,7 +52,7 @@ public class TbkModule {
         if ( params.containsKey( "ext" ) ) {
             req.setExt( params.get( "ext" ) );
         }
-        TbkTpwdCreateResponse rsp = null;
+        TbkTpwdCreateResponse rsp;
         try {
             rsp = taobaoClient.execute( req );
             log.info( JSONUtil.toJsonStr( rsp ) );
@@ -73,7 +66,7 @@ public class TbkModule {
 
     /**
      * 获取短连接
-     * @param params
+     * @param params 参数
      *
      */
     @Comment("获取短连接")
@@ -89,7 +82,7 @@ public class TbkModule {
         }
         obj3.setUrl( url );
         req.setRequests( list2 );
-        TbkSpreadGetResponse rsp = null;
+        TbkSpreadGetResponse rsp;
         try {
             rsp = taobaoClient.execute( req );
             log.info( JSONUtil.toJsonStr( rsp ) );
@@ -105,7 +98,7 @@ public class TbkModule {
 
     /**
      * 淘宝客通用接口
-     * @param params
+     * @param params 参数
      *
      */
     @Comment("淘宝客通用接口")

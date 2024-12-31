@@ -9,7 +9,7 @@
     <artifactId>xc-union-magic-api</artifactId>
     <packaging>jar</packaging>
     <name>xc-union-magic-api</name>
-    <description>xc-union-magic-api</description>
+    <description>接口启动程序</description>
     <dependencies>
         <dependency>
             <groupId>com.xc.union</groupId>
@@ -17,10 +17,14 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-pdd</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.ssssssss</groupId>
             <artifactId>magic-api-spring-boot-starter</artifactId>

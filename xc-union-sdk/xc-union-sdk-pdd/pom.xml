@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xc.union</groupId>
+        <artifactId>xc-union-sdk</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>xc-union-sdk-pdd</artifactId>
+    <packaging>jar</packaging>
+    <name>xc-union-sdk-pdd</name>
+    <description>多多进宝sdk</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pdd.sdk</groupId>
+            <artifactId>pop-sdk</artifactId>
+            <version>1.19.4-all</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/pop-sdk-1.19.4-all.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.pdd.sdk</groupId>
+            <artifactId>pop-sdk-sources</artifactId>
+            <version>1.19.4-all</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/pop-sdk-1.19.4-all-sources.jar</systemPath>
+        </dependency>
+    </dependencies>
+</project>

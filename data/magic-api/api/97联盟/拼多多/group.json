@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "2aa9cb7c26b74542a65dabb99811a5f0",
+  "name" : "拼多多",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/pdd",
+  "createTime" : 1735640419744,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
