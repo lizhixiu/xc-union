@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * 淘宝客模块
+ * pdd模块
  * 脚本中使用
  */
 @Component
@@ -32,11 +32,12 @@ public class PddModule {
      * @param params 参数
      *
      */
-    @Comment("淘宝客通用接口")
+    @Comment("拼多多通用接口")
     public <T extends PopBaseHttpResponse> T execute( @Comment(name = "params", value = "参数") Map<String, String> params ) {
         //接收方法名称
         String apiMethodName = params.get( "apiMethodName" );
         if ( StrUtil.isBlank( apiMethodName ) ) throw new MagicAPIException( "参数【apiMethodName】方法名称为空！" );
+        if ( PddApiConstants.REQUEST_MAP.get( apiMethodName ) ==null ) throw new MagicAPIException( apiMethodName+"方法未集成！" );
         //构建请求对象
         PopBaseHttpRequest request = (PopBaseHttpRequest) ReflectUtil.newInstance( PddApiConstants.REQUEST_MAP.get( apiMethodName ) );
         //请求对象赋值

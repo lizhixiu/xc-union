@@ -16,6 +16,8 @@ public class PddApiConstants {
     public final static Map<String, Class> REQUEST_MAP = new HashMap<>();
 
     static {
+
+        REQUEST_MAP.put( "pdd.ddk.goods.search",PddDdkGoodsSearchRequest.class );
         //多多进宝商品推荐API
         REQUEST_MAP.put( "pdd.ddk.goods.recommend.get", PddDdkGoodsRecommendGetRequest.class );
         //多多进宝商品详情查询

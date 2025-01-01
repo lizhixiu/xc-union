@@ -104,6 +104,7 @@ public class TbkModule {
         //接收方法名称
         String apiMethodName = params.get( "apiMethodName" );
         if ( StrUtil.isBlank( apiMethodName ) ) throw new MagicAPIException( "参数【apiMethodName】方法名称为空！" );
+        if ( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) ==null ) throw new MagicAPIException( apiMethodName+"方法未集成！" );
         //构建请求对象
         TaobaoRequest request = (TaobaoRequest) ReflectUtil.newInstance( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) );
         //请求对象赋值

@@ -1,15 +1,15 @@
 {
   "properties" : { },
-  "id" : "baadb4c7b0ca453e9c0e51aaf00bfd6b",
+  "id" : "copy1735727859916d95947",
   "script" : null,
   "groupId" : "2aa9cb7c26b74542a65dabb99811a5f0",
-  "name" : "01.多多进宝商品推荐API",
+  "name" : "07.多多进宝商品查询",
   "createTime" : null,
-  "updateTime" : 1735727647947,
+  "updateTime" : 1735727952375,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/goodsRecommendGet",
+  "path" : "/goodsSearch",
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
@@ -829,7 +829,7 @@
 import pdd;    //导入tbk模块
 
 var params =  {
-    apiMethodName:"pdd.ddk.goods.recommend.get"
+    apiMethodName:"pdd.ddk.goods.search"
     };
 if(body!=null){
     params.putAll(body);
