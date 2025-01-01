@@ -5,6 +5,7 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.taobao.api.*;
+import com.taobao.api.internal.util.json.JSONWriter;
 import com.taobao.api.request.TbkSpreadGetRequest;
 import com.taobao.api.request.TbkTpwdCreateRequest;
 import com.taobao.api.response.TbkSpreadGetResponse;
@@ -38,7 +39,7 @@ public class TbkModule {
      */
     @Comment("获取淘口令")
     public Map<String, Object> getTpwd( @Comment(name = "params", value = "参数") Map<String, String> params ) {
-        log( "请求报文：{}", params );
+        log( "请求参数：{}", params );
         TbkTpwdCreateRequest req = new TbkTpwdCreateRequest();
         if ( params.containsKey( "title" ) ) {
             req.setText( params.get( "title" ) );
@@ -71,7 +72,7 @@ public class TbkModule {
      */
     @Comment("获取短连接")
     public Map<String, Object> getShortUrl( @Comment(name = "params", value = "参数") Map<String, String> params ) {
-        log( "请求报文：{}", params );
+        log( "请求参数：{}", params );
         String url = params.get( "url" );
         TbkSpreadGetRequest req = new TbkSpreadGetRequest();
         List<TbkSpreadGetRequest.TbkSpreadRequest> list = new ArrayList<>();
@@ -105,12 +106,12 @@ public class TbkModule {
         //接收方法名称
         String apiMethodName = params.get( "apiMethodName" );
         if ( StrUtil.isBlank( apiMethodName ) ) throw new MagicAPIException( "参数【apiMethodName】方法名称为空！" );
-        if ( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) ==null ) throw new MagicAPIException( apiMethodName+"方法未集成！" );
+        if ( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) == null ) throw new MagicAPIException( apiMethodName + "方法未集成！" );
         //构建请求对象
         TaobaoRequest request = (TaobaoRequest) ReflectUtil.newInstance( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) );
         //请求对象赋值
         BeanUtil.fillBeanWithMap( params, request, false );
-        log( "请求报文：{}", params );
+        log( "请求报文：{}", request );
         TaobaoResponse rsp;
         try {
             //调用淘宝客接口
@@ -120,6 +121,16 @@ public class TbkModule {
         }
         log( "返回报文：{}", rsp );
         return (T) rsp;
+    }
+
+    /**
+     * 获取json字符串
+     * @param params 参数
+     *
+     */
+    @Comment("获取json转义的字符串")
+    public String toJsonString( @Comment(name = "params", value = "参数") Object params ) {
+        return new JSONWriter( false, true ).write( params );
     }
 
     private void log( String tag, Object object ) {
