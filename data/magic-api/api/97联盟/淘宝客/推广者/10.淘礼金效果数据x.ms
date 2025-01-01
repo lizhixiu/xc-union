@@ -1,31 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735387504907d1956",
+  "id" : "copy1735405187113d18554",
   "script" : null,
-  "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
-  "name" : "04.阿里妈妈推广券详情查询",
+  "groupId" : "27f4afc4c6354c03b7de834ec569415c",
+  "name" : "10.淘礼金效果数据x",
   "createTime" : null,
-  "updateTime" : 1735449729978,
+  "updateTime" : 1735725892520,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/couponGet",
+  "path" : "/dgVegasTljReport",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "itemId",
-    "value" : "y58Ae2DtRt2a4Y7KxVfyyYUvtA-BMQGmqcrZYYKOwdU8",
-    "description" : null,
-    "required" : true,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"adzoneId\":\"109281650216\"\n    ,\"rightsId\":\"1\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -40,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Remote service error.入参为空\",\n    \"data\": null,\n    \"timestamp\": 1735389285277,\n    \"executeTime\": 114\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"参数错误\",\n    \"data\": null,\n    \"timestamp\": 1735725852817,\n    \"executeTime\": 69\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -56,7 +44,7 @@
     "expression" : "",
     "children" : [ {
       "name" : "code",
-      "value" : "402",
+      "value" : "500",
       "description" : "",
       "required" : false,
       "dataType" : "Integer",
@@ -68,7 +56,7 @@
       "children" : [ ]
     }, {
       "name" : "message",
-      "value" : "凭证已过期",
+      "value" : "参数错误",
       "description" : "",
       "required" : false,
       "dataType" : "String",
@@ -92,7 +80,7 @@
       "children" : [ ]
     }, {
       "name" : "timestamp",
-      "value" : "1734365046744",
+      "value" : "1735725795844",
       "description" : "",
       "required" : false,
       "dataType" : "Long",
@@ -104,10 +92,10 @@
       "children" : [ ]
     }, {
       "name" : "executeTime",
-      "value" : "null",
+      "value" : "125",
       "description" : "",
       "required" : false,
-      "dataType" : "Object",
+      "dataType" : "Integer",
       "type" : null,
       "defaultValue" : null,
       "validateType" : "",
@@ -120,16 +108,14 @@
 ================================
 import tbk;    //导入tbk模块
 
-//itemId 
 var params =  {
-    apiMethodName:"taobao.tbk.coupon.get"
-    ,itemId
+    apiMethodName:"taobao.tbk.dg.vegas.tlj.report"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.results;
+if(!response.resultSuccess){
+    exit 500,response.msgInfo;
 }
-if(response.msg!=null) {
-    exit 0,response.msg+"."+response.subMsg;
-}
-
+return response.result;

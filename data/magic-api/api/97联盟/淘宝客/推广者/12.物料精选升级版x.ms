@@ -1,43 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735405187113d18554",
+  "id" : "copy1735405512642d40680",
   "script" : null,
   "groupId" : "27f4afc4c6354c03b7de834ec569415c",
-  "name" : "10.淘礼金效果数据",
+  "name" : "12.物料精选升级版x",
   "createTime" : null,
-  "updateTime" : 1735449786974,
+  "updateTime" : 1735725655713,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/dgVegasTljReport",
+  "path" : "/dgMaterialRecommend",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "adzoneId",
-    "value" : "109281650216",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "rightsId",
-    "value" : "rer2324er",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"adzoneId\":\"109281650216L\"\n    ,\"materialId\":\"1\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -52,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"系统内部出现错误\",\n    \"data\": null,\n    \"timestamp\": 1735407502182,\n    \"executeTime\": 130\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error.内部调用失败\",\n    \"data\": null,\n    \"timestamp\": 1735725649018,\n    \"executeTime\": 130\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -133,14 +109,13 @@
 import tbk;    //导入tbk模块
 
 var params =  {
-    apiMethodName:"taobao.tbk.dg.vegas.tlj.report"
-    ,adzoneId
-    ,rightsId
+    apiMethodName:"taobao.tbk.dg.material.recommend"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.resultSuccess){
-    return response.result;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msgInfo!=null) {
-    exit 0,response.msgInfo;
-}
+return response.result;

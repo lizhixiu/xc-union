@@ -1,55 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735405802462d10860",
+  "id" : "copy1735404686456d49894",
   "script" : null,
   "groupId" : "27f4afc4c6354c03b7de834ec569415c",
-  "name" : "13.物料id列表查询",
+  "name" : "07.淘口令回流数据查询x",
   "createTime" : null,
-  "updateTime" : 1735449799981,
+  "updateTime" : 1735725920485,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/optimusTouMaterialDdsGet",
+  "path" : "/dgTpwdReportGet",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "adzoneId",
-    "value" : "109281650216L",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "materialId",
-    "value" : "1",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "materialQuery",
-    "value" : "1",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"adzoneId\":109281650216\n    ,\"taoPassword\":\"￥SdIBeafTyjn￥\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -64,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Invalid arguments:material_query.\",\n    \"data\": null,\n    \"timestamp\": 1735405907861,\n    \"executeTime\": 130\n}",
+  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Remote service error.查询不到对应的adzoneId，请检查adzoneId是否正确\",\n    \"data\": null,\n    \"timestamp\": 1735725273518,\n    \"executeTime\": 124\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -145,15 +109,13 @@
 import tbk;    //导入tbk模块
 
 var params =  {
-    apiMethodName:"taobao.tbk.optimus.tou.material.ids.get"
-    ,adzoneId
-    ,materialId
-    ,materialQuery
+    apiMethodName:"taobao.tbk.dg.tpwd.report.get"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.result;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msg!=null) {
-    exit 0,response.msg+"."+response.subMsg;
-}
+return response.result;

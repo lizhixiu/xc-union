@@ -16,6 +16,7 @@ public class TbkApiConstants {
     public final static Map<String, Class> REQUEST_MAP = new HashMap<>();
 
     static {
+        //==== 公用 ====
         //淘宝客-公用-淘宝客商品详情查询(简版)
         REQUEST_MAP.put( "taobao.tbk.item.info.get", TbkItemInfoGetRequest.class );
         //淘宝客-公用-店铺关联推荐

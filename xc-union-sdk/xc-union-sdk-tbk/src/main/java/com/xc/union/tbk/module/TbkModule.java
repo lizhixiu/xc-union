@@ -38,8 +38,8 @@ public class TbkModule {
      */
     @Comment("获取淘口令")
     public Map<String, Object> getTpwd( @Comment(name = "params", value = "参数") Map<String, String> params ) {
+        log( "请求报文：{}", params );
         TbkTpwdCreateRequest req = new TbkTpwdCreateRequest();
-
         if ( params.containsKey( "title" ) ) {
             req.setText( params.get( "title" ) );
         }
@@ -55,10 +55,10 @@ public class TbkModule {
         TbkTpwdCreateResponse rsp;
         try {
             rsp = taobaoClient.execute( req );
-            log.info( JSONUtil.toJsonStr( rsp ) );
         } catch ( ApiException e ) {
-            throw new RuntimeException( e );
+            throw new MagicAPIException( e.getErrMsg(), e );
         }
+        log( "返回报文：{}", rsp );
         Map<String, Object> map = new HashMap<>();
         map.put( "data", rsp.getData() );
         return map;
@@ -71,28 +71,26 @@ public class TbkModule {
      */
     @Comment("获取短连接")
     public Map<String, Object> getShortUrl( @Comment(name = "params", value = "参数") Map<String, String> params ) {
+        log( "请求报文：{}", params );
         String url = params.get( "url" );
         TbkSpreadGetRequest req = new TbkSpreadGetRequest();
-        List<TbkSpreadGetRequest.TbkSpreadRequest> list2 = new ArrayList<>();
-        TbkSpreadGetRequest.TbkSpreadRequest obj3 = new TbkSpreadGetRequest.TbkSpreadRequest();
-        list2.add( obj3 );
-
+        List<TbkSpreadGetRequest.TbkSpreadRequest> list = new ArrayList<>();
+        TbkSpreadGetRequest.TbkSpreadRequest obj = new TbkSpreadGetRequest.TbkSpreadRequest();
+        list.add( obj );
         if ( url.startsWith( "//" ) ) {
             url = "https:" + url;
         }
-        obj3.setUrl( url );
-        req.setRequests( list2 );
+        obj.setUrl( url );
+        req.setRequests( list );
         TbkSpreadGetResponse rsp;
         try {
             rsp = taobaoClient.execute( req );
-            log.info( JSONUtil.toJsonStr( rsp ) );
         } catch ( ApiException e ) {
-            throw new RuntimeException( e );
+            throw new MagicAPIException( e.getErrMsg(), e );
         }
-
+        log( "返回报文：{}", rsp );
         Map<String, Object> map = new HashMap<>();
         map.put( "data", rsp.getResults() );
-
         return map;
     }
 
@@ -110,7 +108,7 @@ public class TbkModule {
         TaobaoRequest request = (TaobaoRequest) ReflectUtil.newInstance( TbkApiConstants.REQUEST_MAP.get( apiMethodName ) );
         //请求对象赋值
         BeanUtil.fillBeanWithMap( params, request, false );
-        log.info( "请求报文：{}", JSONUtil.formatJsonStr( JSONUtil.toJsonStr( request ) ) );
+        log( "请求报文：{}", params );
         TaobaoResponse rsp;
         try {
             //调用淘宝客接口
@@ -118,7 +116,11 @@ public class TbkModule {
         } catch ( ApiException e ) {
             throw new MagicAPIException( e.getErrMsg(), e );
         }
-        log.info( "返回报文：{}", JSONUtil.formatJsonStr( JSONUtil.toJsonStr( rsp ) ) );
+        log( "返回报文：{}", rsp );
         return (T) rsp;
+    }
+
+    private void log( String tag, Object object ) {
+        log.info( tag, JSONUtil.formatJsonStr( JSONUtil.toJsonStr( object ) ) );
     }
 }

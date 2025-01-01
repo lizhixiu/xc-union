@@ -5,27 +5,15 @@
   "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
   "name" : "02.店铺关联推荐",
   "createTime" : null,
-  "updateTime" : 1735448898370,
+  "updateTime" : 1735725047971,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
   "path" : "/shopRecommendGet",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "userId",
-    "value" : "154459421391539260",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"userId\":154459421391539260\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -40,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": null,\n    \"timestamp\": 1735448668199,\n    \"executeTime\": 121\n}",
+  "responseBody" : "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"data\": null,\n    \"timestamp\": 1735724707240,\n    \"executeTime\": 64\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -120,17 +108,17 @@
 ================================
 import tbk;    //导入tbk模块
 
-//userId 商品id
+//userId 店铺id
 var params =  {
     apiMethodName:"taobao.tbk.shop.recommend.get"
-    ,userId
     ,fields:"user_id,shop_title,shop_type,seller_nick,pict_url,shop_url"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.results;
+if(response.errorCode!=""){
+    exit 500,response.msg;
 }
-if(response.msg!=null) {
-    exit 0,response.msg;
-}
+return response.results;
 

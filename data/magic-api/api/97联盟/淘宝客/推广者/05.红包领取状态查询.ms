@@ -5,39 +5,15 @@
   "groupId" : "27f4afc4c6354c03b7de834ec569415c",
   "name" : "05.红包领取状态查询",
   "createTime" : null,
-  "updateTime" : 1735449765693,
+  "updateTime" : 1735723828000,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
   "path" : "/dgVegasSendStatus",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "promotionId",
-    "value" : "37116",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "adzoneId",
-    "value" : "109281650216L",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -52,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Remote service error.暂未匹配到淘宝用户\",\n    \"data\": null,\n    \"timestamp\": 1735404349665,\n    \"executeTime\": 133\n}",
+  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Remote service error.暂未匹配到淘宝用户\",\n    \"data\": null,\n    \"timestamp\": 1735723582615,\n    \"executeTime\": 242\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -135,10 +111,11 @@ import tbk;    //导入tbk模块
 var params =  {
     apiMethodName:"taobao.tbk.dg.vegas.send.status"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.resultList;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msg!=null) {
-    exit 0,response.msg+"."+response.subMsg;
-}
+return response.resultList;

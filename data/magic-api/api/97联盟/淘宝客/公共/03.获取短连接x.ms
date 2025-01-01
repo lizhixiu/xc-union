@@ -3,9 +3,9 @@
   "id" : "copy1735386932150d24009",
   "script" : null,
   "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
-  "name" : "03.获取短连接",
+  "name" : "03.获取短连接x",
   "createTime" : null,
-  "updateTime" : 1735451105113,
+  "updateTime" : 1735725059819,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
@@ -125,6 +125,9 @@ var params =  {
     apiMethodName:"taobao.tbk.spread.get"
     ,requests:[{url}]
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
 if(response.errorCode==""){
     return response.results;

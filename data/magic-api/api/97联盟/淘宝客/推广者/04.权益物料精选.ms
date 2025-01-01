@@ -5,39 +5,15 @@
   "groupId" : "27f4afc4c6354c03b7de834ec569415c",
   "name" : "04.权益物料精选",
   "createTime" : null,
-  "updateTime" : 1735449755436,
+  "updateTime" : 1735725975321,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
   "path" : "/dgOptimusPromotion",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "promotionId",
-    "value" : "37116",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "adzoneId",
-    "value" : "109281650216L",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"promotionId\":37116\n    ,\"adzoneId\":109281650216\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -52,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1738339199000\",\n            \"displayStartTime\": \"1734278400000\",\n            \"nick\": \"华帝新适时专卖店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWaNuSYHtjyUda1NDFeiiV2JRdJpePxJP5tzwbjAGjvCSR&activityId=39cca548e44748efa986a60a8f294ccc\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 602582267133,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D46FQU%2FDfQI5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7C7aiRiBkHjO9wRb50xNNAA%2FHI%2FcElCE9BmGFi2LKmx%2FBJJKTWNpWquWqXISwykCAXPLzMkCDURrtWjK4VfY9l8%2Bat7%2F%2FGdbhUpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 658190715885,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DAkHBidJ1sAlw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7C7aiRiBkHjO8zYwoD7VQxLIHCLGttE0XBusj5cHSjHs%2FQfCnb7PjVnA61vm8at%2FV3Mv5zKd5SRzDThTq0z6HRDASAqPEhecnkpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 720113433987,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D6ZthWYgLICpw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7C7aiRiBkHjO9wH1yf51FVPx7WmaiKvAJ4ndj075O3aBBWLz39pi0ibKen5yurixkbDrGs6pzPZzOupSuyzd0nOZ2AeznqG0oAjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 679897043298,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DM%2Bn3pWK2Q4Fw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7C7aiRiBkHjO8Ps6%2Bz7CJeRCeM%2F3LN7JaMpwTtWDDuG7Mw1VeQU0kbGmE9uMNXtnC0Ho2VcGFoFa3cLAl%2FEHYnotx2kzWtCvpujo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 680816740821,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D9%2FKpTWpRzLNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7C7aiRiBkHjO%2FlXXpz8p9alNOl3Dvj2SNjZoPGfuj5JBlkUnXOPYqV%2F0%2Bhfe1lwtDd7SL8eQkS55MigyQNfaD%2Fjg78gmRKLyTojo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"231.01\",\n                    \"entryDiscount\": \"231\",\n                    \"entryUsedEndTime\": \"1738339199000\",\n                    \"entryUsedStartTime\": \"1734278400000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 1942,\n            \"sellerId\": \"4728851246780339257\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i4/6000000002571/O1CN013xiOfT1UrZ3eZtalx_!!6000000002571-0-shopmanager.jpg\",\n            \"shopTitle\": \"华帝新适时专卖店\",\n            \"totalCount\": 2000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735660799000\",\n            \"displayStartTime\": \"1732982400000\",\n            \"nick\": \"ESTEEM宜庭旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=2108207244&activityId=c09209877793475096db8eb40fdab2ce\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 779210142907,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D9VjK%2ByyOCpZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOpUgl2jWmVYKvZLFKRjLMprhzn7bVlJB%2FxEzSBK7VPlBXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 741197634600,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DVllu%2FavQWDVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOpUgl2jWmVYKvZLFKRjLMpruUDy7cIVcNL1bSLol64NuXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 743579219689,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DgowndmuMqZ1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOpUgl2jWmVYKvZLFKRjLMpoAGWyp6gED%2BfdSQ%2F4gDadsXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 611878764034,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DMZfADg9Py5hw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOpUgl2jWmVYKvZLFKRjLMpre2GDNDlo%2FlqOXfqWIjQjVXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 739438316284,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DgPEm7YbFgXhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOpUgl2jWmVYKvZLFKRjLMprn7eZmg2EcLWPtbiLXJIMAXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"401\",\n                    \"entryDiscount\": \"400\",\n                    \"entryUsedEndTime\": \"1735660799000\",\n                    \"entryUsedStartTime\": \"1732982400000\"\n                }\n            ],\n            \"promotionType\": \"公开券\",\n            \"remainCount\": 94446,\n            \"sellerId\": \"4647926475734068370\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i4/2108207244/O1CN01bzqRID23Nnw3CZmCs_!!2108207244-0-shopmanager.jpg\",\n            \"shopTitle\": \"ESTEEM宜庭旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735660799000\",\n            \"displayStartTime\": \"1734710400000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=33691490b71b418d9a020d87537af43a\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D9FystCWcZihw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gOjQEmLK9ReXgqzUXBs95pZGzGvONcl5FHFYbrgmlvNRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DeRhBPcabaxVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gOjQEmLK9ReVRXUOMAWzOqi%2Ff7JtDqr0dHFYbrgmlvNRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 808123764566,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DPveujIFCqRhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR3w48TQ1ValF%2F2U2b%2FF%2FAPGpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D0ta9Je%2FYw%2FFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR0ZXOyYtnyRA9QfnYj2vq0bpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 864417618509,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DZLchfSAUQgtw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR1ZQzU52jglo4syd3ZrgMI5poQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735660799000\",\n                    \"entryUsedStartTime\": \"1734710400000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 96566,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1738339199000\",\n            \"displayStartTime\": \"1734537600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=d51e28c834c947eb944e1149ef4510f8\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D9FystCWcZihw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gOjQEmLK9ReXgqzUXBs95pZGzGvONcl5FHFYbrgmlvNRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DeRhBPcabaxVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gOjQEmLK9ReVRXUOMAWzOqi%2Ff7JtDqr0dHFYbrgmlvNRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 808123764566,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DPveujIFCqRhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR3w48TQ1ValF%2F2U2b%2FF%2FAPGpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D0ta9Je%2FYw%2FFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR0ZXOyYtnyRA9QfnYj2vq0bpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 864417618509,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DZLchfSAUQgtw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gy2x8RbXhfR1ZQzU52jglo4syd3ZrgMI5poQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1738339199000\",\n                    \"entryUsedStartTime\": \"1734537600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 37000,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735660799000\",\n            \"displayStartTime\": \"1732636800000\",\n            \"nick\": \"华帝正盟专卖店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWag4sbVCGFW1X4PjobwrtrFjpePg3iCQvLkbkrTkGDuLd&activityId=6cf3d14fda084430b7eabca5f9972cfa\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 592471401458,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DI2A6Fz%2Fn%2BVVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPe%2Fohfu%2Bz9z4wCA2rL5IHe%2FXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 640183916319,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DhFbHod4VGmBw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqo0Hyp9wEx2uo9n0zGB7wDDnMwBZPqz2u4cgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 600835241094,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DZ4cbOrFkxsdw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqojAnnqFmF3rDkFNtX5qiRcK%2FS6Or3e0RhcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 544872157392,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DtBSRggUAuIZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPd2tgF2YQBXZ71mhq8CgarOXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 669076765908,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DVvjnBUcO38Vw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPf1YzbwQrXAcd36IfenZGuYXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"221\",\n                    \"entryDiscount\": \"220\",\n                    \"entryUsedEndTime\": \"1735660799000\",\n                    \"entryUsedStartTime\": \"1732636800000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 2300,\n            \"sellerId\": \"4658060126933055035\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i2/1743125211/O1CN01XRKgYS1oMgmXlKk84_!!1743125211-0-shopmanager.jpg\",\n            \"shopTitle\": \"华帝正盟专卖店\",\n            \"totalCount\": 10000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735660799000\",\n            \"displayStartTime\": \"1732982400000\",\n            \"nick\": \"Maison Margiela官方旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWVNgQmgH5qaUJKmAM71tAF3Mdten4VAqsYuC1SM7yn73C&activityId=87bd219c867c45b88ec8eba33a94fd97\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 696125688987,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DMPtk2ebSU%2BVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOt76ixbgzqUBuRz6%2Fre5S%2BDxcyfkRKPN3W9na69ZkmHBHFYbrgmlvNRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 624961037540,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DeGIR0VUXiphw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOt76ixbgzqUBuRz6%2Fre5S%2BDXIYvoNBAujOLv6YXnQsuq3A0Yx8MNE%2B1yBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 760678234679,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DWdeI82U%2BUrRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOt76ixbgzqUBuRz6%2Fre5S%2BBZBn3qmEWpKPVi3NsrJadwczAFk%2BrPa7hyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 659969885273,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DSZnQ3xd4EXNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOt76ixbgzqUBuRz6%2Fre5S%2BA9cthilMVuWVWU%2BmmwtvrEsVsmLpcUBCZyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 750397462299,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DuIjIeSHiVHFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOt76ixbgzqUBuRz6%2Fre5S%2BA5KQcleerBN%2Fg0v%2BMhBUTdczAFk%2BrPa7hyBQR064XIMMYOae24fhW0\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"150.01\",\n                    \"entryDiscount\": \"150\",\n                    \"entryUsedEndTime\": \"1735660799000\",\n                    \"entryUsedStartTime\": \"1732982400000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 720,\n            \"sellerId\": \"4766181296752967193\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i1/2206516494135/O1CN01vucJyu1gPsZMVj6ib_!!2206516494135-0-shopmanager.jpg\",\n            \"shopTitle\": \"Maison Margiela官方旗舰店\",\n            \"totalCount\": 6000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1737388799000\",\n            \"displayStartTime\": \"1734364800000\",\n            \"nick\": \"皮尔卡丹鞋类旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWV1wnkCVoL2Aw3L7J6nVLiAxEqJ4khEpVLsQAp2Poh1kg&activityId=ed21f23abd3747d684f0b411c8499b50\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 791942745860,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DBNZX3nOQE1Jw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZpvFh%2FpVLrpCGAvUMHb2G4RXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 681171795539,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DG88gYCohB7Rw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZp2g7d9SnQ5Gc0JOsAheH58XV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 740061832720,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DIA8XsTB5gcZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZo3Kx2w7QrIkWMCcU3kki%2FkXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 680549329004,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DBrM%2BwkkogmNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZoUx1TSWOitG9kyF4uu8mxZXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 743989131133,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DX5thEzfyOaxw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZpOQCT8PMiUKMZcju70WoS3XV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"200.01\",\n                    \"entryDiscount\": \"200\",\n                    \"entryUsedEndTime\": \"1737388799000\",\n                    \"entryUsedStartTime\": \"1734364800000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 4550,\n            \"sellerId\": \"4863959757305902753\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i1/2121241720/O1CN01fGcnXP1OZo6K02FwE_!!2121241720-2-shopmanager.png\",\n            \"shopTitle\": \"皮尔卡丹鞋类旗舰店\",\n            \"totalCount\": 5000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1740067199000\",\n            \"displayStartTime\": \"1734883200000\",\n            \"nick\": \"华帝正盟专卖店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=1743125211&activityId=7db618c6bd6c43b18e60bb736f5dad30\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 592471401458,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DI2A6Fz%2Fn%2BVVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPe%2Fohfu%2Bz9z4wCA2rL5IHe%2FXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 640183916319,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DhFbHod4VGmBw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqo0Hyp9wEx2uo9n0zGB7wDDnMwBZPqz2u4cgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 600835241094,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DZ4cbOrFkxsdw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqojAnnqFmF3rDkFNtX5qiRcK%2FS6Or3e0RhcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 544872157392,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DtBSRggUAuIZw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPd2tgF2YQBXZ71mhq8CgarOXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 669076765908,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DVvjnBUcO38Vw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnsHC2KijWqoy6dwz%2FSAQPf1YzbwQrXAcd36IfenZGuYXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"201\",\n                    \"entryDiscount\": \"200\",\n                    \"entryUsedEndTime\": \"1740067199000\",\n                    \"entryUsedStartTime\": \"1734883200000\"\n                }\n            ],\n            \"promotionType\": \"公开券\",\n            \"remainCount\": 95000,\n            \"sellerId\": \"4658060126933055035\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i2/1743125211/O1CN01XRKgYS1oMgmXlKk84_!!1743125211-0-shopmanager.jpg\",\n            \"shopTitle\": \"华帝正盟专卖店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735487999000\",\n            \"displayStartTime\": \"1735142400000\",\n            \"nick\": \"金海马官方旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=828946903&activityId=e4e1331f6da94ddc92382525834e61d9\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 531910932024,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dwm0iBuUL2Y9w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOtFkP6Rrijrnb%2FxDxP0M8s%2Fvea28dKK214punA7JB34Wjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 592103249503,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQTHPCMOedFJw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOtFkP6Rrijrnb%2FxDxP0M8s8npk7RKs7rmizeyK3E7SEhjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 760755646758,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DTw5x67AwjLxw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOtFkP6Rrijrnb%2FxDxP0M8s%2FWs1N4Q2E5Qje5opn%2BGCwtjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 617647415399,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D6j4mG5k1sdRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOtFkP6Rrijrnb%2FxDxP0M8s8xBoM5KdENMLjVuACVvU5jjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 618893199004,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DaOSkksuFp3lw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOtFkP6Rrijrnb%2FxDxP0M8s%2Fcetm7HlDqq4kvYmpXVNWGjo7CdQ3pfqNRLBgaW5udaw%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"101\",\n                    \"entryDiscount\": \"100\",\n                    \"entryUsedEndTime\": \"1735487999000\",\n                    \"entryUsedStartTime\": \"1735142400000\"\n                }\n            ],\n            \"promotionType\": \"公开券\",\n            \"remainCount\": 8167,\n            \"sellerId\": \"4621890040656586939\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i2/828946903/O1CN01iDROXW20rcsb04eO0_!!828946903-0-shopmanager.jpg\",\n            \"shopTitle\": \"金海马官方旗舰店\",\n            \"totalCount\": 8333\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735473599000\",\n            \"displayStartTime\": \"1735142400000\",\n            \"nick\": \"PPPIERREPIERUCCI旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=2214690750714&activityId=5d79762e733b4a78bd46c48e65225012\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 740200730715,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dz6ivfiF8hTlw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOjazV83cL8kbjwnFs%2FQJRK6QM41hzf7OfOGc3xU49sKRbHaFw1WzVsRyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 843572710811,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEdrY6ug2Xetw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOjazV83cL8kbjwnFs%2FQJRK79fTlJgUM6Jc8zz8QaKnvWih3Rs9dLq8lyBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 820447119700,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DTpbOmzAXzrNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOjazV83cL8kbjwnFs%2FQJRK55VtKY0IIVAyVfuSV3Ql1c3A0Yx8MNE%2B1yBQR064XIMMYOae24fhW0\"\n                    },\n                    {\n                        \"itemId\": 745546164249,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dv1s6e5RAQNhw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOjazV83cL8kb%2FdE2ec0rbdPPu3%2FXiG50KDtdfGLLT%2BoWpoQPPmqoemrGDF1NzTQoPw%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 733699315131,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D42Sx5Cps4E9w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0G1xQFoUdfmG3aov8ftZy16MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOjazV83cL8kbjwnFs%2FQJRK5iMq4Y0JBBPQI1OPGRggzTih3Rs9dLq8lyBQR064XIMMYOae24fhW0\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"121\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735473599000\",\n                    \"entryUsedStartTime\": \"1735142400000\"\n                }\n            ],\n            \"promotionType\": \"公开券\",\n            \"remainCount\": 1480,\n            \"sellerId\": \"216348729751467179\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i2/6000000007599/O1CN01GUibrR260OTmw7WEZ_!!6000000007599-2-shopmanager.png\",\n            \"shopTitle\": \"PPPIERREPIERUCCI旗舰店\",\n            \"totalCount\": 2000\n        }\n    ],\n    \"timestamp\": 1735389376324,\n    \"executeTime\": 417\n}",
+  "responseBody" : "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735747199000\",\n            \"displayStartTime\": \"1735401600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=40e5756f6ff14ffb8f3cdf25d6378552\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735747199000\",\n                    \"entryUsedStartTime\": \"1735401600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 98112,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1737388799000\",\n            \"displayStartTime\": \"1734364800000\",\n            \"nick\": \"皮尔卡丹鞋类旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWV1wnkCVoL2Aw3L7J6nVLiAxEqJ4khEpVLsQAp2Poh1kg&activityId=ed21f23abd3747d684f0b411c8499b50\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 681171795539,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DE%2FbfDcIPW3Rw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZp2g7d9SnQ5Gc0JOsAheH58XV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 791942745860,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DKTO5rqz0JGBw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZpvFh%2FpVLrpCGAvUMHb2G4RXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 740061832720,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D1S%2Bnmo1vtARw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZo3Kx2w7QrIkWMCcU3kki%2FkXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 680549329004,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DOSl1mbwfiQRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZoUx1TSWOitG9kyF4uu8mxZXV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 743989131133,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DctJXlUHIrbpw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOi6VvSe2JnuT%2B7AoF43zBZpOQCT8PMiUKMZcju70WoS3XV1UcTLd9SHmKtKBeDcrKg%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"200.01\",\n                    \"entryDiscount\": \"200\",\n                    \"entryUsedEndTime\": \"1737388799000\",\n                    \"entryUsedStartTime\": \"1734364800000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 4379,\n            \"sellerId\": \"4863959757305902753\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i1/2121241720/O1CN01fGcnXP1OZo6K02FwE_!!2121241720-2-shopmanager.png\",\n            \"shopTitle\": \"皮尔卡丹鞋类旗舰店\",\n            \"totalCount\": 5000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735747199000\",\n            \"displayStartTime\": \"1735401600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=9b69b5e2363c4a92b70f5325dab3f66d\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735747199000\",\n                    \"entryUsedStartTime\": \"1735401600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 96735,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1738339199000\",\n            \"displayStartTime\": \"1734278400000\",\n            \"nick\": \"华帝新适时专卖店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWaNuSYHtjyUda1NDFeiiV2JRdJpePxJP5tzwbjAGjvCSR&activityId=39cca548e44748efa986a60a8f294ccc\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 602582267133,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DTb3L0H0HeDxw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7CAld0Ny0E%2FTiA%2BrOLedrIyLFbJi6XFAQmcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 602582267133,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DTb3L0H0HeDxw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7CAld0Ny0E%2FTiA%2BrOLedrIyLFbJi6XFAQmcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 658190715885,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DaF9MH295AKNw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7COEH9hU1nnXlv0yPPLzi5CGx2hcNVs1bEcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 720113433987,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DOmSZZKzlGAFw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7Co10BtahYAjfCd6klzct0xBxWG64JpbzUcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    },\n                    {\n                        \"itemId\": 679897043298,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DFQ%2BlTpIraaRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOvr6L8nUXe7CJtKxKhNIA4ZK5kGam1rHZvvyFD8KhVblcgUEdOuFyDDGDmntuH4VtA%3D%3D\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"231.01\",\n                    \"entryDiscount\": \"231\",\n                    \"entryUsedEndTime\": \"1738339199000\",\n                    \"entryUsedStartTime\": \"1734278400000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 1930,\n            \"sellerId\": \"4728851246780339257\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/imgextra/i4/6000000002571/O1CN013xiOfT1UrZ3eZtalx_!!6000000002571-0-shopmanager.jpg\",\n            \"shopTitle\": \"华帝新适时专卖店\",\n            \"totalCount\": 2000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735747199000\",\n            \"displayStartTime\": \"1735401600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=ba2011ac9a334f12bd410ad065c114f2\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735747199000\",\n                    \"entryUsedStartTime\": \"1735401600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 98072,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1738339199000\",\n            \"displayStartTime\": \"1734537600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=d51e28c834c947eb944e1149ef4510f8\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1738339199000\",\n                    \"entryUsedStartTime\": \"1734537600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 35578,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735747199000\",\n            \"displayStartTime\": \"1735401600000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=e3411ab68f554094b4abc1d12a5b81af\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735747199000\",\n                    \"entryUsedStartTime\": \"1735401600000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 70000,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735833599000\",\n            \"displayStartTime\": \"1735488000000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=816a311dff424b528a8741c384ef9705\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735833599000\",\n                    \"entryUsedStartTime\": \"1735488000000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 99842,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1736006399000\",\n            \"displayStartTime\": \"1735488000000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=50c0fff8f7e74e67b846256191be26bb\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1736006399000\",\n                    \"entryUsedStartTime\": \"1735488000000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 99286,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        },\n        {\n            \"conditionType\": \"1\",\n            \"discountType\": \"1\",\n            \"displayEndTime\": \"1735919999000\",\n            \"displayStartTime\": \"1735574400000\",\n            \"nick\": \"CariaKnar旗舰店\",\n            \"promotionExtend\": {\n                \"promotionUrl\": \"https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=58b0c6e2d72c4edcb3b7308619c0f2b8\",\n                \"recommendItemList\": [\n                    {\n                        \"itemId\": 833185577017,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3Dk70pTNyMYN5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhBywdlzofI0DvjxtbQGI4hzt%2BD%2BrTqGXPDT6mXZiUbWKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 814262597677,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DEbp%2BcwcSJoRw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHQ7TIf5ZjfsmfUAlRni2iQp6xGcrVGqLzFC1RNWzrCklC9cBLl3FvOgSIz%2BVIb9tlI48h144Q9J%2FQw9Ijj9Sul2mhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 825656538332,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3D%2BobHCKXMXM5w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhOGn3IyTWCHVUIXl7ynN56fUAlRni2iQqE4VTNuLL03AzKRJkFUasrzqaIfrr8ZL4SIz%2BVIb9tlNlPYmeyCCTvnD0u6pu3XYmmhA8%2Baqh6asYMXU3NNCg%2F\"\n                    },\n                    {\n                        \"itemId\": 816689962369,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DQs%2B9i1GLcqVw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLga2Yg5JMGmcYWTCVEem5FOEjBhxm1wmGm2N9ITB04PnD%2BthZjSR86hPaYJxbvE2fDduT1zm5h1wlTku%2F6%2FktnoQWGMjERZXFmOjsJ1Del%2Bo1EsGBpbm51r\"\n                    },\n                    {\n                        \"itemId\": 814460266977,\n                        \"url\": \"//s.click.taobao.com/t?e=m%3D2%26s%3DNQ4ly6smTI1w4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0HYdkg10LGnzbe2KeWIZY66MOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLgYigY7CdBwRdxgMM7JN3cKwe1gS4yud5LBWnPRfolgdD%2BthZjSR86hJE%2FE05vVRQDduT1zm5h1whgOuJ0oLD%2FJTqALAU6EK0mOjsJ1Del%2Bo1EsGBpbm51r\"\n                    }\n                ],\n                \"youjiaCouponInfo\": null\n            },\n            \"promotionList\": [\n                {\n                    \"entryCondition\": \"120.01\",\n                    \"entryDiscount\": \"120\",\n                    \"entryUsedEndTime\": \"1735919999000\",\n                    \"entryUsedStartTime\": \"1735574400000\"\n                }\n            ],\n            \"promotionType\": \"妈妈券\",\n            \"remainCount\": 98941,\n            \"sellerId\": \"46198762174095032\",\n            \"shopPictureUrl\": \"https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg\",\n            \"shopTitle\": \"CariaKnar旗舰店\",\n            \"totalCount\": 100000\n        }\n    ],\n    \"timestamp\": 1735725148280,\n    \"executeTime\": 200\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -68,7 +44,7 @@
     "expression" : "",
     "children" : [ {
       "name" : "code",
-      "value" : "402",
+      "value" : "200",
       "description" : "",
       "required" : false,
       "dataType" : "Integer",
@@ -80,7 +56,7 @@
       "children" : [ ]
     }, {
       "name" : "message",
-      "value" : "凭证已过期",
+      "value" : "success",
       "description" : "",
       "required" : false,
       "dataType" : "String",
@@ -92,19 +68,319 @@
       "children" : [ ]
     }, {
       "name" : "data",
-      "value" : "null",
+      "value" : "",
       "description" : "",
       "required" : false,
-      "dataType" : "Object",
+      "dataType" : "Array",
       "type" : null,
       "defaultValue" : null,
       "validateType" : "",
       "error" : "",
       "expression" : "",
-      "children" : [ ]
+      "children" : [ {
+        "name" : "",
+        "value" : "",
+        "description" : "",
+        "required" : false,
+        "dataType" : "Object",
+        "type" : null,
+        "defaultValue" : null,
+        "validateType" : "",
+        "error" : "",
+        "expression" : "",
+        "children" : [ {
+          "name" : "conditionType",
+          "value" : "1",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "discountType",
+          "value" : "1",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "displayEndTime",
+          "value" : "1735747199000",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "displayStartTime",
+          "value" : "1735401600000",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "nick",
+          "value" : "CariaKnar旗舰店",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "promotionExtend",
+          "value" : "",
+          "description" : "",
+          "required" : false,
+          "dataType" : "Object",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ {
+            "name" : "promotionUrl",
+            "value" : "https://uland.taobao.com/quan/detail?sellerId=RAzN8HWYerLKZsXzcMjjWkB9BCwdrrFP51gn3UEk9VKfWZL7371&activityId=40e5756f6ff14ffb8f3cdf25d6378552",
+            "description" : "",
+            "required" : false,
+            "dataType" : "String",
+            "type" : null,
+            "defaultValue" : null,
+            "validateType" : "",
+            "error" : "",
+            "expression" : "",
+            "children" : [ ]
+          }, {
+            "name" : "recommendItemList",
+            "value" : "",
+            "description" : "",
+            "required" : false,
+            "dataType" : "Array",
+            "type" : null,
+            "defaultValue" : null,
+            "validateType" : "",
+            "error" : "",
+            "expression" : "",
+            "children" : [ {
+              "name" : "",
+              "value" : "",
+              "description" : "",
+              "required" : false,
+              "dataType" : "Object",
+              "type" : null,
+              "defaultValue" : null,
+              "validateType" : "",
+              "error" : "",
+              "expression" : "",
+              "children" : [ {
+                "name" : "itemId",
+                "value" : "833185577017",
+                "description" : "",
+                "required" : false,
+                "dataType" : "Long",
+                "type" : null,
+                "defaultValue" : null,
+                "validateType" : "",
+                "error" : "",
+                "expression" : "",
+                "children" : [ ]
+              }, {
+                "name" : "url",
+                "value" : "//s.click.taobao.com/t?e=m%3D2%26s%3DXo3aZuJI4Nlw4vFB6t2Z2ueEDrYVVa64Dne87AjQPk9yINtkUhsv0M6nvtPectqB9K%2Fw6znZO7GMOuOVKw8yy8wBd6pP%2FZV%2BISoO3AelRwJPLB4XoK5p6tThQdxQXnbgFBoMXOGuG5DkaqczTKGnOnKU9ZTWKm6gRkWRXMcvTLhuj4gEwHVIzs2P%2F%2FE3PVLAd1a6tqtQlCWGn3or5nAWBKg1D2DgaINCA%2BJuxCJOrUUSIz%2BVIb9tlJmZd%2BIf6vOUAHs1qD%2Fh%2FfymhA8%2Baqh6asYMXU3NNCg%2F",
+                "description" : "",
+                "required" : false,
+                "dataType" : "String",
+                "type" : null,
+                "defaultValue" : null,
+                "validateType" : "",
+                "error" : "",
+                "expression" : "",
+                "children" : [ ]
+              } ]
+            } ]
+          }, {
+            "name" : "youjiaCouponInfo",
+            "value" : "null",
+            "description" : "",
+            "required" : false,
+            "dataType" : "Object",
+            "type" : null,
+            "defaultValue" : null,
+            "validateType" : "",
+            "error" : "",
+            "expression" : "",
+            "children" : [ ]
+          } ]
+        }, {
+          "name" : "promotionList",
+          "value" : "",
+          "description" : "",
+          "required" : false,
+          "dataType" : "Array",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ {
+            "name" : "",
+            "value" : "",
+            "description" : "",
+            "required" : false,
+            "dataType" : "Object",
+            "type" : null,
+            "defaultValue" : null,
+            "validateType" : "",
+            "error" : "",
+            "expression" : "",
+            "children" : [ {
+              "name" : "entryCondition",
+              "value" : "120.01",
+              "description" : "",
+              "required" : false,
+              "dataType" : "String",
+              "type" : null,
+              "defaultValue" : null,
+              "validateType" : "",
+              "error" : "",
+              "expression" : "",
+              "children" : [ ]
+            }, {
+              "name" : "entryDiscount",
+              "value" : "120",
+              "description" : "",
+              "required" : false,
+              "dataType" : "String",
+              "type" : null,
+              "defaultValue" : null,
+              "validateType" : "",
+              "error" : "",
+              "expression" : "",
+              "children" : [ ]
+            }, {
+              "name" : "entryUsedEndTime",
+              "value" : "1735747199000",
+              "description" : "",
+              "required" : false,
+              "dataType" : "String",
+              "type" : null,
+              "defaultValue" : null,
+              "validateType" : "",
+              "error" : "",
+              "expression" : "",
+              "children" : [ ]
+            }, {
+              "name" : "entryUsedStartTime",
+              "value" : "1735401600000",
+              "description" : "",
+              "required" : false,
+              "dataType" : "String",
+              "type" : null,
+              "defaultValue" : null,
+              "validateType" : "",
+              "error" : "",
+              "expression" : "",
+              "children" : [ ]
+            } ]
+          } ]
+        }, {
+          "name" : "promotionType",
+          "value" : "妈妈券",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "remainCount",
+          "value" : "98112",
+          "description" : "",
+          "required" : false,
+          "dataType" : "Integer",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "sellerId",
+          "value" : "46198762174095032",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "shopPictureUrl",
+          "value" : "https://img.alicdn.com/i2/2215634631375/O1CN01IIf3dw1M1nPjaBq3J_!!2215634631375-0-shopmanager.jpg",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "shopTitle",
+          "value" : "CariaKnar旗舰店",
+          "description" : "",
+          "required" : false,
+          "dataType" : "String",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        }, {
+          "name" : "totalCount",
+          "value" : "100000",
+          "description" : "",
+          "required" : false,
+          "dataType" : "Integer",
+          "type" : null,
+          "defaultValue" : null,
+          "validateType" : "",
+          "error" : "",
+          "expression" : "",
+          "children" : [ ]
+        } ]
+      } ]
     }, {
       "name" : "timestamp",
-      "value" : "1734365046744",
+      "value" : "1735723452921",
       "description" : "",
       "required" : false,
       "dataType" : "Long",
@@ -116,10 +392,10 @@
       "children" : [ ]
     }, {
       "name" : "executeTime",
-      "value" : "null",
+      "value" : "381",
       "description" : "",
       "required" : false,
-      "dataType" : "Object",
+      "dataType" : "Integer",
       "type" : null,
       "defaultValue" : null,
       "validateType" : "",
@@ -135,13 +411,13 @@ import tbk;    //导入tbk模块
 //promotionId：官方提供的权益物料Id。有价券-37104、大额店铺券-37116、天猫店铺券-62191、券券补-61809 更多权益物料id敬请期待！
 var params =  {
     apiMethodName:"taobao.tbk.dg.optimus.promotion"
-    ,promotionId
-    ,adzoneId
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.resultList;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msg!=null) {
-    exit 0,response.msg+"."+response.subMsg;
-}
+return response.resultList;
+

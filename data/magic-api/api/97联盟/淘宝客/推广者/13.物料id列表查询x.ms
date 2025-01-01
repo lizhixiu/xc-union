@@ -1,19 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735405011545d19680",
+  "id" : "copy1735405802462d10860",
   "script" : null,
   "groupId" : "27f4afc4c6354c03b7de834ec569415c",
-  "name" : "09.淘礼金暂停发放",
+  "name" : "13.物料id列表查询x",
   "createTime" : null,
-  "updateTime" : 1735449783322,
+  "updateTime" : 1735725504423,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/dgVegasTljStop",
+  "path" : "/optimusTouMaterialDdsGet",
   "method" : "POST",
   "parameters" : [ {
     "name" : "adzoneId",
-    "value" : "20241229",
+    "value" : "109281650216L",
     "description" : null,
     "required" : false,
     "dataType" : "String",
@@ -24,8 +24,20 @@
     "expression" : null,
     "children" : null
   }, {
-    "name" : "rightsId",
-    "value" : "20241229",
+    "name" : "materialId",
+    "value" : "1",
+    "description" : null,
+    "required" : false,
+    "dataType" : "String",
+    "type" : null,
+    "defaultValue" : null,
+    "validateType" : null,
+    "error" : null,
+    "expression" : null,
+    "children" : null
+  }, {
+    "name" : "materialQuery",
+    "value" : "1",
     "description" : null,
     "required" : false,
     "dataType" : "String",
@@ -37,7 +49,7 @@
     "children" : null
   } ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"adzoneId\":\"\"\n    ,\"materialId\":\"\"\n    ,\"materialQuery\":\"\" \n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -52,7 +64,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"系统内部出现错误\",\n    \"data\": null,\n    \"timestamp\": 1735407410546,\n    \"executeTime\": 153\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Missing required arguments:material_query.\",\n    \"data\": null,\n    \"timestamp\": 1735725495264,\n    \"executeTime\": 122\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -133,14 +145,13 @@
 import tbk;    //导入tbk模块
 
 var params =  {
-    apiMethodName:"taobao.tbk.dg.vegas.tlj.stop"
-    ,adzoneId
-    ,rightsId
+    apiMethodName:"taobao.tbk.optimus.tou.material.ids.get"
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.resultSuccess){
-    return response.result;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msgInfo!=null) {
-    exit 0,response.msgInfo;
-}
+return response.result;

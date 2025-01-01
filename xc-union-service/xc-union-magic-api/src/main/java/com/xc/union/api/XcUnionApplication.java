@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.xc.union.*") // 指定要扫描的基础包名
 public class XcUnionApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run( XcUnionApplication.class, args);
-	}
+    public static void main( String[] args ) {
+        SpringApplication.run( XcUnionApplication.class, args );
+    }
 }
 

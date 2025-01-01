@@ -1,43 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735404686456d49894",
+  "id" : "copy1735387504907d1956",
   "script" : null,
-  "groupId" : "27f4afc4c6354c03b7de834ec569415c",
-  "name" : "07.淘口令回流数据查询",
+  "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
+  "name" : "04.阿里妈妈推广券详情查询x",
   "createTime" : null,
-  "updateTime" : 1735449773891,
+  "updateTime" : 1735725067091,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/dgTpwdReportGet",
+  "path" : "/couponGet",
   "method" : "POST",
-  "parameters" : [ {
-    "name" : "adzoneId",
-    "value" : "109281650216L",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  }, {
-    "name" : "taoPassword",
-    "value" : "￥SdIBeafTyjn￥",
-    "description" : null,
-    "required" : false,
-    "dataType" : "String",
-    "type" : null,
-    "defaultValue" : null,
-    "validateType" : null,
-    "error" : null,
-    "expression" : null,
-    "children" : null
-  } ],
+  "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "",
+  "requestBody" : "{\n    \"itemId\":\"y58Ae2DtRt2a4Y7KxVfyyYUvtA-BMQGmqcrZYYKOwdU8\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -52,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 0,\n    \"message\": \"Remote service error.查询不到对应的adzoneId，请检查adzoneId是否正确\",\n    \"data\": null,\n    \"timestamp\": 1735404861583,\n    \"executeTime\": 254\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error.入参为空\",\n    \"data\": null,\n    \"timestamp\": 1735725065787,\n    \"executeTime\": 167\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -132,15 +108,18 @@
 ================================
 import tbk;    //导入tbk模块
 
+//itemId 
 var params =  {
-    apiMethodName:"taobao.tbk.dg.tpwd.report.get"
-    ,adzoneId
-    ,taoPassword
+    apiMethodName:"taobao.tbk.coupon.get"
+    ,itemId
     };
+if(body!=null){
+    params.putAll(body);
+}
 var response = tbk.execute(params);
-if(response.errorCode==""){
-    return response.result;
+if(response.errorCode!=""){
+    exit 500,response.msg+"."+response.subMsg;
 }
-if(response.msg!=null) {
-    exit 0,response.msg+"."+response.subMsg;
-}
+return response.results;
+
+

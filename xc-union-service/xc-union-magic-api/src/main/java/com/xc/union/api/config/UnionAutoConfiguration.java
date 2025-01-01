@@ -21,7 +21,7 @@ public class UnionAutoConfiguration {
 
     /**
      * 淘宝联盟API的配置
-     * @return
+     * @return TbkConfig
      */
     @Bean
     @ConditionalOnMissingBean
@@ -32,8 +32,8 @@ public class UnionAutoConfiguration {
 
     /**
      * 获得淘宝联盟的API客户端
-     * @param cfg
-     * @return
+     * @param cfg 配置信息
+     * @return TaobaoClient
      */
     @Bean
     @ConditionalOnMissingBean
@@ -42,8 +42,8 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * pdd配置
-     * @return
+     * 多多进宝API配置
+     * @return PddConfig
      */
     @Bean
     @ConditionalOnMissingBean
@@ -53,9 +53,9 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * pdd的API客户端
-     * @param cfg
-     * @return
+     * 多多进宝的API客户端
+     * @param cfg 配置信息
+     * @return PopClient
      */
     @Bean
     @ConditionalOnMissingBean

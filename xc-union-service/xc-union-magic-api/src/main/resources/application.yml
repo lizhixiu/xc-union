@@ -20,6 +20,10 @@ magic-api:
   resource:
     location: data/magic-api
 # 其它配置请参考 https://ssssssss.org/magic-api/config/
+  response-code:
+    success: 200 #执行成功的code值
+    invalid: 400 #参数验证未通过的code值
+    exception: 500 #执行出现异常的code值
 
 # 返利联盟配置
 union:
