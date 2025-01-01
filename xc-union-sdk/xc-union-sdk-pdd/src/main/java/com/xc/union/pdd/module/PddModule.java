@@ -34,6 +34,7 @@ public class PddModule {
      */
     @Comment("拼多多通用接口")
     public <T extends PopBaseHttpResponse> T execute( @Comment(name = "params", value = "参数") Map<String, String> params ) {
+        log.info( "请求参数：{}", params );
         //接收方法名称
         String apiMethodName = params.get( "apiMethodName" );
         if ( StrUtil.isBlank( apiMethodName ) ) throw new MagicAPIException( "参数【apiMethodName】方法名称为空！" );
@@ -42,7 +43,7 @@ public class PddModule {
         PopBaseHttpRequest request = (PopBaseHttpRequest) ReflectUtil.newInstance( PddApiConstants.REQUEST_MAP.get( apiMethodName ) );
         //请求对象赋值
         BeanUtil.fillBeanWithMap( params, request, false );
-        log.info( "请求报文：{}", JSONUtil.formatJsonStr( JSONUtil.toJsonStr( request ) ) );
+        log.info( "请求报文：{}", JSONUtil.formatJsonStr( JSONUtil.toJsonStr( request.getParamsMap() ) ) );
         PopBaseHttpResponse rsp;
         try {
             //调用淘宝客接口

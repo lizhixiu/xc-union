@@ -3,9 +3,9 @@
   "id" : "copy1735708067137d53355",
   "script" : null,
   "groupId" : "2aa9cb7c26b74542a65dabb99811a5f0",
-  "name" : "04.生成营销工具推广链接x",
+  "name" : "04.生成营销工具推广链接",
   "createTime" : null,
-  "updateTime" : 1735727773022,
+  "updateTime" : 1735730223842,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
@@ -13,10 +13,10 @@
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \n}",
+  "requestBody" : "{\n    \"pIdList\":[\n      \"13879733_299244371\"\n    ]\n}",
   "headers" : [ ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"请求参数不能为空：p_id_list\",\n    \"data\": null,\n    \"timestamp\": 1735727761499,\n    \"executeTime\": 104\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"业务服务错误.暂无红包推广权限，如有推广需求请按流程申请 https://jinbao.pinduoduo.com/qa-system?questionId=289\",\n    \"data\": null,\n    \"timestamp\": 1735730070451,\n    \"executeTime\": 85\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : null
@@ -24,7 +24,6 @@
 ================================
 import pdd;    //导入tbk模块
 
-var goodsSignList = [{goodsSign}]
 var params =  {
     apiMethodName:"pdd.ddk.rp.prom.url.generate"
     };
@@ -33,8 +32,6 @@ if(body!=null){
 }
 var response = pdd.execute(params);
 if(response.errorResponse!=null){
-    exit 500,response.errorResponse.errorMsg;
+    exit 500,response.errorResponse.errorMsg+"."+response.errorResponse.subMsg;
 }
-if(response.goodsDetailResponse!=null) {
-    return response;
-}
+return response;
