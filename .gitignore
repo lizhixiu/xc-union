@@ -138,3 +138,5 @@ target/
 
 *.class
 *-backup-*.chnr.json
+
+xc-union-service/xc-union-magic-api/src/main/resources/data/magic-api/

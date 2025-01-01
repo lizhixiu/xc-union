@@ -16,6 +16,8 @@
 ### 演示环境
 - 访问地址: http://union.demoeg.com:19999/magic/web/index.html
 
+- 淘宝联盟集成演示地址:http://union.demoeg.com/tbk/index.html
+
 ### 本地访问
 - 接口文档: http://127.0.0.1:9999/magic/web/index.html
 
@@ -35,6 +37,10 @@
 
 ### 获取淘口令
 <img src="doc/images/tbk/Snipaste_2024-12-29_13-45-32.jpg" alt="获取淘口令" width="250">
+
+### 接口基础：商品列表
+<img src="doc/images/tbk/WechatIMG261.jpg" alt="商品列表" width="250">
+
 
 ### 多多进宝商品查询
 <img src="doc/images/pdd/Snipaste_2025-01-01_21-14-52.jpg" alt="多多进宝商品查询" width="250">
