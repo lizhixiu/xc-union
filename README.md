@@ -9,7 +9,7 @@
 
 ## 技术架构
 
-* Java 后端：`master` 分支为 JDK 8 + Spring Boot 2.4.5
+* Java 后端：`master` 分支为 JDK 8 + Spring Boot 2.7.18
 * 后端采用magic-api多模块架构
 * 数据库使用 MySQL
 
@@ -23,7 +23,7 @@
 ## 开发环境要求
 
 - JDK: 8+
-- GRADLE: 8.4+
+- Maven: 3.9+
 - MySQL: 5.7+
 
 ## 部分功能展示
@@ -36,6 +36,11 @@
 ### 获取淘口令
 <img src="doc/images/tbk/Snipaste_2024-12-29_13-45-32.jpg" alt="获取淘口令" width="250">
 
+### 多多进宝商品查询
+<img src="doc/images/pdd/Snipaste_2025-01-01_21-14-52.jpg" alt="多多进宝商品查询" width="250">
+
+### 多多进宝商品详情查询
+<img src="doc/images/pdd/Snipaste_2025-01-01_21-15-45.jpg" alt="多多进宝商品详情查询" width="250">
 
 ## 项目合作
 
