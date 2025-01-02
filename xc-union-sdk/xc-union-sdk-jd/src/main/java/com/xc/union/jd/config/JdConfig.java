@@ -8,5 +8,9 @@ import lombok.Data;
 @Data
 public class JdConfig {
 
-
+    //region 京东联盟API配置信息
+    private String serverUrl = "https://api.jd.com/routerjson";
+    private String accessToken;
+    private String appKey;
+    private String appSecret;
 }

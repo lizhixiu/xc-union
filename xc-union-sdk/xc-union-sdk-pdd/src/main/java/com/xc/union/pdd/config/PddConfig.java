@@ -13,6 +13,5 @@ public class PddConfig {
     private String clientId;
     /** 多多进宝clientSecret */
     private String clientSecret;
-
-
+    
 }

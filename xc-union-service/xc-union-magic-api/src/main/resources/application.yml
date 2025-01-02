@@ -36,3 +36,8 @@ union:
   pdd:
     client-id:
     client-secret:
+  # 京东联盟
+  jd:
+    access-token:
+    app-key:
+    app-secret:

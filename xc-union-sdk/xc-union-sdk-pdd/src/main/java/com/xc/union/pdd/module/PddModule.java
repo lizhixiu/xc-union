@@ -46,7 +46,7 @@ public class PddModule {
         log.info( "请求报文：{}", JSONUtil.formatJsonStr( JSONUtil.toJsonStr( request.getParamsMap() ) ) );
         PopBaseHttpResponse rsp;
         try {
-            //调用淘宝客接口
+            //调用多多进宝接口
             rsp = popClient.syncInvoke( request );
         } catch ( Exception e ) {
             throw new MagicAPIException( e.getMessage(), e );

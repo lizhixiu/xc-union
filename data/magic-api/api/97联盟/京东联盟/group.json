@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "adb881207ca247faac36f7fb94a1c6f7",
+  "name" : "京东联盟",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/jd",
+  "createTime" : 1735822364926,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
