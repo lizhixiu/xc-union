@@ -1,19 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735831809588d18720",
+  "id" : "copy1735831070917d81257",
   "script" : null,
   "groupId" : "adb881207ca247faac36f7fb94a1c6f7",
-  "name" : "09.请码获取接口",
+  "name" : "07.招商团长活动商品列表查询",
   "createTime" : null,
-  "updateTime" : 1735831865052,
+  "updateTime" : 1735870541927,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/channelInvitecodeGet",
+  "path" : "/cpActivityGoodsQuery",
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \"promotionCodeReq\":\n    {\n        \"materialId\":\"https://item.jd.com/23484023378.html\"\n        ,\"siteId\":\"4101366216\"\n        ,\"sceneId\":1\n    }\n}",
+  "requestBody" : "{\n    \"activityReq\":\n    {\n        \"poolId\":1\n    }\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -28,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"参数错误\",\n    \"data\": null,\n    \"timestamp\": 1735831601579,\n    \"executeTime\": 300\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"token已过期或者不存在，请重新授权,access_token:ece3b6ab1c8b87a7576d6d9c1e435b990c952da1445086a38470a7b998d92a645254ef8f90b71561（解决方案参考: https://jos.jd.com/commondoc?listId=171）\",\n    \"data\": null,\n    \"timestamp\": 1735831348071,\n    \"executeTime\": 271\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -109,7 +109,7 @@
 import jd;    //导入jd模块
 
 var params =  {
-    apiMethodName:"jd.union.open.channel.invitecode.get"
+    apiMethodName:"jd.union.open.cp.activity.goods.query"
     };
 if(body!=null){
     params.putAll(body);
@@ -118,7 +118,7 @@ var response = jd.execute(params);
 if(response.code!="0"){
     exit 500,response.zhDesc;
 }
-if( response.getResult!=null && response.getResult.code!=200 ) {
-    exit 500,response.getResult.message;
+if( response.queryResult!=null && response.queryResult.code!=200 ) {
+    exit 500,response.queryResult.message;
 }
-return response.getResult;
+return response.queryResult;

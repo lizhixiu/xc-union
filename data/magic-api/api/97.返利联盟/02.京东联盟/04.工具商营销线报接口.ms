@@ -1,15 +1,15 @@
 {
   "properties" : { },
-  "id" : "copy1735831070917d81257",
+  "id" : "copy1735830603537d49466",
   "script" : null,
   "groupId" : "adb881207ca247faac36f7fb94a1c6f7",
-  "name" : "07.招商团长活动商品列表查询",
+  "name" : "04.工具商营销线报接口",
   "createTime" : null,
-  "updateTime" : 1735831543083,
+  "updateTime" : 1735870549827,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/cpActivityGoodsQuery",
+  "path" : "/promotionToolsIntelligenceQuery",
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
@@ -28,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"token已过期或者不存在，请重新授权,access_token:ece3b6ab1c8b87a7576d6d9c1e435b990c952da1445086a38470a7b998d92a645254ef8f90b71561（解决方案参考: https://jos.jd.com/commondoc?listId=171）\",\n    \"data\": null,\n    \"timestamp\": 1735831348071,\n    \"executeTime\": 271\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"token已过期或者不存在，请重新授权,access_token:ece3b6ab1c8b87a7576d6d9c1e435b990c952da1445086a38470a7b998d92a645254ef8f90b71561（解决方案参考: https://jos.jd.com/commondoc?listId=171）\",\n    \"data\": null,\n    \"timestamp\": 1735870466189,\n    \"executeTime\": 272\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -109,7 +109,7 @@
 import jd;    //导入jd模块
 
 var params =  {
-    apiMethodName:"jd.union.open.cp.activity.goods.query"
+    apiMethodName:"jd.union.open.promotion.tools.intelligence.query"
     };
 if(body!=null){
     params.putAll(body);
@@ -118,7 +118,7 @@ var response = jd.execute(params);
 if(response.code!="0"){
     exit 500,response.zhDesc;
 }
-if( response.queryResult!=null && response.queryResult.code!=200 ) {
+if(response.queryResult!=null && response.queryResult.code!=200 ) {
     exit 500,response.queryResult.message;
 }
 return response.queryResult;

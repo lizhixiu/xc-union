@@ -1,19 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735830758366d48888",
+  "id" : "copy1735831406735d21975",
   "script" : null,
   "groupId" : "adb881207ca247faac36f7fb94a1c6f7",
-  "name" : "06.商品详情查询接口",
+  "name" : "08.网站APP获取推广链接接口",
   "createTime" : null,
-  "updateTime" : 1735831364521,
+  "updateTime" : 1735870539474,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/goodsBigfieldQuery",
+  "path" : "/promotionCommonGet",
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \"activityReq\":\n    {\n        \"poolId\":1\n    }\n}",
+  "requestBody" : "{\n    \"promotionCodeReq\":\n    {\n        \"materialId\":\"https://item.jd.com/23484023378.html\"\n        ,\"siteId\":\"4101366216\"\n        ,\"sceneId\":1\n    }\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -28,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"data\": null,\n    \"timestamp\": 1735831056736,\n    \"executeTime\": 282\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"参数错误\",\n    \"data\": null,\n    \"timestamp\": 1735831601579,\n    \"executeTime\": 300\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -109,16 +109,16 @@
 import jd;    //导入jd模块
 
 var params =  {
-    apiMethodName:"jd.union.open.goods.bigfield.query"
+    apiMethodName:"jd.union.open.promotion.common.get"
     };
 if(body!=null){
     params.putAll(body);
 }
 var response = jd.execute(params);
-if(response.code!=""){
+if(response.code!="0"){
     exit 500,response.zhDesc;
 }
-if(response.queryResult!=null && response.queryResult.code!=200 ) {
-    exit 500,response.queryResult.message;
+if( response.getResult!=null && response.getResult.code!=200 ) {
+    exit 500,response.getResult.message;
 }
-return response.queryResult;
+return response.getResult;
