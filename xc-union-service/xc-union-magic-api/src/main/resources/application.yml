@@ -30,7 +30,7 @@ union:
   # 淘宝客
   tbk:
     app-key:
-    api-secret:
+    app-secret:
     adzone-id:
   # 拼多多
   pdd:

@@ -43,7 +43,7 @@ public class UnionAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public TaobaoClient taobaoClient( TbkConfig cfg ) {
-        return new DefaultTaobaoClient( cfg.getUrl(), cfg.getAppKey(), cfg.getApiSecret() );
+        return new DefaultTaobaoClient( cfg.getUrl(), cfg.getAppKey(), cfg.getAppSecret() );
     }
 
     /**

@@ -14,7 +14,7 @@ public class TbkConfig {
     /** 阿里联盟app-key */
     private String appKey;
     /** 阿里联盟app-secret */
-    private String apiSecret;
+    private String appSecret;
 
     /** 淘宝联盟PID的最后一段数字（推广位id）。mm_xxx_xxx_12345678（mm+账号ID+媒体ID+推广位ID）三段式的最后一段数字 */
     private Long adzoneId;
