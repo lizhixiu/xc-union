@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "91a1c56a441c428582bbc038f8237d62",
+  "name" : "04.大淘客额",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/dtk",
+  "createTime" : 1736006710486,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

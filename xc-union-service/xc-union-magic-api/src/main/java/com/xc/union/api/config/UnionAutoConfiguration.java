@@ -1,11 +1,13 @@
 package com.xc.union.api.config;
 
+import com.dtk.api.client.DtkApiClient;
 import com.jd.open.api.sdk.DefaultJdClient;
 import com.jd.open.api.sdk.JdClient;
 import com.pdd.pop.sdk.http.PopClient;
 import com.pdd.pop.sdk.http.PopHttpClient;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.xc.union.dtk.config.DtkConfig;
 import com.xc.union.jd.config.JdConfig;
 import com.xc.union.pdd.config.PddConfig;
 import com.xc.union.tbk.config.TbkConfig;
@@ -86,6 +88,28 @@ public class UnionAutoConfiguration {
     @ConditionalOnMissingBean
     public JdClient jdClient( JdConfig cfg ) {
         return new DefaultJdClient( cfg.getServerUrl(), cfg.getAccessToken(), cfg.getAppKey(), cfg.getAppSecret() );
+    }
+
+    /**
+     * 大淘客API的配置
+     * @return TbkConfig
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "union.dtk")
+    public DtkConfig dtkConfig() {
+        return new DtkConfig();
+    }
+
+    /**
+     * 获得大淘客的API客户端
+     * @param cfg 配置信息
+     * @return TaobaoClient
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public DtkApiClient dtkApiClient( DtkConfig cfg ) {
+        return DtkApiClient.getInstance( cfg.getAppKey(), cfg.getAppSecret() );
     }
 
 }

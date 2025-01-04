@@ -41,3 +41,7 @@ union:
     access-token:
     app-key:
     app-secret:
+  # 大淘客
+  dtk:
+    app-key:
+    app-secret:

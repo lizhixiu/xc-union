@@ -16,6 +16,7 @@
         <module>xc-union-sdk-jd</module>
         <module>xc-union-sdk-pdd</module>
         <module>xc-union-sdk-tbk</module>
+        <module>xc-union-sdk-dtk</module>
     </modules>
     <dependencies>
         <dependency>
