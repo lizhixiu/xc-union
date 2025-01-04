@@ -8,6 +8,7 @@ import com.pdd.pop.sdk.http.PopHttpClient;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.xc.union.dtk.config.DtkConfig;
+import com.xc.union.hdk.config.HdkConfig;
 import com.xc.union.jd.config.JdConfig;
 import com.xc.union.pdd.config.PddConfig;
 import com.xc.union.tbk.config.TbkConfig;
@@ -110,6 +111,17 @@ public class UnionAutoConfiguration {
     @ConditionalOnMissingBean
     public DtkApiClient dtkApiClient( DtkConfig cfg ) {
         return DtkApiClient.getInstance( cfg.getAppKey(), cfg.getAppSecret() );
+    }
+
+    /**
+     * 好单库API的配置
+     * @return TbkConfig
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "union.hdk")
+    public HdkConfig hdkConfig() {
+        return new HdkConfig();
     }
 
 }

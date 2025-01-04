@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "1d769e450596490d8703eac12b73d96e",
+  "name" : "05.好单库",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/hdk",
+  "createTime" : 1736014454083,
+  "updateTime" : 1736014457381,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
