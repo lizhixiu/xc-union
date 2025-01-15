@@ -48,3 +48,6 @@ union:
   # 好单库
   hdk:
     api-key:
+  # 模板路径
+  template:
+    location:
