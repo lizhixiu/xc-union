@@ -45,3 +45,6 @@ union:
   dtk:
     app-key:
     app-secret:
+  # 好单库
+  hdk:
+    api-key:

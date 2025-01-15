@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "f7ee97e3f8be4dacb38d9f07b94ef7e4",
+  "name" : "01.首页",
+  "type" : "api",
+  "parentId" : "0",
+  "path" : "/tbk",
+  "createTime" : null,
+  "updateTime" : 1736867039361,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

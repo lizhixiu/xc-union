@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "21789057d19042c0a3e6ca7282372c6b",
+  "name" : "05.折上折",
+  "type" : "api",
+  "parentId" : "ad70461b72674d4198c63045ada45fd1",
+  "path" : "/zsz",
+  "createTime" : null,
+  "updateTime" : 1736922738717,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

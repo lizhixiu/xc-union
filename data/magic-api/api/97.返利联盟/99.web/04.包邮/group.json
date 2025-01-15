@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "cbf3af0f2f4a4bb19b0418d09d2c9164",
+  "name" : "04.包邮",
+  "type" : "api",
+  "parentId" : "ad70461b72674d4198c63045ada45fd1",
+  "path" : "/baoyou",
+  "createTime" : null,
+  "updateTime" : 1736915378377,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

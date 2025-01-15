@@ -52,6 +52,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>enjoy</artifactId>
+            <version>5.2.2</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>xc-union</finalName>

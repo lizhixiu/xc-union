@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "b1b5cac3410243a48b32b54d375cf0eb",
+  "name" : "02.品牌精选",
+  "type" : "api",
+  "parentId" : "ad70461b72674d4198c63045ada45fd1",
+  "path" : "/ppjx",
+  "createTime" : 1736907129951,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

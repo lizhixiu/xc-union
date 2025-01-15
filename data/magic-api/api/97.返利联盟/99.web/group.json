@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "ad70461b72674d4198c63045ada45fd1",
+  "name" : "99.web",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/web",
+  "createTime" : null,
+  "updateTime" : 1736851433716,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

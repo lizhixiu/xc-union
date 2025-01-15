@@ -1,6 +1,6 @@
 # 基于magic-api的多平台返利平台（xc-union）
 
-本项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、拼多多等主流电商平台的返利对接。
+项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库等主流电商平台的返利对接。
 
 ## 系统特点
 
@@ -14,13 +14,14 @@
 * 数据库使用 MySQL
 
 ### 演示环境
-- 访问地址: http://union.demoeg.com:19999/magic/web/index.html
+- 接口地址: http://union.demoeg.com:19999/magic/web/index.html
 
-- 淘宝联盟集成演示地址:http://union.demoeg.com/tbk/index.html
+- 淘宝客集成演示地址: http://union.demoeg.com/tbk/index.html
 
 ### 本地访问
 - 接口文档: http://127.0.0.1:9999/magic/web/index.html
 
+- 淘宝客集成演示地址: http://127.0.0.1:9999/tbk/index.html
 
 ## 开发环境要求
 
@@ -29,6 +30,15 @@
 - MySQL: 5.7+
 
 ## 部分功能展示
+
+### 引用场景：
+
+### 个人社区模式商品列表
+<img src="doc/images/tbk/WechatIMG_2025_01_15.jpg" alt="商品列表" width="250">
+
+### 商品列表
+<img src="doc/images/tbk/WechatIMG261.jpg" alt="商品列表" width="250">
+
 ### 物料搜索升级版
 <img src="doc/images/tbk/Snipaste_2024-12-29_13-40-57.jpg" alt="物料搜索升级版" width="250">
 
@@ -37,10 +47,6 @@
 
 ### 获取淘口令
 <img src="doc/images/tbk/Snipaste_2024-12-29_13-45-32.jpg" alt="获取淘口令" width="250">
-
-### 接口基础：商品列表
-<img src="doc/images/tbk/WechatIMG261.jpg" alt="商品列表" width="250">
-
 
 ### 多多进宝商品查询
 <img src="doc/images/pdd/Snipaste_2025-01-01_21-14-52.jpg" alt="多多进宝商品查询" width="250">

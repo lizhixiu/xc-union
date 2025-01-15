@@ -124,4 +124,15 @@ public class UnionAutoConfiguration {
         return new HdkConfig();
     }
 
+    /**
+     * 模板配置
+     * @return TemplateConfig
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "union.template")
+    public TemplateConfig templateConfig() {
+        return new TemplateConfig();
+    }
+
 }

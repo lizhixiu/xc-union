@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "45b53656cf10403eb3713a21704f7ec4",
+  "name" : "01.首页",
+  "type" : "api",
+  "parentId" : "ad70461b72674d4198c63045ada45fd1",
+  "path" : "",
+  "createTime" : null,
+  "updateTime" : 1736851500834,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

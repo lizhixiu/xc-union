@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "3f04995a992c4413afc065124883ad0e",
+  "name" : "02.疯抢榜",
+  "type" : "api",
+  "parentId" : "f7ee97e3f8be4dacb38d9f07b94ef7e4",
+  "path" : "/fqb",
+  "createTime" : null,
+  "updateTime" : 1736876644947,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
