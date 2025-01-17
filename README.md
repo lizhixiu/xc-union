@@ -39,7 +39,7 @@
 ### 引用场景：
 
 ### 个人社区模式商品列表
-<img src="doc/images/tbk/WechatIMG_2025_01_15.jpg" alt="商品列表" width="250">
+<img src="doc/images/tbk/Snipaste_2025-01-17_08-43-30.jpg" alt="商品列表" width="250">
 
 ### 商品列表
 <img src="doc/images/tbk/WechatIMG261.jpg" alt="商品列表" width="250">
