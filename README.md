@@ -2,9 +2,9 @@
 
 项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库等主流电商平台的返利对接。
 
-## v1.0.0 版本内容:
-- 基于 magic-api 实现淘宝联盟、京东联盟、多多进宝、大淘客、好单库等主流返利电商平台的接口对接；
-- 基于 magic-api+enjoy 模板引擎完美实现伪静态技术。
+## v1.0.1 版本内容:
+- 集成大淘客美团接口；
+- 美团券数据输出展示。
 
 ## 系统特点
 
@@ -22,10 +22,14 @@
 
 - 淘宝客集成演示地址: http://union.demoeg.com/tbk/index.html
 
+- 美团集成演示地址: http://union.demoeg.com/meituan/index.html
+
 ### 本地访问
 - 接口文档: http://127.0.0.1:9999/magic/web/index.html
 
 - 淘宝客集成演示地址: http://127.0.0.1:9999/tbk/index.html
+
+- 美团集成演示地址: http://127.0.0.1:9999/meituan/index.html
 
 ## 开发环境要求
 
@@ -37,6 +41,9 @@
 ## 部分功能展示
 
 ### 引用场景：
+
+### 美团商品列表
+<img src="doc/images/meituan/Snipaste_2025-01-26_10-40-10.jpg" alt="商品列表" width="250">
 
 ### 个人社区模式商品列表
 <img src="doc/images/tbk/Snipaste_2025-01-17_08-43-30.jpg" alt="商品列表" width="250">

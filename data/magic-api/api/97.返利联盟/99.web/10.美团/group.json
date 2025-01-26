@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "00180bb6131b47c9adf66165fe281eeb",
+  "name" : "10.美团",
+  "type" : "api",
+  "parentId" : "ad70461b72674d4198c63045ada45fd1",
+  "path" : "/meituan",
+  "createTime" : null,
+  "updateTime" : 1737789337095,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

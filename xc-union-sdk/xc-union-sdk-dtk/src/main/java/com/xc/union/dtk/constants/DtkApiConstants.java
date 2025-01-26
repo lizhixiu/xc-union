@@ -1,6 +1,7 @@
 package com.xc.union.dtk.constants;
 
 import com.dtk.api.request.mastertool.DtkGetSuperCategoryRequest;
+import com.dtk.api.request.meituan.MtPromoteQueryCouponRequest;
 import com.dtk.api.request.putstorage.DtkGoodsDetailsRequest;
 import com.dtk.api.request.putstorage.DtkGoodsListRequest;
 import com.dtk.api.request.search.*;
@@ -39,6 +40,9 @@ public class DtkApiConstants {
 
         //各大榜单
         REQUEST_MAP.put( "goods/get-ranking-list", DtkGetRankingListRequest.class );
+
+        //美团获取推广链接
+        REQUEST_MAP.put( "mt/promote/query-coupon", MtPromoteQueryCouponRequest.class );
     }
 
 }

@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "dbd4db7410c949f1998a3df2303f1dab",
+  "name" : "01.通用接口",
+  "type" : "api",
+  "parentId" : "00180bb6131b47c9adf66165fe281eeb",
+  "path" : "/common",
+  "createTime" : null,
+  "updateTime" : 1737855650597,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
