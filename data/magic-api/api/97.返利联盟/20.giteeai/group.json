@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "ed164cb0a44c4a90914aca2f7bb4585b",
+  "name" : "20.giteeai",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/giteeai",
+  "createTime" : null,
+  "updateTime" : 1739244320247,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
