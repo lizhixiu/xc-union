@@ -18,6 +18,7 @@
         <module>xc-union-sdk-tbk</module>
         <module>xc-union-sdk-dtk</module>
         <module>xc-union-sdk-hdk</module>
+        <module>xc-union-sdk-giteeai</module>
     </modules>
     <dependencies>
         <dependency>

@@ -36,6 +36,13 @@
             <artifactId>xc-union-sdk-hdk</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-giteeai</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>

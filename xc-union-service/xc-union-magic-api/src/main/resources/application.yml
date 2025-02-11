@@ -51,3 +51,6 @@ union:
   # 模板路径
   template:
     location:
+  # giteeai
+  giteeai:
+    api-key:

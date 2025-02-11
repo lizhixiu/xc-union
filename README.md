@@ -2,9 +2,8 @@
 
 项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库等主流电商平台的返利对接。
 
-## v1.0.1 版本内容:
-- 集成大淘客美团接口；
-- 美团券数据输出展示。
+## v1.0.2 版本内容:
+- 集成giteeai接口对接。
 
 ## 系统特点
 
@@ -41,6 +40,12 @@
 ## 部分功能展示
 
 ### 引用场景：
+
+### 问题
+<img src="doc/images/ai/giteeai/WechatIMG269.jpg" alt="问题" width="250">
+
+### 回答
+<img src="doc/images/ai/giteeai/WechatIMG270.jpg" alt="回答" width="250">
 
 ### 美团商品列表
 <img src="doc/images/meituan/Snipaste_2025-01-26_10-40-10.jpg" alt="商品列表" width="250">

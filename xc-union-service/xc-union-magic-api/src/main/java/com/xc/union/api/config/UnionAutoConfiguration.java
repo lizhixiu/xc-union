@@ -8,6 +8,7 @@ import com.pdd.pop.sdk.http.PopHttpClient;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.xc.union.dtk.config.DtkConfig;
+import com.xc.union.giteeai.config.GiteeAiConfig;
 import com.xc.union.hdk.config.HdkConfig;
 import com.xc.union.jd.config.JdConfig;
 import com.xc.union.pdd.config.PddConfig;
@@ -133,6 +134,18 @@ public class UnionAutoConfiguration {
     @ConfigurationProperties(prefix = "union.template")
     public TemplateConfig templateConfig() {
         return new TemplateConfig();
+    }
+
+
+    /**
+     * giteeAi配置
+     * @return TemplateConfig
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "union.giteeai")
+    public GiteeAiConfig giteeAiConfig() {
+        return new GiteeAiConfig();
     }
 
 }
