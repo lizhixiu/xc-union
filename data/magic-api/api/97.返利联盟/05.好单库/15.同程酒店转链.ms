@@ -5,7 +5,7 @@
   "groupId" : "1d769e450596490d8703eac12b73d96e",
   "name" : "15.同程酒店转链",
   "createTime" : null,
-  "updateTime" : 1740245980961,
+  "updateTime" : 1740247259810,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
@@ -22,7 +22,6 @@
   "responseBodyDefinition" : null
 }
 ================================
-import com.sun.org.apache.regexp.internal.recompile
 import hdk;    //导入hdk模块
 
 //例子
