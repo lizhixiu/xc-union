@@ -1,21 +1,26 @@
 # 基于magic-api的多平台返利平台（xc-union）
+项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库(饿了么、唯品会、抖音团购、同程酒店)等主流电商平台的返利对接。
 
-项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库等主流电商平台的返利对接。
+## v1.0.3 版本内容:
+- 完善代码注释；
+- 完善代码逻辑；
+- 集成好单库：饿了么、唯品会、抖音团购、同程酒店相关接口。
 
 ## v1.0.2 版本内容:
 - 集成giteeai接口对接。
 
 ## 系统特点
-
 * 支持主流电商平台返利对接
 * ai技术
 * 开箱即用
 
 ## 技术架构
-
 * Java 后端：`master` 分支为 JDK 8 + Spring Boot 2.7.18
 * 后端采用magic-api多模块架构
 * 数据库使用 MySQL
+
+### 仓库地址
+- 仓库地址: https://gitee.com/xc_java/xc-union
 
 ### 演示环境
 - 接口地址: http://union.demoeg.com:19999/magic/web/index.html
@@ -42,10 +47,13 @@
 
 ### 引用场景：
 
-### 问题
+### 好单库接口：淘宝、抖货、饿了么、唯品会、抖音团购、同程酒店
+<img src="doc/images/hdk/Snipaste_2025-02-23_01-47-27.jpg" alt="问题" width="250">
+
+### giteeAi问题
 <img src="doc/images/ai/giteeai/WechatIMG269.jpg" alt="问题" width="250">
 
-### 回答
+### giteeAi回答
 <img src="doc/images/ai/giteeai/WechatIMG270.jpg" alt="回答" width="250">
 
 ### 美团商品列表
