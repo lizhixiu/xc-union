@@ -13,7 +13,9 @@ import org.ssssssss.magicapi.core.exception.MagicAPIException;
 import org.ssssssss.script.annotation.Comment;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 好单库模块
  * 脚本中使用
@@ -45,17 +47,19 @@ public class HdkModule {
         String v = params.get( "v" ) != null ? params.get( "v" ) : "";
         String url;
         // 根据版本号 v 选择不同的 API 基础 URL
-        if ("v2".equals(v)) {
+        if ( "v2".equals( v ) ) {
             // 若版本为 v2，使用 V2 版本的 API 基础 URL
             url = config.getApiUrlV2();
-        } else {
+        }
+        else {
             // 其他情况，使用 V3 版本的 API 基础 URL
             url = config.getApiUrlV3();
         }
+        String httpMethod = params.get( "httpMethod" ) != null ? params.get( "httpMethod" ).toUpperCase() : "GET";
         // 创建临时参数 Map，用于存储最终发送请求的参数
         Map<String, Object> tempParams = new HashMap<>();
         // 遍历传入的参数，将其添加到临时参数 Map 中
-        for (Map.Entry<String, String> entry : params.entrySet()) {
+        for ( Map.Entry<String, String> entry : params.entrySet() ) {
             tempParams.put( entry.getKey(), entry.getValue() );
         }
         // 添加 API 密钥到临时参数 Map 中
@@ -63,7 +67,12 @@ public class HdkModule {
         JSON resultJson;
         try {
             // 执行 HTTP GET 请求，获取 API 响应结果
-            String result = HttpUtil.get( url + apiMethodName, tempParams );
+            String result;
+            if ( httpMethod.equals( "GET" ) )
+                result = HttpUtil.get( url + apiMethodName, tempParams );
+            else {
+                result = HttpUtil.post( url + apiMethodName, tempParams );
+            }
             // 记录原始响应报文
             log.info( "返回原报文：{}", result );
             // 将 Unicode 编码的响应结果转换为普通字符串
