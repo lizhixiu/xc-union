@@ -1,56 +1,89 @@
+# 服务器配置
 server:
+  # 服务器监听端口，应用将在该端口上接收外部请求
   port: 9999
   # 配置静态资源启用 gzip 压缩
   compression:
+    # 是否启用 gzip 压缩，true 表示启用
     enabled: true
+    # 响应内容大小达到该值时才进行压缩，单位为字节
     min-response-size: 128
 # 配置主数据源
 spring:
+  # Jackson 配置，用于处理 JSON 数据的序列化和反序列化
   jackson:
+    # 日期格式，指定日期在 JSON 中显示的格式
     date-format: yyyy-MM-dd HH:mm:ss
+    # 时区设置，指定日期处理时使用的时区
     time-zone: GMT+8
+  # 数据源配置
   datasource:
+    # 数据库驱动类名，指定使用的数据库驱动
     driver-class-name: com.mysql.jdbc.Driver
+    # 数据库连接 URL，指定要连接的数据库地址和相关参数
     url: jdbc:mysql://localhost/xc_union?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai
+    # 数据库用户名，用于连接数据库的身份验证
     username: xc_union
+    # 数据库密码，用于连接数据库的身份验证
     password: xc_union
 
+# Magic API 配置
 magic-api:
+  # Magic API 的 Web 访问路径，通过该路径可以访问 Magic API 的管理界面
   web: /magic/web
+  # 资源配置
   resource:
+    # Magic API 资源文件的存储位置，指定 API 脚本文件的存放目录
     location: data/magic-api
 # 其它配置请参考 https://ssssssss.org/magic-api/config/
+  # 响应状态码配置
   response-code:
+    # 执行成功时返回的状态码
     success: 200 #执行成功的code值
+    # 参数验证未通过时返回的状态码
     invalid: 400 #参数验证未通过的code值
+    # 执行出现异常时返回的状态码
     exception: 500 #执行出现异常的code值
 
 # 返利联盟配置
 union:
-  # 淘宝客
+  # 淘宝客配置
   tbk:
+    # 淘宝客应用的 App Key，用于身份验证和访问淘宝客 API
     app-key:
+    # 淘宝客应用的 App Secret，用于身份验证和访问淘宝客 API
     app-secret:
+    # 淘宝客推广位 ID，用于指定推广的位置
     adzone-id:
-  # 拼多多
+  # 拼多多配置
   pdd:
+    # 拼多多开放平台的客户端 ID，用于身份验证和访问拼多多 API
     client-id:
+    # 拼多多开放平台的客户端密钥，用于身份验证和访问拼多多 API
     client-secret:
-  # 京东联盟
+  # 京东联盟配置
   jd:
+    # 京东联盟的访问令牌，用于身份验证和访问京东联盟 API
     access-token:
+    # 京东联盟应用的 App Key，用于身份验证和访问京东联盟 API
     app-key:
+    # 京东联盟应用的 App Secret，用于身份验证和访问京东联盟 API
     app-secret:
-  # 大淘客
+  # 大淘客配置
   dtk:
+    # 大淘客应用的 App Key，用于身份验证和访问大淘客 API
     app-key:
+    # 大淘客应用的 App Secret，用于身份验证和访问大淘客 API
     app-secret:
-  # 好单库
+  # 好单库配置
   hdk:
+    # 好单库的 API 密钥，用于身份验证和访问好单库 API
     api-key:
-  # 模板路径
+  # 模板路径配置
   template:
+    # 模板文件的存储位置，指定模板文件的存放目录
     location:
-  # giteeai
+  # Gitee AI 配置
   giteeai:
+    # Gitee AI 的 API 密钥，用于身份验证和访问 Gitee AI 服务
     api-key:

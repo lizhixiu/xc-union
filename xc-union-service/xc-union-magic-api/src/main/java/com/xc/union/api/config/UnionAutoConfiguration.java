@@ -17,8 +17,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 /**
+ * 该类是一个自动配置类，用于创建并管理多个返利联盟相关 API 的配置和客户端实例
  *
  * @author xiuj
  * @since 2024/12/16 18:30
@@ -27,8 +27,10 @@ import org.springframework.context.annotation.Configuration;
 public class UnionAutoConfiguration {
 
     /**
-     * 淘宝联盟API的配置
-     * @return TbkConfig
+     * 配置淘宝联盟 API 的相关信息
+     * 此方法会从配置文件中以 "union.tbk" 为前缀的配置项加载配置到 TbkConfig 实例中
+     * 若 Spring 容器中还没有 TbkConfig 实例，则创建一个新的实例
+     * @return 配置好的 TbkConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -38,9 +40,11 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 获得淘宝联盟的API客户端
-     * @param cfg 配置信息
-     * @return TaobaoClient
+     * 创建淘宝联盟的 API 客户端实例
+     * 此方法使用已经配置好的 TbkConfig 实例中的信息来初始化淘宝联盟客户端
+     * 若 Spring 容器中还没有 TaobaoClient 实例，则创建一个新的实例
+     * @param cfg 淘宝联盟的配置信息
+     * @return 淘宝联盟的 API 客户端实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -49,8 +53,10 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 多多进宝API配置
-     * @return PddConfig
+     * 配置多多进宝 API 的相关信息
+     * 此方法会从配置文件中以 "union.pdd" 为前缀的配置项加载配置到 PddConfig 实例中
+     * 若 Spring 容器中还没有 PddConfig 实例，则创建一个新的实例
+     * @return 配置好的 PddConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -60,9 +66,11 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 多多进宝的API客户端
-     * @param cfg 配置信息
-     * @return PopClient
+     * 创建多多进宝的 API 客户端实例
+     * 此方法使用已经配置好的 PddConfig 实例中的信息来初始化多多进宝客户端
+     * 若 Spring 容器中还没有 PopClient 实例，则创建一个新的实例
+     * @param cfg 多多进宝的配置信息
+     * @return 多多进宝的 API 客户端实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -71,8 +79,10 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 京东联盟API配置
-     * @return JdConfig
+     * 配置京东联盟 API 的相关信息
+     * 此方法会从配置文件中以 "union.jd" 为前缀的配置项加载配置到 JdConfig 实例中
+     * 若 Spring 容器中还没有 JdConfig 实例，则创建一个新的实例
+     * @return 配置好的 JdConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -82,9 +92,11 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 京东联盟API客户端
-     * @param cfg 配置信息
-     * @return JdClient
+     * 创建京东联盟的 API 客户端实例
+     * 此方法使用已经配置好的 JdConfig 实例中的信息来初始化京东联盟客户端
+     * 若 Spring 容器中还没有 JdClient 实例，则创建一个新的实例
+     * @param cfg 京东联盟的配置信息
+     * @return 京东联盟的 API 客户端实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -93,8 +105,10 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 大淘客API的配置
-     * @return TbkConfig
+     * 配置大淘客 API 的相关信息
+     * 此方法会从配置文件中以 "union.dtk" 为前缀的配置项加载配置到 DtkConfig 实例中
+     * 若 Spring 容器中还没有 DtkConfig 实例，则创建一个新的实例
+     * @return 配置好的 DtkConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -104,9 +118,11 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 获得大淘客的API客户端
-     * @param cfg 配置信息
-     * @return TaobaoClient
+     * 创建大淘客的 API 客户端实例
+     * 此方法使用已经配置好的 DtkConfig 实例中的信息来初始化大淘客客户端
+     * 若 Spring 容器中还没有 DtkApiClient 实例，则创建一个新的实例
+     * @param cfg 大淘客的配置信息
+     * @return 大淘客的 API 客户端实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -115,8 +131,10 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 好单库API的配置
-     * @return TbkConfig
+     * 配置好单库 API 的相关信息
+     * 此方法会从配置文件中以 "union.hdk" 为前缀的配置项加载配置到 HdkConfig 实例中
+     * 若 Spring 容器中还没有 HdkConfig 实例，则创建一个新的实例
+     * @return 配置好的 HdkConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -126,8 +144,10 @@ public class UnionAutoConfiguration {
     }
 
     /**
-     * 模板配置
-     * @return TemplateConfig
+     * 配置模板的相关信息
+     * 此方法会从配置文件中以 "union.template" 为前缀的配置项加载配置到 TemplateConfig 实例中
+     * 若 Spring 容器中还没有 TemplateConfig 实例，则创建一个新的实例
+     * @return 配置好的 TemplateConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -136,10 +156,11 @@ public class UnionAutoConfiguration {
         return new TemplateConfig();
     }
 
-
     /**
-     * giteeAi配置
-     * @return TemplateConfig
+     * 配置 Gitee AI 的相关信息
+     * 此方法会从配置文件中以 "union.giteeai" 为前缀的配置项加载配置到 GiteeAiConfig 实例中
+     * 若 Spring 容器中还没有 GiteeAiConfig 实例，则创建一个新的实例
+     * @return 配置好的 GiteeAiConfig 实例
      */
     @Bean
     @ConditionalOnMissingBean

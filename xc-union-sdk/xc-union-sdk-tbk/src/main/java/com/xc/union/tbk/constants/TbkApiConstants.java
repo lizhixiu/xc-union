@@ -1,19 +1,26 @@
 package com.xc.union.tbk.constants;
 
 import com.taobao.api.request.*;
+import com.taobao.api.TaobaoRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 该类用于定义淘宝客API相关的常量，主要包含一个映射表，用于存储API名称和对应的请求类。
  *
  * @author xiuj
  * @since 2024/12/28 12:33
  */
 public class TbkApiConstants {
 
-    //https://open.taobao.com/api.htm?docId=24518&docType=2
-    public final static Map<String, Class> REQUEST_MAP = new HashMap<>();
+
+    /**
+     * 淘宝客API文档链接，可通过该链接查看API详细信息
+     * 宝客API名称与对应请求类的映射表。
+     * 键为API名称，值为继承自TaobaoRequest的请求类的Class对象。
+     */
+    public final static Map<String, Class<? extends TaobaoRequest>> REQUEST_MAP = new HashMap<>();
 
     static {
         //==== 公用 ====

@@ -11,7 +11,6 @@ import org.ssssssss.script.annotation.Comment;
 
 import javax.annotation.Resource;
 import java.util.*;
-
 /**
  * GiteeAi模块
  * 脚本中使用
@@ -55,20 +54,24 @@ public class GiteeAiModule {
         data.put( "messages", messageses );
 
         String body = JSONUtil.toJsonStr( data );
-        HttpResponse response = HttpUtil.createPost( url ).headerMap( header, true ).body( body ).execute();
-
         String responseBody;
-        // 检查响应状态码
-        if ( response.isOk() ) {
-            // 获取响应内容
-            responseBody = response.body();
-            log.info( "响应内容：" );
-            log.info( responseBody );
-        }
-        else {
-            log.info( "请求失败，状态码：{}", response.getStatus() );
-            log.info( "错误信息：{}", response.body() );
-            responseBody = response.body();
+        // 使用 try-with-resources 语句确保 HttpResponse 资源正确关闭
+        try (HttpResponse response = HttpUtil.createPost( url ).headerMap( header, true ).body( body ).execute()) {
+            // 检查响应状态码
+            if ( response.isOk() ) {
+                // 获取响应内容
+                responseBody = response.body();
+                log.info( "响应内容：" );
+                log.info( responseBody );
+            }
+            else {
+                log.info( "请求失败，状态码：{}", response.getStatus() );
+                log.info( "错误信息：{}", response.body() );
+                responseBody = response.body();
+            }
+        } catch (Exception e) {
+            log.error("请求发生异常", e);
+            responseBody = "请求发生异常：" + e.getMessage();
         }
 
         return responseBody;
