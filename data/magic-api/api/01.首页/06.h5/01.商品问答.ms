@@ -1,15 +1,15 @@
 {
   "properties" : { },
-  "id" : "0aacb90008e14b53bab08a3f7c0459c1",
+  "id" : "copy1741529426791d36664",
   "script" : null,
-  "groupId" : "f7ee97e3f8be4dacb38d9f07b94ef7e4",
-  "name" : "首页",
+  "groupId" : "d5be04ee76134025a92cd3f7fc9bb343",
+  "name" : "01.商品问答",
   "createTime" : null,
-  "updateTime" : 1741527977076,
+  "updateTime" : 1741529832978,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/index.html",
+  "path" : "/index_ask.html",
   "method" : "GET",
   "parameters" : [ ],
   "options" : [ ],
@@ -26,11 +26,10 @@ import enjoy;
 import response;
 import magic;
 
-var path = "/tbk/index.enjoy";
+var path = "/tbk/h5/index_ask.enjoy";
 var data = {
-    res:"/resource"
+  res:"/resource"
 }
 
-data.putAll(magic.execute("POST","/union/web/index",{}));
 
 return enjoy.htmlByTemplate(path,data);

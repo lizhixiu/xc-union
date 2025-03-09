@@ -1,16 +1,25 @@
 package com.xc.union.giteeai.module;
 
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xc.union.giteeai.config.GiteeAiConfig;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.*;
+import okio.BufferedSource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.ssssssss.magicapi.core.annotation.MagicModule;
 import org.ssssssss.script.annotation.Comment;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+
 /**
  * GiteeAi模块
  * 脚本中使用
@@ -25,56 +34,122 @@ public class GiteeAiModule {
 
     /**
      * giettai通用接口
-     * @param params 参数
      *
+     * @param params 参数
      */
     @Comment("giettai通用接口")
-    public String execute( @Comment(name = "params", value = "参数") Map<String, String> params ) {
+    public String execute(@Comment(name = "params", value = "参数") Map<String, String> params) {
         String url = config.getApiUrl();
-        Map<String, String> header = new HashMap<>();
-        header.put( "Authorization", "Bearer " + config.getApiKey() );
-        header.put( "Content-Type", "application/json" );
-        header.put( "X-Failover-Enabled", "true" );
-        header.put( "X-Package", "1910" );
+        Map<String, String> headers = buildHeaders();
+        String model = getModel(params);
+        String body = buildRequestBody(model, params);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put( "model", "DeepSeek-R1-Distill-Qwen-32B" );
-        data.put( "stream", true );
-        data.put( "max_tokens", 1024 );
-        data.put( "temperature", 0.6 );
-        data.put( "top_p", 0.8 );
-        data.put( "top_k", 20 );
-        data.put( "frequency_penalty", 1.1 );
+        OkHttpClient client = new OkHttpClient();
+        Request request = buildRequest(url, headers, body);
+        StringBuffer buffer = new StringBuffer();
+        CountDownLatch latch = new CountDownLatch(1);
 
-        List<Map<String, Object>> messageses = new ArrayList<>();
-        Map<String, Object> messages = new HashMap<>();
-        messages.put( "role", "user" );
-        messages.put( "content", params.get( "content" ) );
-        messageses.add( messages );
-        data.put( "messages", messageses );
-
-        String body = JSONUtil.toJsonStr( data );
-        String responseBody;
-        // 使用 try-with-resources 语句确保 HttpResponse 资源正确关闭
-        try (HttpResponse response = HttpUtil.createPost( url ).headerMap( header, true ).body( body ).execute()) {
-            // 检查响应状态码
-            if ( response.isOk() ) {
-                // 获取响应内容
-                responseBody = response.body();
-                log.info( "响应内容：" );
-                log.info( responseBody );
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                latch.countDown();
+                log.error("请求失败", e);
+                buffer.append("请求失败: ").append(e.getMessage());
             }
-            else {
-                log.info( "请求失败，状态码：{}", response.getStatus() );
-                log.info( "错误信息：{}", response.body() );
-                responseBody = response.body();
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    ResponseBody responseBody = response.body();
+                    if (responseBody != null) {
+                        try (BufferedSource source = responseBody.source()) {
+                            String line;
+                            while ((line = source.readUtf8Line()) != null) {
+                                log.info("line 的值为: {}", line);
+                                if (line.startsWith("data: ")) {
+                                    String data = line.substring(6);
+                                    if (!data.equals("[DONE]")) {
+                                        JSONObject jsonObject = JSONUtil.parseObj(data);
+                                        JSONArray choicesArray = jsonObject.getJSONArray("choices");
+                                        if (choicesArray != null && !choicesArray.isEmpty()) {
+                                            JSONObject firstChoice = choicesArray.getJSONObject(0);
+                                            JSONObject delta = firstChoice.getJSONObject("delta");
+                                            if (delta != null) {
+                                                String content = delta.getStr("content");
+                                                log.info("content 的值为: {}", content);
+                                                buffer.append(content);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    log.error("Request failed: {}", response.message());
+                    buffer.append("请求失败: ").append(response.message());
+                }
+                latch.countDown();
             }
-        } catch (Exception e) {
-            log.error("请求发生异常", e);
-            responseBody = "请求发生异常：" + e.getMessage();
+        });
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            buffer.append("等待响应时被中断: ").append(e.getMessage());
+            log.error("Interrupted while waiting for response", e);
         }
-
+        String responseBody = buffer.toString();
+        log.info(responseBody);
         return responseBody;
     }
 
+    private Map<String, String> buildHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + config.getApiKey());
+        headers.put("Content-Type", "application/json");
+        headers.put("X-Failover-Enabled", "true");
+        headers.put("X-Package", "1910");
+        return headers;
+    }
+
+    private String getModel(Map<String, String> params) {
+        String model = config.getModel();
+        if (params.containsKey("model")) {
+            model = params.get("model");
+        }
+        return model;
+    }
+
+    private String buildRequestBody(String model, Map<String, String> params) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("model", model);
+        data.put("stream", true);
+        data.put("max_tokens", 1024);
+        data.put("temperature", 0.6);
+        data.put("top_p", 0.8);
+        data.put("top_k", 20);
+        data.put("frequency_penalty", 1.1);
+
+        List<Map<String, Object>> messageses = new ArrayList<>();
+        Map<String, Object> messages = new HashMap<>();
+        messages.put("role", "user");
+        messages.put("content", params.get("content"));
+        messageses.add(messages);
+        data.put("messages", messageses);
+
+        return JSONUtil.toJsonStr(data);
+    }
+
+    private Request buildRequest(String url, Map<String, String> headers, String body) {
+        MediaType jsonMediaType = MediaType.get("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(body, jsonMediaType);
+        Request.Builder requestBuilder = new Request.Builder().url(url).post(requestBody);
+
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            requestBuilder.addHeader(entry.getKey(), entry.getValue());
+        }
+
+        return requestBuilder.build();
+    }
 }

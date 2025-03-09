@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调用 ai 接口</title>
+    <link rel="stylesheet" href="#(res)/module/tbk/ai/styles.css">
+    <!-- 引入 Markdown 解析库 -->
+    <script src="#(res)/module/tbk/ai/marked.min.js"></script>
+</head>
+<body>
+<div id="loading" class="loading">
+    <div class="loading-content">
+        <div class="spinner"></div>
+        <p>正在回答问题，请稍等</p>
+    </div>
+</div>
+<div id="content" style="display: none;">
+    <h1>向 AI 提问</h1>
+    <div class="input-container">
+        <textarea id="question" placeholder="请输入你的问题">#(content)</textarea>
+    </div>
+    <button id="askButton">提问</button>
+    <div id="answer"></div>
+</div>
+<script src="#(res)/module/tbk/ai/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+
+  <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>商品列表导购页</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <link rel="shortcut icon" type="image/ico" href="#(res)/favicon.ico">
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="#(res)/module/tbk/h5/style.css" rel="stylesheet" type="text/css"/>
+        <script src="#(res)/module/tbk/h5/jquery.min.js"></script>
+    </head>
+    <body>
+
+        <section class="xc-union-flexView">
+            <header class="xc-union-navBar xc-union-navBar-fixed b-line">
+                <div class="xc-union-center">
+                    <span class="xc-union-center-title">商品列表</span>
+                </div>
+            </header>
+            <section class="xc-union-scrollView">
+                <div class="xc-union-limit-box">
+                    
+                  
+                </div>
+            </section>
+            <div id="pagination">
+                <!-- 分页按钮等元素将动态生成在此处 -->
+            </div>
+        </section>
+
+        <script type="text/javascript">
+
+                $(document).ready(function () {
+    // 模拟的每页显示数量，可根据实际需求调整
+    const pageSize = 10;
+    // 当前页码，初始为1
+    let currentPage = 1;
+    // 总页数，初始为0，后续根据获取到的总数据量计算得出
+    let totalPages = 0;
+    // 用于存储从后端获取到的全部数据（假设数据格式类似商品列表对象数组，可根据实际情况调整结构）
+    let allData = [];
+
+    // 模拟从后端获取数据的函数，实际中这里可以换成使用ajax等方式请求真实的后端接口
+    function fetchData(callback) {
+        const requestData = {
+            "adzoneId":109281650216
+            ,"q":"天猫超市零食"
+            ,"pageNo":  currentPage
+            ,"pageSize":pageSize
+        };
+       return $.ajax({
+            url: '/union/tbk/dgMaterialOptionalUpgrade',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(requestData),
+            async: false,  // 设置为同步请求，确保数据获取完成后再进行后续操作，实际中可根据情况考虑异步处理及相应的回调逻辑
+            success: function (response) {
+                // 假设后端返回的数据格式为包含商品信息的对象数组，直接返回响应数据
+                console.log(response.data);
+                //return response.data;
+                callback(response);
+            },
+            error: function (xhr, status, error) {
+                console.log('数据获取失败：', xhr.responseText);
+                // 如果获取失败，返回空数组，避免后续操作出错
+                callback([]);
+            }
+        });
+    }
+
+    // 渲染商品数据到页面的函数
+    function renderProducts(data) {
+        const productListDiv = $('.xc-union-limit-box');
+        productListDiv.empty(); // 先清空之前的内容，避免重复渲染
+        data.forEach(function (product) {
+            console.log(product);
+            const productHtml = `
+                <a href="javascript:;" class="xc-union-flex b-line" data-detail-url="${product.publishInfo.clickUrl}">
+                    <div class="xc-union-flex-time-img">
+                        <img src="${product.itemBasicInfo.pictUrl}" alt="">
+                    </div>
+                    <div class="xc-union-flex-box">
+                        <h2>${product.itemBasicInfo.title}</h2>
+                        <h3>￥${product.pricePromotionInfo.finalPromotionPrice}券后价</h3>
+                        <h4>￥${product.pricePromotionInfo.zkFinalPrice}</h4>
+                        <div class="xc-union-flex xc-union-flex-clear-pa">
+                            <div class="xc-union-flex-box">
+                                <div class="xc-union-flex-texts">
+                                    <h3>返￥${product.publishInfo.incomeInfo.commissionAmount}</h3>
+                                </div>
+                                <div class="xc-union-flex-box">
+                                     <p>&nbsp;&nbsp;全网热销${product.itemBasicInfo.annualVol}</p>
+                                </div>
+                            </div>
+                             <div class="xc-union-time-button">
+                                <button>
+                                    领券
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+            const productLink = $(productHtml);
+            productLink.click(function () {
+                const detailUrl = productLink.data('detail-url');
+                if (detailUrl) {
+                    window.location.href = detailUrl;
+                }
+            });
+            productListDiv.append(productLink);
+        });
+    }
+
+    // 生成分页按钮的函数
+    function generatePagination() {
+        const paginationDiv = $('#pagination');
+        paginationDiv.empty(); // 清空之前的分页按钮（如果有）
+
+        // 定义显示的页码按钮数量（左右各显示几个，总共显示数量为这个值的两倍加1，可根据实际情况调整）
+        const visiblePageButtons = 3;
+        // 生成首页按钮
+        const firstPageButton = $('<button>').text('首').addClass('pagination-button').click(function () {
+            currentPage = 1;
+            getData();
+        });
+        paginationDiv.append(firstPageButton);
+
+        // 生成上一页按钮
+        const prevPageButton = $('<button>').text('<').addClass('pagination-button').click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                getData();
+            }
+        });
+        paginationDiv.append(prevPageButton);
+
+        // 计算起始页码和结束页码，确保显示当前页附近的页码按钮
+        let startPage = Math.max(1, currentPage - Math.floor(visiblePageButtons / 2));
+        let endPage = Math.min(totalPages, startPage + visiblePageButtons - 1);
+        if (endPage - startPage < visiblePageButtons - 1) {
+            startPage = Math.max(1, endPage - visiblePageButtons + 1);
+        }
+
+        // 生成页码按钮
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = $('<button>').text(i).addClass('pagination-button').click(function () {
+                currentPage = i;
+                getData();
+            });
+            paginationDiv.append(pageButton);
+            if (i === currentPage) {
+                pageButton.addClass('current-page');
+            }
+        }
+
+        // 判断是否需要添加省略号（如果不是显示全部页码且不是第一页和最后一页的情况）
+        if (totalPages > visiblePageButtons && currentPage > 1 && currentPage < totalPages) {
+            const ellipsisLeft = $('<span>').text('...').addClass('pagination-ellipsis');
+            paginationDiv.append(ellipsisLeft);
+        }
+
+        // 生成下一页按钮
+        const nextPageButton = $('<button>').text('>').addClass('pagination-button').click(function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                getData();
+            }
+        });
+        paginationDiv.append(nextPageButton);
+
+        // 生成尾页按钮
+        const lastPageButton = $('<button>').text('尾').addClass('pagination-button').click(function () {
+            currentPage = totalPages;
+            getData();
+        });
+        paginationDiv.append(lastPageButton);
+    }
+
+    // 根据当前页码渲染对应页面数据的函数
+    function renderPage() {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const pageData = allData;
+        renderProducts(pageData);
+    }
+
+    // 初始化函数，获取数据、计算总页数、渲染第一页数据和分页按钮
+    function getData() {
+       fetchData(function (response) {
+            allData = response.data.resultList;
+            totalPages = Math.ceil(response.data.totalResults / pageSize);
+            console.log(totalPages);
+            renderPage();
+            generatePagination();
+        });
+    }
+
+    getData();
+});
+           
+        </script>
+
+    </body>
+</html>

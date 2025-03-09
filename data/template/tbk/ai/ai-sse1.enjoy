@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调用 ai 接口</title>
+    <link rel="stylesheet" href="#(res)/module/tbk/ai/styles.css">
+    <!-- 引入 Markdown 解析库 -->
+    <script src="#(res)/module/tbk/ai/marked.min.js"></script>
+</head>
+<body>
+内容展示11
+<div id="output"></div>
+<script>
+    const eventSource = new EventSource('/union/giteeai/streamGiteeAiResponse');
+
+    eventSource.onmessage = function (event) {
+        const outputDiv = document.getElementById('output');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = event.data;
+        outputDiv.appendChild(newMessage);
+    };
+
+    eventSource.onerror = function (error) {
+        console.error('EventSource failed:', error);
+        eventSource.close();
+    };
+</script>
+</body>
+
+</html>

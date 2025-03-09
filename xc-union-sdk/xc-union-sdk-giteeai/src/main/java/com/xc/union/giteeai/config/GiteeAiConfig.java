@@ -19,4 +19,6 @@ public class GiteeAiConfig {
      * 该地址用于与 Gitee AI 服务进行通信，发起聊天完成请求
      */
     private String apiUrl = "https://ai.gitee.com/v1/chat/completions";
+
+    private String model = "DeepSeek-R1-Distill-Qwen-32B";
 }

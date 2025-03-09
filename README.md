@@ -1,13 +1,11 @@
 # 基于magic-api的多平台返利平台（xc-union）
 项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库(饿了么、唯品会、抖音团购、同程酒店)等主流电商平台的返利对接。
 
-## v1.0.3 版本内容:
-- 完善代码注释；
-- 完善代码逻辑；
-- 集成好单库：饿了么、唯品会、抖音团购、同程酒店相关接口。
-
-## v1.0.2 版本内容:
-- 集成giteeai接口对接。
+## v1.0.4 版本内容:
+- 增加商品列表导购问答页；
+- 增加H5商品列表导购页；
+- 增加商品列表导购问答（SSE）页；
+- 实现giteeAi接口对接，使用SSE流式输出。
 
 ## 系统特点
 * 支持主流电商平台返利对接
@@ -23,6 +21,13 @@
 - 仓库地址: https://gitee.com/xc_java/xc-union
 
 ### 演示环境
+
+- 增加商品列表导购问答页: http://union.demoeg.com/tbk/h5/index_ask.html
+
+- 增加商品列表导购问答（SSE）页: http://union.demoeg.com/tbk/h5/index_ask_sse.html
+
+- 美团集成演示地址: http://union.demoeg.com/meituan/index.html
+
 - 接口地址: http://union.demoeg.com:19999/magic/web/index.html
 
 - 淘宝客集成演示地址: http://union.demoeg.com/tbk/index.html
@@ -46,6 +51,11 @@
 ## 部分功能展示
 
 ### 引用场景：
+
+### 增加商品列表导购问答页
+<img src="doc/images/tbk/WechatIMG5.jpg" alt="商品列表" width="250">
+<img src="doc/images/tbk/WechatIMG3.jpg" alt="商品列表" width="250">
+<img src="doc/images/tbk/WechatIMG4.jpg" alt="商品列表" width="250">
 
 ### 好单库接口：淘宝、抖货、饿了么、唯品会、抖音团购、同程酒店
 <img src="doc/images/hdk/Snipaste_2025-02-23_01-47-27.jpg" alt="问题" width="250">

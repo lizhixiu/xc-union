@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "d5be04ee76134025a92cd3f7fc9bb343",
+  "name" : "06.h5",
+  "type" : "api",
+  "parentId" : "f7ee97e3f8be4dacb38d9f07b94ef7e4",
+  "path" : "/h5",
+  "createTime" : null,
+  "updateTime" : 1741527976340,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
