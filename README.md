@@ -1,5 +1,11 @@
-# 基于magic-api的多平台返利平台（xc-union）
-项目打造一个基于magic-api的多平台返利平台，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库(饿了么、唯品会、抖音团购、同程酒店)等主流电商平台的返利对接。
+# 基于magic-api的多平台返利系统（xc-union）
+项目打造一个基于magic-api的多平台返利系统，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库(饿了么、唯品会、抖音团购、同程酒店)等主流电商平台的返利对接。
+
+## v1.0.5 版本内容:
+- 取消没配置大淘客的相关配置，服务无法正常启动问题；
+- 增加项目目录描说明，更好解读项目；
+- 增加XC-UNION 安装部署指南（XC-UNION-INSTALL.md）；
+- 增加各个电商联盟平台注册指南（XC-UNION-PLATFORM_REGISTER.md）。
 
 ## v1.0.4 版本内容:
 - 增加商品列表导购问答页；
@@ -19,6 +25,38 @@
 
 ### 仓库地址
 - 仓库地址: https://gitee.com/xc_java/xc-union
+
+# XC-Union 项目结构
+
+## 项目概述
+XC-Union是一个多平台联盟聚合项目，支持京东、拼多多、美团等多个电商平台的联盟对接。
+
+## 目录结构
+
+```
+├── data                           # 数据外置目录
+│   ├── magic-api                  # Magic-API接口配置
+│   │   └── api                    # API接口定义
+│   └── template                   # 模板文件
+│       ├── index                  # 首页模板
+│       ├── meituan                # 美团相关模板
+│       └── tbk                    # 淘宝客模板
+│
+├── xc-union-sdk                  # SDK模块
+│   ├── xc-union-sdk-dtk          # 大淘客SDK
+│   ├── xc-union-sdk-giteeai      # Gitee AI SDK
+│   ├── xc-union-sdk-hdk          # 好单库SDK
+│   ├── xc-union-sdk-jd           # 京东联盟SDK
+│   ├── xc-union-sdk-pdd          # 拼多多多多进宝SDK
+│   └── xc-union-sdk-tbk          # 淘宝客SDK
+│
+├── xc-union-service             # 服务模块
+│   └── xc-union-magic-api       # Magic-API服务模块
+│
+├── start-xc-union.sh           # 启动脚本
+└── stop-xc-union.sh            # 停止脚本
+```
+
 
 ### 演示环境
 
