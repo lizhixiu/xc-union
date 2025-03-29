@@ -25,8 +25,8 @@ public class DtkApiClient extends AbstractDtkApiClient {
     }
 
     public static DtkApiClient getInstance(String appKey, String appSecret) {
-        Assert.notBank(appKey, DtkResultEnum.VERSION_NOT_EMPTY);
-        Assert.notBank(appSecret, DtkResultEnum.APP_SECRET_EMPTY);
+//        Assert.notBank(appKey, DtkResultEnum.VERSION_NOT_EMPTY);
+//        Assert.notBank(appSecret, DtkResultEnum.APP_SECRET_EMPTY);
         if (dtkApiClient == null) {
             synchronized (DtkApiClient.class) {
                 if (dtkApiClient == null) {
