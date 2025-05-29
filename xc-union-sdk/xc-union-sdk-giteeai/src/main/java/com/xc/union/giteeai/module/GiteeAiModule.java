@@ -65,7 +65,7 @@ public class GiteeAiModule {
                         try (BufferedSource source = responseBody.source()) {
                             String line;
                             while ((line = source.readUtf8Line()) != null) {
-                                log.info("line 的值为: {}", line);
+                                if (config.isDebug()) log.info("line 的值为: {}", line);
                                 if (line.startsWith("data: ")) {
                                     String data = line.substring(6);
                                     if (!data.equals("[DONE]")) {
@@ -76,7 +76,7 @@ public class GiteeAiModule {
                                             JSONObject delta = firstChoice.getJSONObject("delta");
                                             if (delta != null) {
                                                 String content = delta.getStr("content");
-                                                log.info("content 的值为: {}", content);
+                                                if (config.isDebug()) log.info("content 的值为: {}", content);
                                                 buffer.append(content);
                                             }
                                         }

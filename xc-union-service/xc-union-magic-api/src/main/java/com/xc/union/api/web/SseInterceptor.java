@@ -52,7 +52,7 @@ public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
             if (requestEntity.getParameters() != null && requestEntity.getParameters().size() > 0) {
                 rootVariables.putAll(requestEntity.getParameters());
             }
-            log.info("rootVariables:{}", rootVariables);
+            if (config.isDebug()) log.info("rootVariables:{}", rootVariables);
             return streamGiteeAiResponse(rootVariables);
         }
 
@@ -72,7 +72,7 @@ public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
             header.put("X-Failover-Enabled", "true");
             header.put("X-Package", "1910");
 
-            log.info("header请求参数：{}", JSONUtil.formatJsonStr(JSONUtil.toJsonStr(header)));
+            if (config.isDebug()) log.info("header请求参数：{}", JSONUtil.formatJsonStr(JSONUtil.toJsonStr(header)));
 
             // 设置请求体
             Map<String, Object> data = new HashMap<>();
@@ -124,7 +124,7 @@ public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
                                                 JSONObject delta = firstChoice.getJSONObject("delta");
                                                 if (delta != null) {
                                                     String content = delta.getStr("content");
-                                                    log.info("content 的值为: {}", content);
+                                                    if (config.isDebug()) log.info("content 的值为: {}", content);
                                                     emitter.next(ServerSentEvent.<String>builder().data(content).id(String.valueOf(id.getAndIncrement())).build());
                                                 }
                                             }

@@ -21,4 +21,9 @@ public class GiteeAiConfig {
     private String apiUrl = "https://ai.gitee.com/v1/chat/completions";
 
     private String model = "DeepSeek-R1-Distill-Qwen-32B";
+
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }
