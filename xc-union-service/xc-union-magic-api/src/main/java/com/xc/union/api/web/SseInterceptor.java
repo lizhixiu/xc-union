@@ -7,7 +7,6 @@ import com.xc.union.giteeai.config.GiteeAiConfig;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import okio.BufferedSource;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Component;
@@ -108,7 +107,7 @@ public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful()) {
                         ResponseBody responseBody = response.body();
                         if (responseBody != null) {
@@ -141,7 +140,7 @@ public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
                 }
 
                 @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                public void onFailure(Call call, IOException e) {
                     emitter.error(e);
                 }
 

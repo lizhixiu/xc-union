@@ -36,13 +36,11 @@
             <artifactId>xc-union-sdk-hdk</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.xc.union</groupId>
             <artifactId>xc-union-sdk-giteeai</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -62,7 +60,6 @@
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>enjoy</artifactId>
-            <version>5.2.2</version>
         </dependency>
 
         <dependency>

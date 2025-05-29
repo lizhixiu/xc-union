@@ -8,7 +8,8 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <name>xc-union</name>
-    <description>项目打造一个基于magic-api的多平台返利系统，支持淘宝联盟、京东联盟、拼多多等主流电商平台的返利对接。</description>
+    <description>项目打造一个基于magic-api的多平台返利系统，支持淘宝联盟、京东联盟、拼多多等主流电商平台的返利对接。
+    </description>
     <url>http://union.demoeg.com</url>
     <inceptionYear>2024</inceptionYear>
     <licenses>
@@ -29,27 +30,38 @@
         <developerConnection>scm:git:https://gitee.com/xc_java/xc-union.git</developerConnection>
     </scm>
     <properties>
-        <revision>1.0.5</revision>
-
+        <!-- 项目版本号 -->
+        <revision>1.0.6</revision>
+        <!-- 编译版本 -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+        <!-- 依赖版本 -->
         <spring-boot.version>2.7.18</spring-boot.version>
-        <magic-api.version>2.1.1</magic-api.version>
-        <magic-script.version>1.8.8</magic-script.version>
+        <spring-framework.version>5.3.39</spring-framework.version>
+        <magic-api.version>2.2.1</magic-api.version>
+        <magic-script.version>1.9.0</magic-script.version>
         <org.projectlombok_lombok.version>1.18.36</org.projectlombok_lombok.version>
         <cn.hutool_hutool-all.version>5.8.35</cn.hutool_hutool-all.version>
         <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <druid.version>1.2.1</druid.version>
-
+        <org-apache-tomcat.version>9.0.104</org-apache-tomcat.version>
+        <org-yaml.version>2.4</org-yaml.version>
+        <logback.version>1.2.13</logback.version>
+        <httpclient.version>4.5.12</httpclient.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <jackson.version>2.14.2</jackson.version>
+        <knife4j.version>2.0.3</knife4j.version>
+        <jfinal-enjoy.version>5.2.2</jfinal-enjoy.version>
+        <okhttp3.version>4.9.3</okhttp3.version>
     </properties>
-	<modules>
-		<module>xc-union-sdk</module>
+    <modules>
+        <module>xc-union-sdk</module>
         <module>xc-union-service</module>
     </modules>
     <dependencyManagement>
         <dependencies>
+            <!--springboot-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -57,36 +69,192 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jcl</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-messaging</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-websocket</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webflux</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <!-- magic-api -->
             <dependency>
                 <groupId>org.ssssssss</groupId>
                 <artifactId>magic-api</artifactId>
                 <version>${magic-api.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.ssssssss</groupId>
+                <artifactId>magic-api-spring-boot-starter</artifactId>
+                <version>${magic-api.version}</version>
+            </dependency>
+            <!-- hutool -->
+            <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${cn.hutool_hutool-all.version}</version>
             </dependency>
+            <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok_lombok.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.ssssssss</groupId>
-                <artifactId>magic-api-spring-boot-starter</artifactId>
-                <version>${magic-api.version}</version>
-            </dependency>
+            <!-- mysql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
             </dependency>
+            <!-- druid -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+            <!-- tomcat -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${org-apache-tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-el</artifactId>
+                <version>${org-apache-tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-websocket</artifactId>
+                <version>${org-apache-tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-annotations-api</artifactId>
+                <version>${org-apache-tomcat.version}</version>
+            </dependency>
+            <!-- yaml-->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${org-yaml.version}</version>
+            </dependency>
+            <!-- logback -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <!-- httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!-- commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- knife4j -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!--enjoy模板引擎-->
+            <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>enjoy</artifactId>
+                <version>${jfinal-enjoy.version}</version>
+            </dependency>
+            <!-- okhttp3 依赖 -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
