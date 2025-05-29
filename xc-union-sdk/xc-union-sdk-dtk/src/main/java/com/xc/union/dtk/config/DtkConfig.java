@@ -19,4 +19,8 @@ public class DtkConfig {
      * 用于对请求进行签名验证，确保请求的安全性，与 appKey 配合使用
      */
     private String appSecret;
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }

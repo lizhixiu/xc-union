@@ -25,4 +25,8 @@ public class HdkConfig {
      * 用于构建调用 V3 版本 API 接口的完整请求地址
      */
     private String apiUrlV3 = "https://v3.api.haodanku.com/";
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }

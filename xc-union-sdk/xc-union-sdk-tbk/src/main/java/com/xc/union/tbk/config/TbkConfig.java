@@ -43,4 +43,9 @@ import lombok.Data;
      * 在进行分页查询时，指定每页返回的数据数量。
      */
     private Long pageSize;
+
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }

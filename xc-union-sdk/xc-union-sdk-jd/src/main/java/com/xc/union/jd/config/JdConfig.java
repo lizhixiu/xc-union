@@ -28,5 +28,8 @@ public class JdConfig {
      * 用于对请求进行签名，确保请求的安全性
      */
     private String appSecret;
-
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }

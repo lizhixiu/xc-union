@@ -21,4 +21,8 @@ public class PddConfig {
      */
     private String clientSecret;
 
+    /**
+     * 是否开启调试模式
+     */
+    private boolean debug = false;
 }
