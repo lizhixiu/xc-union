@@ -1,17 +1,15 @@
 # 基于magic-api的多平台返利系统（xc-union）
 项目打造一个基于magic-api的多平台返利系统，支持淘宝联盟、京东联盟、多多进宝、大淘客、好单库(饿了么、唯品会、抖音团购、同程酒店)等主流电商平台的返利对接。
 
+## v1.0.6 版本内容:
+- pom依赖版本统一；
+- 增加ui模块(naiveui技术栈)。
+
 ## v1.0.5 版本内容:
 - 取消没配置大淘客的相关配置，服务无法正常启动问题；
 - 增加项目目录描说明，更好解读项目；
 - 增加XC-UNION 安装部署指南（XC-UNION-INSTALL.md）；
 - 增加各个电商联盟平台注册指南（XC-UNION-PLATFORM_REGISTER.md）。
-
-## v1.0.4 版本内容:
-- 增加商品列表导购问答页；
-- 增加H5商品列表导购页；
-- 增加商品列表导购问答（SSE）页；
-- 实现giteeAi接口对接，使用SSE流式输出。
 
 ## 系统特点
 * 支持主流电商平台返利对接
@@ -60,6 +58,8 @@ XC-Union是一个多平台联盟聚合项目，支持京东、拼多多、美团
 
 ### 演示环境
 
+- 淘宝商品列表（naiveui）：http://tbk.demoeg.com/
+
 - 增加商品列表导购问答页: http://union.demoeg.com/tbk/h5/index_ask.html
 
 - 增加商品列表导购问答（SSE）页: http://union.demoeg.com/tbk/h5/index_ask_sse.html
@@ -75,6 +75,8 @@ XC-Union是一个多平台联盟聚合项目，支持京东、拼多多、美团
 ### 本地访问
 - 接口文档: http://127.0.0.1:9999/magic/web/index.html
 
+- 淘宝商品列表（naiveui）：http://localhost:5173
+
 - 淘宝客集成演示地址: http://127.0.0.1:9999/tbk/index.html
 
 - 美团集成演示地址: http://127.0.0.1:9999/meituan/index.html
@@ -89,6 +91,9 @@ XC-Union是一个多平台联盟聚合项目，支持京东、拼多多、美团
 ## 部分功能展示
 
 ### 引用场景：
+
+### 淘宝商品列表（naiveui）
+<img src="doc/images/naiveui/Snipaste_2025-05-30_15-48-41.png" alt="商品列表" width="250">
 
 ### 增加商品列表导购问答页
 <img src="doc/images/tbk/WechatIMG5.jpg" alt="商品列表" width="250">

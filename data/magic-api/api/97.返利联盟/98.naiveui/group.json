@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "fd7936f740e24dc3adbec79b453ccdf2",
+  "name" : "98.naiveui",
+  "type" : "api",
+  "parentId" : "a6f49651efa34a019c697cadbea71bca",
+  "path" : "/naiveui",
+  "createTime" : null,
+  "updateTime" : 1748590472417,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

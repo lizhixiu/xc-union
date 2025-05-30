@@ -1,4 +1,4 @@
-# XC-Union 安装部署指南
+# XC-Union 开发部署指南
 
 ## 环境要求
 
@@ -34,6 +34,16 @@ mvn clean package
    - 拼多多多多进宝
    - 大淘客
    - 好单库
+3. 配置模板文件路径
+```yaml
+union:
+   # 模板文件路径
+   # 注意：location配置为项目的data/template，可用绝对对象
+   template:
+      location: 
+```
+- 淘宝客演示：http://127.0.0.1:9999/tbk/index.html
+- 美团演示：http://127.0.0.1:9999/meituan/index.html
 
 ### 4. 启动服务
 1. 使用启动脚本：
