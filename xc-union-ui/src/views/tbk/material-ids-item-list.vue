@@ -1,24 +1,7 @@
 <template>
 
   <div class="xc-list">
-    <n-card :bordered="true" title="查询条件" class="mt-4 proCard" size="small">
-      <div class="xc-search">
-        <n-space>
-          <n-input v-model:value="searchValue"
-                   placeholder=""
-                   style="width: 200px"></n-input>
-          <n-button type="primary" @click="search">
-            <xc--icon icon="Search"/>
-            搜索
-          </n-button>
-          <n-button @click="() => { searchValue = ''; search() }">
-            <xc--icon icon="TrashOutline"/>
-            清空
-          </n-button>
-        </n-space>
-      </div>
-    </n-card>
-    <div class="gap" style="height: 5px;"></div>
+
     <n-card :bordered="true" title="商品列表" class="mt-4 proCard" size="small">
       <div class="xc-toolbar">
         <n-space>
@@ -33,19 +16,30 @@
 <script setup>
 
 
+import {formatDate} from '@/scripts/utils/dateFormat.js';
+import MaterialIdsItemList from "@/views/tbk/material-ids-item-list.vue";
+
+// 定义接收的属性
+const props = defineProps({
+  materialId: {
+    type: String,
+    required: true
+  }
+});
+
+const showModal = ref(false)
 const table = ref()
 const searchValue = ref('')
 const tableOptions = reactive({
   id: 'list',
   autoload: false,
   loading: false,
-  url: '/union/naiveui/tbkMaterialList',
+  url: '/union/naiveui/tbk/dgMaterialRecommend',
   page: true,
   limit: 20,
   where: {
     "adzoneId": "109281650216"
-    , "sort": "total_sales_asc"
-    , "hasCoupon": true
+    , "materialId": props.materialId
   },
   cols: [
     {
@@ -59,7 +53,10 @@ const tableOptions = reactive({
           label: '购买',
           link: true,
           click: (row) => {
-            const url = row.couponShareUrl;
+            let url = row.clickUrl;
+            if(row.couponShareUrl!=null){
+              url = row.couponShareUrl;
+            }
             window.open(url, '_blank');
           }
         }
@@ -67,9 +64,9 @@ const tableOptions = reactive({
     },
     {
       field: 'pictUrl',
-      label: '商品图片',
+      label: '图片',
       type: 'image',
-      width: 80
+      width: 50
     },
     {
       field: 'title',
@@ -79,23 +76,24 @@ const tableOptions = reactive({
     {
       field: 'shopTitle',
       label: '商家',
-      width: 120
+      width: 100
     }, {
       field: 'categoryName',
       label: '分类',
-      width: 120
+      width: 100
     },
     {
       field: 'brandName',
       label: '品牌',
-      width: 120
+      type: 'tag',
+      width: 150
     },
     {
       field: 'finalPromotionPathList',
       label: '优惠信息',
       width: 180,
       render: (row) => {
-        if (row.finalPromotionPathList.length == 0) {
+        if (row.finalPromotionPathList==null || row.finalPromotionPathList.length == 0) {
           return ''
         }
         let msg = '';
@@ -127,6 +125,15 @@ const tableOptions = reactive({
     }
     ,
     {
+      field: 'commissionAmount',
+      label: '佣金',
+      width: 100,
+      render: (row) => {
+        return h('b', {style: {color: 'green'}}, {default: () => row.commissionAmount})
+      }
+    }
+    ,
+    {
       field: 'annualVol',
       label: '销量',
       width: 100
@@ -142,7 +149,10 @@ const tableOptions = reactive({
           label: '购买',
           link: true,
           click: (row) => {
-            const url = row.couponShareUrl;
+            let url = row.clickUrl;
+            if(row.couponShareUrl!=null){
+              url = row.couponShareUrl;
+            }
             window.open(url, '_blank');
           }
         }
@@ -157,8 +167,6 @@ function search() {
 }
 
 onMounted(() => {
-  searchValue.value = '天猫超市粽子'
-  tableOptions.where.q = searchValue.value
   table.value.reload()
 })
 </script>

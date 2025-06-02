@@ -5,7 +5,7 @@
   "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
   "name" : "01.淘宝客商品详情查询",
   "createTime" : null,
-  "updateTime" : 1735900614598,
+  "updateTime" : 1748794335562,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
@@ -13,7 +13,7 @@
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \"numIids\":\"3j4kmgbUAtYjy4O9a0sPbXf9tJ-BMQGmqcr5pP0K4PtD6\"\n}",
+  "requestBody" : "{\n    \"numIids\":\"2Qgg2obiotgpa2ZgkRFwZ6hDtD-j4QzdvUXXggypq7Cw3\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",

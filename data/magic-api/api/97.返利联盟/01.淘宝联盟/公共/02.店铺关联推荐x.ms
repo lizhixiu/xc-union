@@ -1,19 +1,19 @@
 {
   "properties" : { },
-  "id" : "copy1735405512642d40680",
+  "id" : "copy1735386446404d57345",
   "script" : null,
-  "groupId" : "27f4afc4c6354c03b7de834ec569415c",
-  "name" : "12.物料精选升级版x",
+  "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
+  "name" : "02.店铺关联推荐x",
   "createTime" : null,
-  "updateTime" : 1735725655713,
+  "updateTime" : 1748841459515,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
-  "path" : "/dgMaterialRecommend",
+  "path" : "/shopRecommendGet",
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \"adzoneId\":\"109281650216L\"\n    ,\"materialId\":\"1\"\n}",
+  "requestBody" : "{\n    \"userId\":\"719809807913\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -28,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error.内部调用失败\",\n    \"data\": null,\n    \"timestamp\": 1735725649018,\n    \"executeTime\": 130\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error\",\n    \"data\": null,\n    \"timestamp\": 1748841416396,\n    \"executeTime\": 128\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {
@@ -44,7 +44,7 @@
     "expression" : "",
     "children" : [ {
       "name" : "code",
-      "value" : "402",
+      "value" : "1",
       "description" : "",
       "required" : false,
       "dataType" : "Integer",
@@ -56,7 +56,7 @@
       "children" : [ ]
     }, {
       "name" : "message",
-      "value" : "凭证已过期",
+      "value" : "success",
       "description" : "",
       "required" : false,
       "dataType" : "String",
@@ -80,7 +80,7 @@
       "children" : [ ]
     }, {
       "name" : "timestamp",
-      "value" : "1734365046744",
+      "value" : "1735448668199",
       "description" : "",
       "required" : false,
       "dataType" : "Long",
@@ -92,10 +92,10 @@
       "children" : [ ]
     }, {
       "name" : "executeTime",
-      "value" : "null",
+      "value" : "121",
       "description" : "",
       "required" : false,
-      "dataType" : "Object",
+      "dataType" : "Integer",
       "type" : null,
       "defaultValue" : null,
       "validateType" : "",
@@ -108,14 +108,17 @@
 ================================
 import tbk;    //导入tbk模块
 
+//userId 店铺id
 var params =  {
-    apiMethodName:"taobao.tbk.dg.material.recommend"
+    apiMethodName:"taobao.tbk.shop.recommend.get"
+    ,fields:"user_id,shop_title,shop_type,seller_nick,pict_url,shop_url"
     };
 if(body!=null){
     params.putAll(body);
 }
 var response = tbk.execute(params);
 if(response.errorCode!=""){
-    exit 500,response.msg+"."+response.subMsg;
+    exit 500,response.msg;
 }
-return response.result;
+return response.results;
+

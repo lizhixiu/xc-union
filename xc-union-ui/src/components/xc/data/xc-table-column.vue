@@ -14,6 +14,11 @@
             <xc-icon v-if="col.copyText" class="copy-text" icon="CopyOutline"
                      @click="copyText(col.templet(row, col, index))"/>
         </template>
+        <template v-else-if="type === 'tag'">
+           <n-tag type="info" v-if="getLabel(row, col)!==''">
+            {{ getLabel(row, col) }}
+           </n-tag>
+        </template>
         <template v-else-if="type === 'buttons'">
             <n-space>
                 <template v-for="it in col.buttons">
@@ -47,7 +52,7 @@
                         lazy
                         :width="componentProperties.table.image.width"
                         :height="componentProperties.table.image.height"
-                        :src="row[col.field].startsWith('http') ? row[col.field] : global.filePrefix + encodeURIComponent(row[col.field])"
+                        :src="getPicUrl(row[col.field])"
                     />
                 </div>
             </n-image-group>
@@ -109,6 +114,11 @@ const props = defineProps({
 function copyText(text) {
   // $common.copyText(text)
 }
+
+function getPicUrl(text) {
+  return text.startsWith('http')|| text.startsWith('//') ? text : global.filePrefix + encodeURIComponent(text)
+}
+
 
 function getLabel(row, col) {
   return notEmptyNot01(getValueByPath(row, col.field)) ? getValueByPath(row, col.field) : notEmptyNot01(col.defaultValue) ? col.defaultValue : ''

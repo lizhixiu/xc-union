@@ -5,7 +5,7 @@
   "groupId" : "0e8570345c884f5993e9bac4a0e0de2d",
   "name" : "04.阿里妈妈推广券详情查询x",
   "createTime" : null,
-  "updateTime" : 1735725067091,
+  "updateTime" : 1748872557727,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,
@@ -13,7 +13,7 @@
   "method" : "POST",
   "parameters" : [ ],
   "options" : [ ],
-  "requestBody" : "{\n    \"itemId\":\"y58Ae2DtRt2a4Y7KxVfyyYUvtA-BMQGmqcrZYYKOwdU8\"\n}",
+  "requestBody" : "{\n    \"itemId\":\"0vK0jvGrh7t8YGrAVPRuKydU2t6-vnKGzWFB3Ra4az3Hz\"\n}",
   "headers" : [ {
     "name" : "Token",
     "value" : "782eb501-08f7-461e-8255-df6632c28f01",
@@ -28,7 +28,7 @@
     "children" : null
   } ],
   "paths" : [ ],
-  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error.入参为空\",\n    \"data\": null,\n    \"timestamp\": 1735725065787,\n    \"executeTime\": 167\n}",
+  "responseBody" : "{\n    \"code\": 500,\n    \"message\": \"Remote service error.非法的me参数值\",\n    \"data\": null,\n    \"timestamp\": 1748872550744,\n    \"executeTime\": 125\n}",
   "description" : null,
   "requestBodyDefinition" : null,
   "responseBodyDefinition" : {

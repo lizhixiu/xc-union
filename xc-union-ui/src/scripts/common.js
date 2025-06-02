@@ -12,7 +12,11 @@ export function renderWhere(where) {
     let newWhere = {}
     for (let key in where) {
         if (where[key] instanceof Object) {
-            newWhere[key] = where[key].value
+            if(where[key].value === null || where[key].value === undefined || where[key].value === '') {
+                newWhere[key] = where[key]
+            }else{
+                newWhere[key] = where[key].value
+            }
         } else {
             newWhere[key] = where[key]
         }

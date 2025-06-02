@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "c8cef91cf2b740d8b90a52d8ca575633",
+  "name" : "淘宝联盟",
+  "type" : "api",
+  "parentId" : "fd7936f740e24dc3adbec79b453ccdf2",
+  "path" : "/tbk",
+  "createTime" : 1748838857416,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}
