@@ -25,6 +25,10 @@
 <script setup>
 
 import XcCardList from "@/components/xc/data/xc-card-list.vue";
+import { useMessage } from 'naive-ui'
+import {postJson} from '@/scripts/common.js';
+
+const message = useMessage()
 
 const table = ref()
 const searchValue = ref('')
@@ -50,6 +54,30 @@ const tableOptions = reactive({
       url = product.couponShareUrl;
     }
     window.open(url, '_blank');
+  }
+
+  ,// 处理卡片点击事件
+  tpwdCreateClick: (row) => {
+    const url = '/union/naiveui/tbk/tpwdCreate';
+    let itemUrl = row.clickUrl;
+    if(row.couponShareUrl!=null){
+      itemUrl = row.couponShareUrl;
+    }
+    var params = {
+      "text": row.title,
+      "url": "https:"+itemUrl,
+      "logo": row.pictUrl
+    }
+    postJson(url,params ).then((res) => {
+      message.info(
+          res.data.model,
+          {
+            showIcon: false,
+            closable: true,
+            duration: 50000
+          }
+      )
+    })
   }
 })
 

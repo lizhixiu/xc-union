@@ -31,7 +31,10 @@
   </div>
 </template>
 <script setup>
+import { useMessage } from 'naive-ui'
+import {postJson} from '@/scripts/common.js';
 
+const message = useMessage()
 
 const table = ref()
 const searchValue = ref('')
@@ -148,12 +151,30 @@ const tableOptions = reactive({
       fixed: 'right',
       buttons: [
         {
-          key: 'buy',
-          label: '购买',
+          key: 'tpwdCreate',
+          label: '淘口令',
           link: true,
           click: (row) => {
-            const url = row.couponShareUrl;
-            window.open(url, '_blank');
+            const url = '/union/naiveui/tbk/tpwdCreate';
+            let itemUrl = row.clickUrl;
+            if(row.couponShareUrl!=null){
+              itemUrl = row.couponShareUrl;
+            }
+            var params = {
+              "text": row.title,
+              "url": "https:"+itemUrl,
+              "logo": row.pictUrl
+            }
+            postJson(url,params ).then((res) => {
+              message.info(
+                  res.data.model,
+                  {
+                    showIcon: false,
+                    closable: true,
+                    duration: 50000
+                  }
+              )
+            })
           }
         }
       ]

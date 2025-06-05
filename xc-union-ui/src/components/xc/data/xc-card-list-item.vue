@@ -1,7 +1,7 @@
 <template>
-  <n-card class="product-card" :bordered="true" size="small" @click="handleClick">
+  <n-card class="product-card" :bordered="true" size="small" >
     <template #cover>
-      <img :src="product.pictUrl" class="product-image"/>
+      <img :src="product.pictUrl" class="product-image" @click="handleClick"/>
     </template>
     <div class="brand">
       <n-tag type="error" size="small" class="brand-tag" :bordered="false">
@@ -26,7 +26,7 @@
         返 {{ product.commissionAmount }}
       </n-tag>
     </div>
-    <div class="title">{{ product.title }}</div>
+    <div class="title" @click="handleClick">{{ product.title }}</div>
 
     <div class="title">
       <n-space>
@@ -38,6 +38,8 @@
     </div>
     <div class="sales-info">
       <span>销量 {{ product.annualVol }}</span>
+      <!-- 添加淘口令按钮 -->
+      <n-button type="info" strong secondary size="mini" @click="tpwdCreateClick" class="taobao-btn">生成淘口令</n-button>
     </div>
   </n-card>
 </template>
@@ -56,10 +58,16 @@ const emit = defineEmits(['card-click']);
 // 点击事件处理函数
 const handleClick = () => {
   // 触发自定义事件并传递商品数据
-  console.log(props)
-  console.log(props.product)
   emit('card-click', props.product);
 };
+
+// 点击事件处理函数
+const tpwdCreateClick = () => {
+  // 触发自定义事件并传递商品数据
+  emit('tpwdCreate-click', props.product);
+};
+
+
 
 </script>
 
@@ -144,5 +152,14 @@ const handleClick = () => {
 .sales-info {
   color: #999;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 让内容两端对齐 */
 }
+
+
+.taobao-btn {
+  margin-left: auto; /* 让按钮靠右 */
+}
+
 </style>

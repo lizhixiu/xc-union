@@ -5,7 +5,7 @@
         <n-grid :x-gap="16" :y-gap="16" cols="5">
           <!-- 使用 v-if 确保数据加载完成后再渲染 -->
           <n-grid-item v-for="product in bindProps.data" :key="product.id" v-if="!bindProps.loading">
-            <xcCardListItem :product="product" @card-click="handleCardClick"/>
+            <xcCardListItem :product="product" @card-click="handleCardClick" @tpwdCreate-click="tpwdCreateClick"/>
           </n-grid-item>
           <!-- 加载状态提示 -->
           <div v-else>加载中...</div>
@@ -157,6 +157,9 @@ const props = defineProps({
     default: () => {
     }
   },cardClickHandler: {
+    type: Function,
+    default: (product) => {}
+  },tpwdCreateClick: {
     type: Function,
     default: (product) => {}
   }
