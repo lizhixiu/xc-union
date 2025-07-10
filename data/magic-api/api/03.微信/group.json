@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "7fcbc9c28b3f4132b4e2480561ce1210",
+  "name" : "03.微信",
+  "type" : "api",
+  "parentId" : "0",
+  "path" : "/wx",
+  "createTime" : 1752135054795,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

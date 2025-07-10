@@ -39,7 +39,7 @@
             <artifactId>open-api-sdk</artifactId>
             <version>2.0-2024-12-26</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/open-api-sdk-2.0-2024-12-26.jar</systemPath>
+            <systemPath>${project.basedir}/lib/open-api-sdk-2.0-2025-07-03.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

@@ -49,6 +49,10 @@ public class JdApiConstants {
         // 联盟实时热销榜商品接口
         // 该接口用于查询京东联盟实时热销榜的商品信息
         REQUEST_MAP.put( "jd.union.open.goods.rank.query", UnionOpenGoodsRankQueryRequest.class );
+
+
+        // 该接口用于查询京东联盟实时热销榜的商品信息
+        REQUEST_MAP.put( "jd.union.open.goods.rank.query", UnionOpenGoodsRankQueryRequest.class );
     }
 
 }

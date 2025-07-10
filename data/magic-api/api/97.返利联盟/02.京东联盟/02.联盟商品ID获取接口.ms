@@ -5,7 +5,7 @@
   "groupId" : "adb881207ca247faac36f7fb94a1c6f7",
   "name" : "02.联盟商品ID获取接口",
   "createTime" : null,
-  "updateTime" : 1735829518685,
+  "updateTime" : 1749525036099,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,

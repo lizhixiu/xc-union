@@ -99,7 +99,7 @@ const tableOptions = reactive({
       label: '优惠信息',
       width: 180,
       render: (row) => {
-        if (row.finalPromotionPathList.length == 0) {
+        if (row.finalPromotionPathList==null || row.finalPromotionPathList.length == 0) {
           return ''
         }
         let msg = '';

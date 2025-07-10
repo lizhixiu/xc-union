@@ -21,5 +21,9 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, 'src'),
         }
+    },
+    // 添加 server 配置，修改端口为 8080，可按需修改
+    server: {
+        port: 8686
     }
 })

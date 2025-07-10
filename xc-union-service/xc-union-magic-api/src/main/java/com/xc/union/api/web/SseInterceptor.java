@@ -33,7 +33,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class SseInterceptor implements RequestInterceptor, HandlerInterceptor {
 
-
     @Resource
     private GiteeAiConfig config;
 
