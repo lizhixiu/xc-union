@@ -26,12 +26,12 @@
     </developers>
     <scm>
         <url>https://gitee.com/xc_java/xc-union</url>
-        <connection>scm:git:https://gitee.com/ssssssss-team/magic-api.git</connection>
+        <connection>scm:git:https://gitee.com/xc_java/xc-union.git</connection>
         <developerConnection>scm:git:https://gitee.com/xc_java/xc-union.git</developerConnection>
     </scm>
     <properties>
         <!-- 项目版本号 -->
-        <revision>1.0.7</revision>
+        <revision>1.0.8</revision>
         <!-- 编译版本 -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

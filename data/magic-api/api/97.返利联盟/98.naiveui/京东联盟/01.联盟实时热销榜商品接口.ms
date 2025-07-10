@@ -5,7 +5,7 @@
   "groupId" : "72aa006ebd6a4c1183b8f202a668e130",
   "name" : "01.联盟实时热销榜商品接口",
   "createTime" : 1750093024147,
-  "updateTime" : 1750094228457,
+  "updateTime" : 1752167465317,
   "lock" : null,
   "createBy" : null,
   "updateBy" : null,

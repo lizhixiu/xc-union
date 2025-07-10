@@ -1,11 +1,16 @@
 package com.xc.union.dtk.constants;
 
+import com.dtk.api.request.mastertool.DtkGetPrivilegeLinkRequest;
 import com.dtk.api.request.mastertool.DtkGetSuperCategoryRequest;
+import com.dtk.api.request.mastertool.DtkParseContentRequest;
 import com.dtk.api.request.meituan.MtPromoteQueryCouponRequest;
 import com.dtk.api.request.putstorage.DtkGoodsDetailsRequest;
 import com.dtk.api.request.putstorage.DtkGoodsListRequest;
 import com.dtk.api.request.search.*;
+import com.dtk.api.request.special.DtkDdqGoodsListRequest;
+import com.dtk.api.request.special.DtkGetColumnListRequest;
 import com.dtk.api.request.special.DtkGetRankingListRequest;
+import com.dtk.api.request.special.DtkListSimilerGoodsByOpenRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,8 +45,18 @@ public class DtkApiConstants {
         REQUEST_MAP.put( "tb-service/get-tb-service", DtkGetTbServiceRequest.class );
         // 该接口用于获取各大榜单信息
         REQUEST_MAP.put( "goods/get-ranking-list", DtkGetRankingListRequest.class );
+        // 咚咚抢
+        REQUEST_MAP.put( "category/ddq-goods-list", DtkDdqGoodsListRequest.class );
+        // 品牌特卖
+        REQUEST_MAP.put( "delanys/brand/get-column-list", DtkGetColumnListRequest.class );
+        // 猜你喜欢
+        REQUEST_MAP.put( "goods/list-similer-goods-by-open", DtkListSimilerGoodsByOpenRequest.class );
+        // 高效转链
+        REQUEST_MAP.put( "tb-service/get-privilege-link", DtkGetPrivilegeLinkRequest.class );
         // 该接口用于美团获取推广链接
         REQUEST_MAP.put( "mt/promote/query-coupon", MtPromoteQueryCouponRequest.class );
+        //万能解析转链
+        REQUEST_MAP.put( "tb-service/parse-content", DtkParseContentRequest.class );
     }
 
 }

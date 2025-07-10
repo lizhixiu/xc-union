@@ -99,3 +99,11 @@ union:
     api-key:
     # 调式模式，true 表示启用调试模式，false 表示禁用调试模式
     debug: false
+
+# 微信公众号配置
+wx:
+  mp:
+    appId:
+    secret:
+    token:
+    aesKey:

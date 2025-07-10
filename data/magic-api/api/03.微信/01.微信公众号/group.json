@@ -1,0 +1,14 @@
+{
+  "properties" : { },
+  "id" : "3ec69c6b6c214639bddc577f84bce9a6",
+  "name" : "01.微信公众号",
+  "type" : "api",
+  "parentId" : "7fcbc9c28b3f4132b4e2480561ce1210",
+  "path" : "/wxmp",
+  "createTime" : 1752167461033,
+  "updateTime" : null,
+  "createBy" : null,
+  "updateBy" : null,
+  "paths" : [ ],
+  "options" : [ ]
+}

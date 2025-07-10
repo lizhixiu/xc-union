@@ -1,11 +1,13 @@
 package com.xc.union.api.script.modules;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Engine;
 import com.jfinal.template.Template;
 import com.xc.union.api.config.TemplateConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.ssssssss.magicapi.core.annotation.MagicModule;
@@ -92,5 +94,49 @@ public class EnjoyModule {
         String result = template.renderToString( data );
         // 返回包含渲染后 HTML 内容的响应实体
         return ResponseEntity.ok().header( HttpHeaders.CONTENT_TYPE, "text/html").body(result);
+    }
+
+    /**
+     * 根据模板文件路径，使用 Enjoy 模板引擎将模板渲染为 HTML 响应实体
+     *
+     * @param templateSource 模板路径，相对于模板配置中指定的存储位置
+     * @param data           内容数据，用于填充模板中的变量，键为变量名，值为变量对应的值
+     * @return 包含渲染后 HTML 内容的响应实体，如果模板文件不存在则返回空的 HTML 响应
+     */
+    @Comment("输出HTML")
+    public ResponseEntity<String> htmlByContent(@Comment(name = "templateSource", value = "模板内容") String templateSource, @Comment(name = "data", value = "内容数据") Map<String, Object> data) {
+        if (StrUtil.isEmpty(templateSource)) {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML.toString()).body("");
+        }
+        // 获取默认的 Enjoy 模板引擎实例
+        Engine engine = Engine.use();
+        // 读取模板文件内容并创建模板对象
+        Template template = engine.getTemplateByString(templateSource);
+        // 使用数据渲染模板得到渲染后的字符串
+        String result = template.renderToString(data);
+        // 返回包含渲染后 HTML 内容的响应实体
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML.toString()).body(result);
+    }
+
+    /**
+     * 根据模板文件路径，使用 Enjoy 模板引擎将模板渲染为 TEXT_XML 响应实体
+     *
+     * @param templateSource 模板路径，相对于模板配置中指定的存储位置
+     * @param data           内容数据，用于填充模板中的变量，键为变量名，值为变量对应的值
+     * @return 包含渲染后 TEXT_XML 内容的响应实体，如果模板文件不存在则返回空的 HTML 响应
+     */
+    @Comment("输出TEXT_XML")
+    public ResponseEntity<String> xmlByContent(@Comment(name = "templateSource", value = "模板内容") String templateSource, @Comment(name = "data", value = "内容数据") Map<String, Object> data) {
+        if (StrUtil.isEmpty(templateSource)) {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_XML.toString()).body("");
+        }
+        // 获取默认的 Enjoy 模板引擎实例
+        Engine engine = Engine.use();
+        // 读取模板文件内容并创建模板对象
+        Template template = engine.getTemplateByString(templateSource);
+        // 使用数据渲染模板得到渲染后的字符串
+        String result = template.renderToString(data);
+        // 返回包含渲染后 HTML 内容的响应实体
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_XML.toString()).body(result);
     }
 }
