@@ -39,7 +39,7 @@
         <!-- 依赖版本 -->
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-framework.version>5.3.39</spring-framework.version>
-        <magic-api.version>2.2.1</magic-api.version>
+        <magic-api.version>2.2.2</magic-api.version>
         <magic-script.version>1.9.0</magic-script.version>
         <org.projectlombok_lombok.version>1.18.36</org.projectlombok_lombok.version>
         <cn.hutool_hutool-all.version>5.8.35</cn.hutool_hutool-all.version>
