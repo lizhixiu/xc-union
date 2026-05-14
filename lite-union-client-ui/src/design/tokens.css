@@ -1,0 +1,25 @@
+:root {
+  --bg-app: #f8fafc;
+  --bg-card: #ffffff;
+  --brand-primary: #75a8a4;
+  --brand-primary-soft: #f0f6f5;
+  --text-main: #2c3e50;
+  --text-muted: #94a3b8;
+  --line-border: #e2e8f0;
+  --danger: #e07a5f;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  --shadow-card: 0 8px 24px rgba(44, 62, 80, 0.06);
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+}
