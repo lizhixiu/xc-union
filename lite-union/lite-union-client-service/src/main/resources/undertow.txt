@@ -1,4 +1,4 @@
-undertow.resourcePath =
+undertow.resourcePath = classpath:webapp,classpath:static
 
 undertow.devMode=false
 undertow.port=18090

@@ -25,6 +25,7 @@
         <version.slf4j>1.7.36</version.slf4j>
         <version.logback>1.2.13</version.logback>
         <version.hutool>5.8.40</version.hutool>
+        <version.fastjson>2.0.60</version.fastjson>
         <version.compiler-plugin>3.8.1</version.compiler-plugin>
     </properties>
 
@@ -107,6 +108,13 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${version.hutool}</version>
+            </dependency>
+
+            <!-- FastJSON -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${version.fastjson}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
