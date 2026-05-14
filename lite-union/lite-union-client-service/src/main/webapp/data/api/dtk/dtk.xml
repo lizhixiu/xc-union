@@ -7,8 +7,8 @@
             import log;
             var paraMap = {};
             paraMap.url = "/goods/get-dtk-search-goods";
-            paraMap.pageId = "1";
-            paraMap.pageSize = "20";
+            paraMap.pageId = body.pageId;
+            paraMap.pageSize = body.pageSize;
             paraMap. tchaoshi = "1";
 
             var data =  dtk.execute(paraMap);
@@ -16,6 +16,26 @@
       ]]>
         </script>
     </api>
+
+    <api id="getRealTimeRankings" name="获取实时榜单" caption="获取实时榜单" method="POST" path="/getRealTimeRankings">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId;
+            paraMap.pageSize = body.pageSize;
+            paraMap.sort = "2";
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+
+
 
 
 </api-group>

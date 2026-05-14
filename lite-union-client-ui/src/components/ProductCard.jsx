@@ -4,7 +4,7 @@ export default function ProductCard({ item, onOpen }) {
       onClick={() => onOpen(item)}
       className="text-left bg-cardWhite border border-borderLine rounded-xl p-3 flex md:flex-col gap-3 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
     >
-      <img src="https://placehold.co/400x400/F0F6F5/94A3B8?text=商品图" className="w-[110px] h-[110px] md:w-full md:h-[220px] rounded object-cover bg-appBg border border-borderLine/50" />
+      <img src={item.image || "https://placehold.co/400x400/F0F6F5/94A3B8?text=商品图"} className="w-[110px] h-[110px] md:w-full md:h-[220px] rounded object-cover bg-appBg border border-borderLine/50" />
       <div className="flex-1 flex flex-col justify-between py-0.5">
         <h3 className="text-[14px] md:text-[15px] text-textMain font-medium leading-tight line-clamp-2 md:mb-3">{item.title}</h3>
         <div>
