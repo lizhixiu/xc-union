@@ -1,114 +1,161 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, CheckCircle, Clock, Copy, Leaf, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
+import { useMemo, useState } from 'react';
+import { ArrowLeft, Clock, Copy, Leaf, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
 import BottomNav from './components/BottomNav';
-import ProductCard from './components/ProductCard';
 import SearchBar from './components/SearchBar';
-import StatePanel from './components/StatePanel';
 import Toast from './components/Toast';
+import MailboxAuthPanel from './components/MailboxAuthPanel';
+import HomeDealsPage from './themes/lite-union/pages/HomePage';
+import HotDealsRankPage from './themes/lite-union/pages/GoodPricePage';
 
-const API_URL = '/dtk/getTmallGoodsList';
-const DEFAULT_PAGE_SIZE = 20;
+const PARSE_API_URL = '/dtk/tbService/parseContent';
 
 function toCurrency(value) {
   const n = Number(value || 0);
   return Number.isFinite(n) ? n.toFixed(2) : '0.00';
 }
 
-function mapItem(raw = {}) {
-  const original = raw.originalPrice ?? raw.zkFinalPrice ?? raw.actualPrice ?? raw.price ?? 0;
-  const discount = Number(raw.couponPrice ?? raw.couponAmount ?? 0);
-  const finalPrice = Math.max(Number(original) - discount, 0);
+function extractParseData(resp) {
+  return resp?.data?.data?.data ?? resp?.data?.data ?? resp?.data ?? {};
+}
+
+function mapParseItem(raw = {}) {
+  const originPrice = Number(raw?.originInfo?.price ?? 0);
+  const threshold = Number(raw?.originInfo?.startFee ?? 0);
+  const couponAmount = Number(raw?.originInfo?.amount ?? 0);
+  const commission = Number(raw?.commissionRate ?? 0);
+  const finalPrice = Math.max(originPrice - couponAmount, 0);
 
   return {
-    id: raw.id ?? raw.goodsId ?? raw.itemId ?? `${raw.dtitle || raw.title || Math.random()}`,
-    title: raw.dtitle || raw.title || raw.goodsName || '未命名商品',
-    image: raw.mainPic || raw.pic || raw.goodsImg || raw.img,
-    coupon: discount > 0 ? `隐藏券 ¥${toCurrency(discount)}` : '暂无优惠券',
-    price: toCurrency(finalPrice || raw.actualPrice || raw.price || original),
-    original: `¥${toCurrency(original)}`,
-    rebate: toCurrency(raw.commission || raw.commissionRate || 0)
+    id: raw.goodsId ?? raw.itemId ?? `${raw.itemName || raw.title || Math.random()}`,
+    title: raw.itemName || raw?.originInfo?.title || '未命名商品',
+    image: raw.mainPic || raw?.originInfo?.image || '',
+    coupon: couponAmount > 0 ? `满${toCurrency(threshold)}减${toCurrency(couponAmount)}` : '暂无优惠券',
+    price: toCurrency(finalPrice || originPrice),
+    original: `¥${toCurrency(originPrice)}`,
+    rebate: toCurrency(commission),
+    cpsFullTpwd: raw.cpsFullTpwd || '',
+    couponLongUrl: raw.couponLongUrl || '',
+    shortUrl: raw.shortUrl || '',
+    itemLink: raw.itemLink || raw.shortUrl || raw.originUrl || ''
   };
 }
 
-function extractPayload(resp) {
-  const root = resp?.data ?? resp;
-  const list = root?.list ?? root?.data?.list ?? root?.result?.list ?? root?.tbk_dg_optimus_material_response?.result_list?.map_data ?? [];
-  const nextPageId = root?.pageId ?? root?.nextPageId ?? root?.data?.pageId ?? null;
-  return {
-    list: Array.isArray(list) ? list : [],
-    nextPageId: nextPageId == null || nextPageId === '' ? null : String(nextPageId)
-  };
+async function copyTextWithFallback(text) {
+  if (!text) {
+    return false;
+  }
+
+  if (navigator?.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // fallback to execCommand below
+    }
+  }
+
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    return ok;
+  } catch {
+    return false;
+  }
 }
 
 export default function App() {
   const [page, setPage] = useState('home');
   const [toast, setToast] = useState('');
 
-  const [items, setItems] = useState([]);
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState('');
-  const [nextPageId, setNextPageId] = useState('1');
+  const [searchText, setSearchText] = useState('');
+  const [lastPastedText, setLastPastedText] = useState('');
+  const [showQrModal, setShowQrModal] = useState(false);
 
   const showToast = (msg) => {
     setToast(msg);
     setTimeout(() => setToast(''), 2000);
   };
 
-  const fetchGoods = async ({ pageId, append }) => {
-    const setLoadingState = append ? setLoadingMore : setLoading;
-    setLoadingState(true);
+  const requestParse = async (content) => {
+    const parsedContent = (content || '').trim();
+    if (!parsedContent) {
+      showToast('请输入内容');
+      return;
+    }
+
+    setLoading(true);
     setError('');
     try {
-      const resp = await fetch(API_URL, {
+      const resp = await fetch(PARSE_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageId, pageSize: DEFAULT_PAGE_SIZE })
+        body: JSON.stringify({ content: parsedContent })
       });
       if (!resp.ok) {
-        throw new Error(`接口请求失败: ${resp.status}`);
+        throw new Error(`解析接口请求失败: ${resp.status}`);
       }
       const json = await resp.json();
-      const payload = extractPayload(json);
-      const mapped = payload.list.map(mapItem);
+      const parsed = extractParseData(json);
+      const mapped = mapParseItem(parsed);
 
-      setItems((prev) => (append ? [...prev, ...mapped] : mapped));
-      setNextPageId(payload.nextPageId);
-      if (!append && mapped.length > 0) {
-        setDetail(mapped[0]);
-      }
+      setDetail(mapped);
+      setPage('detail');
+      setSearchText(parsedContent);
+      showToast('解析成功');
     } catch (e) {
-      setError(e.message || '接口调用失败');
+      setError(e.message || '解析失败');
+      showToast(e.message || '解析失败');
     } finally {
-      setLoadingState(false);
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchGoods({ pageId: '1', append: false });
-  }, []);
+  const parseLink = async () => {
+    let text = (searchText || '').trim();
 
-  const loadMore = () => {
-    if (!nextPageId || loadingMore) {
+    if (navigator?.clipboard?.readText) {
+      try {
+        const clipboardText = (await navigator.clipboard.readText()).trim();
+        if (clipboardText) {
+          text = clipboardText;
+          setSearchText(clipboardText);
+          setLastPastedText(clipboardText);
+        }
+      } catch {
+        // ignore clipboard read error and fallback to input content
+      }
+    }
+
+    if (!text) {
+      showToast('请输入内容');
       return;
     }
-    fetchGoods({ pageId: nextPageId, append: true });
+    setLastPastedText(text);
+    await requestParse(text);
   };
 
-  const parseLink = () => {
-    if (items.length === 0) {
-      showToast('暂无可展示商品，请先加载列表');
+  const handlePasteCapture = (text) => {
+    const pasted = (text || '').trim();
+    setLastPastedText(pasted);
+  };
+
+  const openQrModal = () => {
+    const qrText = (detail?.shortUrl || '').trim();
+    if (!qrText) {
+      showToast('暂无可生成二维码的口令');
       return;
     }
-    showToast('已为您解析真实底价');
-    setDetail(items[0]);
-    setPage('detail');
-  };
-
-  const openDetail = (item) => {
-    setDetail(item);
-    setPage('detail');
+    setShowQrModal(true);
   };
 
   const activeDesktopNav = useMemo(() => (page === 'detail' ? 'home' : page), [page]);
@@ -121,56 +168,31 @@ export default function App() {
           <nav className="flex gap-6">
             {['home', 'rank', 'profile'].map((n) => (
               <button key={n} onClick={() => setPage(n)} className={`text-[15px] py-6 ${activeDesktopNav === n ? 'font-medium text-primary border-b-2 border-primary' : 'text-textMuted hover:text-textMain'}`}>
-                {n === 'home' ? '查券大厅' : n === 'rank' ? '实时榜单' : '资产管理'}
+                {n === 'home' ? '首页' : n === 'rank' ? '好价' : '我'}
               </button>
             ))}
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <SearchBar onParse={parseLink} />
-          <div className="w-10 h-10 rounded-full border border-borderLine flex items-center justify-center bg-appBg text-primary"><User size={20} /></div>
+          <SearchBar
+            value={searchText}
+            onChange={setSearchText}
+            onPasteCapture={handlePasteCapture}
+            onParse={parseLink}
+          />
+          <button
+            onClick={() => setPage('profile')}
+            aria-label="打开资产管理"
+            className="w-10 h-10 rounded-full border border-borderLine flex items-center justify-center bg-appBg text-primary hover:bg-primaryLight transition-colors"
+          >
+            <User size={20} />
+          </button>
         </div>
       </header>
 
       <div className="app-wrapper md:px-8">
         {page === 'home' && (
-          <section className="page md:py-8 pb-[80px]">
-            <div className="md:hidden bg-cardWhite pt-8 pb-4 px-4 border-b border-borderLine sticky top-0 z-40">
-              <h1 className="text-[20px] font-bold text-textMain tracking-wide mb-4">轻购</h1>
-              <SearchBar mobile onParse={parseLink} />
-            </div>
-            <div className="p-4 md:p-0">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-[15px] md:text-[18px] text-textMain font-bold">今日实测低价</h2>
-                <span className="text-[12px] text-textMuted flex items-center gap-1"><CheckCircle size={14} /> 已去除水分</span>
-              </div>
-
-              {loading && <StatePanel title="商品加载中" desc="正在拉取天猫高返商品，请稍候..." />}
-              {!loading && error && <StatePanel title="加载失败" desc={error} actionLabel="重试" onAction={() => fetchGoods({ pageId: '1', append: false })} />}
-
-              {!loading && !error && (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {items.map((item) => <ProductCard key={item.id} item={item} onOpen={openDetail} />)}
-                  </div>
-
-                  <div className="mt-5 flex justify-center">
-                    {nextPageId ? (
-                      <button
-                        onClick={loadMore}
-                        disabled={loadingMore}
-                        className="h-11 px-6 rounded-lg border border-borderLine bg-cardWhite hover:bg-appBg disabled:opacity-60"
-                      >
-                        {loadingMore ? '加载中...' : '加载下一页'}
-                      </button>
-                    ) : (
-                      <span className="text-textMuted text-[13px]">没有更多数据了</span>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-          </section>
+          <HomeDealsPage />
         )}
 
         {page === 'detail' && detail && (
@@ -197,8 +219,25 @@ export default function App() {
                 </div>
                 <div className="fixed bottom-0 left-0 right-0 md:static md:mt-8 bg-cardWhite md:bg-transparent border-t border-borderLine md:border-none p-3 md:p-0 z-50 flex gap-3">
                   <button className="md:hidden w-12 h-12 rounded border border-borderLine flex items-center justify-center text-textMain" aria-label="分享"><ShareNetwork size={20} /></button>
-                  <button onClick={() => showToast('链接已复制，请前往淘宝打开')} className="flex-1 md:w-[240px] md:flex-none bg-primary hover:bg-primary/90 text-white h-12 rounded text-[15px] font-medium flex items-center justify-center gap-2"><Copy size={18} />一键复制淘口令</button>
-                  <button className="hidden md:flex flex-1 md:w-[140px] md:flex-none bg-cardWhite hover:bg-appBg border border-borderLine text-textMain h-12 rounded text-[15px] font-medium items-center justify-center gap-2">扫码购买</button>
+                  <button
+                    onClick={async () => {
+                      const content = detail.cpsFullTpwd || detail.itemLink;
+                      if (!content) {
+                        showToast('暂无可复制内容');
+                        return;
+                      }
+                      const copied = await copyTextWithFallback(content);
+                      if (copied) {
+                        showToast('已复制，请前往淘宝打开');
+                      } else {
+                        showToast('复制失败，请手动长按复制');
+                      }
+                    }}
+                    className="flex-1 md:w-[240px] md:flex-none bg-primary hover:bg-primary/90 text-white h-12 rounded text-[15px] font-medium flex items-center justify-center gap-2"
+                  >
+                    <Copy size={18} />一键复制淘口令
+                  </button>
+                  <button onClick={openQrModal} className="hidden md:flex flex-1 md:w-[140px] md:flex-none bg-cardWhite hover:bg-appBg border border-borderLine text-textMain h-12 rounded text-[15px] font-medium items-center justify-center gap-2">扫码购买</button>
                 </div>
               </div>
             </div>
@@ -206,19 +245,37 @@ export default function App() {
         )}
 
         {page === 'rank' && (
-          <section className="page p-4 md:px-0 md:py-8 pb-[80px]">
-            <StatePanel title="榜单加载中" desc="榜单接口接入前，这里先保留标准加载占位。" actionLabel="返回大厅" onAction={() => setPage('home')} />
-          </section>
+          <HotDealsRankPage />
         )}
 
         {page === 'profile' && (
           <section className="page p-4 md:px-0 md:py-8 pb-[80px]">
-            <StatePanel title="暂无资产数据" desc="当前账号还没有可展示数据，后续接入账户中心后自动展示。" actionLabel="去查券" onAction={() => setPage('home')} />
+            <MailboxAuthPanel onToast={showToast} />
           </section>
         )}
 
         {page !== 'detail' && <BottomNav page={page} onSwitch={setPage} />}
         <Toast message={toast} />
+        {showQrModal && (
+          <div className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] flex items-center justify-center p-4" onClick={() => setShowQrModal(false)}>
+            <div className="w-full max-w-[320px] rounded-2xl bg-cardWhite p-5 border border-borderLine shadow-xl" onClick={(e) => e.stopPropagation()}>
+              <h3 className="text-[16px] font-bold text-textMain text-center">扫码购买</h3>
+              <div className="w-[220px] h-[220px] mx-auto mt-4 bg-appBg rounded-xl border border-borderLine overflow-hidden">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(detail?.shortUrl || '')}`}
+                  alt="购买二维码"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <button
+                onClick={() => setShowQrModal(false)}
+                className="w-full mt-4 h-10 rounded-lg bg-primary text-white text-[14px] font-medium"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

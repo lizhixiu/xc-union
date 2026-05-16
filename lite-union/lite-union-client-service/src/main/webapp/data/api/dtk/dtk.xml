@@ -35,6 +35,20 @@
     </api>
 
 
+    <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tbService/parseContent">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/tb-service/parse-content";
+            paraMap.content = body.content;
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
 
 
 

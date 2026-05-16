@@ -1,9 +1,9 @@
 import { Leaf, TrendUp, User } from '@phosphor-icons/react';
 
 const tabs = [
-  { key: 'home', label: '大厅', icon: Leaf },
-  { key: 'rank', label: '榜单', icon: TrendUp },
-  { key: 'profile', label: '资产', icon: User }
+  { key: 'home', label: '首页', icon: Leaf },
+  { key: 'rank', label: '好价', icon: TrendUp },
+  { key: 'profile', label: '我', icon: User }
 ];
 
 export default function BottomNav({ page, onSwitch }) {
