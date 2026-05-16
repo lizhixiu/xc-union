@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="home" name="home" path="/home">
+
+    <api id="getGoodsList" name="获取商品列表" caption="获取商品列表" method="POST" path="/getGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/goods/singlePage/list-height-commission";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+    <api id="getGoodPriceGoodsList" name="获取好价商品列表" caption="获取高价商品列表" method="POST" path="/getGoodPriceGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/goods/get-half-price-day";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
+            paraMap.sessions = "1";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+
+    <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tbService/parseContent">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/tb-service/parse-content";
+            paraMap.content = body.content;
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+
+
+</api-group>

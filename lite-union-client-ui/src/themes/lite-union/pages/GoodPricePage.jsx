@@ -1,24 +1,146 @@
-import { ArrowLeft, ClockCountdown, FireSimple, Info, ShareNetwork } from '@phosphor-icons/react';
+import { ArrowLeft, ClockCountdown, FireSimple, Info, MagnifyingGlass, ShareNetwork } from '@phosphor-icons/react';
+import { useEffect, useRef, useState } from 'react';
 
-const rankItems = [
-  { id: 'r1', top: 'TOP1', title: '【神价】巴布豆儿童防蚊裤 2条装', price: '19.90', rebate: '2.68', extra: '需淘金币抵扣', image: 'https://placehold.co/180x180/FCE7E7/8B5E5E?text=TOP1' },
-  { id: 'r2', top: 'TOP2', title: '【神价】夏季速干T恤 2件装', price: '39.00', rebate: '3.10', extra: '需店铺券', image: 'https://placehold.co/180x180/EEF2FF/5165A7?text=TOP2' },
-  { id: 'r3', top: 'TOP3', title: '【神价】厨房纸巾 16卷', price: '25.80', rebate: '1.70', extra: '限时购', image: 'https://placehold.co/180x180/E8F7EF/4D8668?text=TOP3' }
-];
+const GOODS_API_URL = '/home/getGoodPriceGoodsList';
+const PAGE_SIZE = 20;
 
-export default function HotDealsRankPage({ standalone = false }) {
+function toCurrency(value) {
+  const n = Number(value || 0);
+  return Number.isFinite(n) ? n.toFixed(2) : '0.00';
+}
+
+function mapGoodsItem(raw = {}) {
+  return {
+    id: raw.id ?? raw.goodsId ?? Math.random(),
+    goodsId: raw.goodsId ?? '',
+    title: raw.dtitle || raw.title || '未命名商品',
+    image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
+    price: toCurrency(raw.actualPrice ?? raw.originalPrice ?? 0),
+    rebate: toCurrency(raw.commissionRate ?? 0),
+    sales: raw.monthSales ?? 0,
+    shopName: raw.shopName || '店铺',
+    brandName: raw.brandName || '其他',
+    couponPrice: Number(raw.couponPrice ?? 0)
+  };
+}
+
+export default function GoodPricePage({ standalone = false }) {
+  const [products, setProducts] = useState([]);
+  const [pageId, setPageId] = useState('1');
+  const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [leftTime, setLeftTime] = useState('24:00:00');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [activeKeyword, setActiveKeyword] = useState('');
+  const [inputFocused, setInputFocused] = useState(false);
+
+  const loadMoreRef = useRef(null);
+  const inFlightRef = useRef(false);
+  const loadThrottleRef = useRef(0);
+
+  const fetchGoods = async ({ append, reqPageId }) => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setLoadError('');
+
+    try {
+      const currentPageId = reqPageId || pageId;
+      const resp = await fetch(GOODS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId: currentPageId, pageSize: PAGE_SIZE })
+      });
+
+      if (!resp.ok) {
+        throw new Error(`好价接口请求失败: ${resp.status}`);
+      }
+
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const list = Array.isArray(payload?.list) ? payload.list : [];
+      const mapped = list.map(mapGoodsItem);
+      const nextPageId = list.length >= PAGE_SIZE ? String(Number(currentPageId || '1') + 1) : '';
+
+      setProducts((prev) => (append ? [...prev, ...mapped] : mapped));
+      setPageId(nextPageId || '');
+      setHasMore(Boolean(nextPageId));
+    } catch (e) {
+      setLoadError(e.message || '好价商品加载失败');
+    } finally {
+      inFlightRef.current = false;
+      setLoading(false);
+      setInitLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoods({ append: false, reqPageId: '1' });
+  }, []);
+
+  useEffect(() => {
+    const updateLeft = () => {
+      const now = new Date();
+      const passedSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const remain = Math.max(0, 24 * 3600 - passedSeconds);
+      const h = String(Math.floor(remain / 3600)).padStart(2, '0');
+      const m = String(Math.floor((remain % 3600) / 60)).padStart(2, '0');
+      const s = String(remain % 60).padStart(2, '0');
+      setLeftTime(`${h}:${m}:${s}`);
+    };
+    updateLeft();
+    const timer = setInterval(updateLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (!first?.isIntersecting) return;
+        if (loading || initLoading || !hasMore || !pageId) return;
+
+        const now = Date.now();
+        if (now - loadThrottleRef.current < 800) return;
+        loadThrottleRef.current = now;
+
+        fetchGoods({ append: true, reqPageId: pageId });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, initLoading, hasMore, pageId]);
+
+  const shownProducts = activeKeyword
+    ? products.filter((p) => {
+        const kw = activeKeyword.toLowerCase();
+        return `${p.title} ${p.shopName} ${p.brandName}`.toLowerCase().includes(kw);
+      })
+    : products;
+
+  const handleSearch = () => {
+    setActiveKeyword((searchKeyword || '').trim());
+  };
+
   return (
-    <section className="page pb-[80px]">
-      <div className="p-4 md:p-0">
-        <div className="rounded-3xl overflow-hidden border border-[#ffaea6] shadow-[0_10px_24px_rgba(245,66,66,0.2)]">
-          <div className="p-4 md:p-5 bg-[linear-gradient(135deg,#ff4f4f_0%,#f33c3c_100%)] text-white">
+    <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
+      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
+        <div className="rounded-3xl overflow-hidden border border-[#ffaea6] shadow-[0_10px_24px_rgba(245,66,66,0.2)] h-full flex flex-col">
+          <div className="sticky top-0 z-20 p-4 md:p-5 bg-[linear-gradient(135deg,#ff4f4f_0%,#f33c3c_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone && (
                 <button onClick={() => window.location.assign('/')} className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowLeft size={18} />
                 </button>
               )}
-              <div className="text-[20px] md:text-[22px] font-bold tracking-wide flex-1 min-w-0">神价好货</div>
+              <div className="text-[20px] md:text-[22px] font-bold tracking-wide flex-1 min-w-0">好价</div>
               {standalone && (
                 <>
                   <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><Info size={16} /></button>
@@ -26,46 +148,90 @@ export default function HotDealsRankPage({ standalone = false }) {
                 </>
               )}
             </div>
-            <div className="mt-3 h-10 rounded-full bg-white/95 px-3 flex items-center gap-2 text-[#9a3a3a]">
-              <span className="text-[13px] opacity-80 flex-1 truncate">mlb斜挎包</span>
-              <button className="h-7 px-3 rounded-full bg-[#f33c3c] text-white text-[12px] shrink-0">搜神价</button>
+            <div className={`mt-3 h-10 rounded-full bg-white pl-3 pr-1 flex items-center gap-2 border ${inputFocused ? 'border-[#ffd1dd] shadow-[0_0_0_2px_rgba(255,255,255,0.35)]' : 'border-[#ffdbe4]'}`}>
+              <MagnifyingGlass size={16} className="text-[#9aa4b2] shrink-0" />
+              <input
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                onFocus={() => setInputFocused(true)}
+                onBlur={() => setInputFocused(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSearch();
+                }}
+                placeholder="复合维生素"
+                className="flex-1 min-w-0 bg-transparent text-[14px] font-medium text-[#354052] placeholder:text-[#9aa4b2] outline-none"
+              />
+              <button
+                onClick={handleSearch}
+                className="h-8 w-[96px] rounded-full text-[16px] font-bold shrink-0"
+                style={{ backgroundColor: '#ff2f5b', color: '#ffffff', border: '1px solid #ff6f90' }}
+              >
+                搜好价
+              </button>
             </div>
-            <div className="text-[13px] mt-2 text-white/95">返利限时加码中，低价榜实时更新</div>
+            <div className="mt-3 h-11 rounded-full bg-[#ff1f54] text-white px-3 flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold">
+                <FireSimple size={18} weight="fill" />
+                <span className="text-[15px] leading-none">实时爆款精选</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-semibold text-[16px]">
+                <ClockCountdown size={16} />
+                <span className="text-[15px]">仅剩:</span>
+                <span className="inline-flex items-center font-mono tabular-nums tracking-tight">
+                  <span className="inline-block w-[2ch] text-center">{leftTime.slice(0, 2)}</span>
+                  <span className="inline-block w-[1ch] text-center">:</span>
+                  <span className="inline-block w-[2ch] text-center">{leftTime.slice(3, 5)}</span>
+                  <span className="inline-block w-[1ch] text-center">:</span>
+                  <span className="inline-block w-[2ch] text-center">{leftTime.slice(6, 8)}</span>
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-cardWhite p-4 md:p-5 rounded-t-3xl -mt-2">
-            <div className="flex items-center justify-between mb-3 bg-[#fff5f3] border border-[#ffd8d2] rounded-xl px-3 py-2">
-              <div className="flex items-center gap-2 text-[14px] font-bold text-textMain">
-                <FireSimple size={18} className="text-[#f54242]" />
-                实时爆款精选
-              </div>
-              <div className="text-[12px] text-[#f54242] flex items-center gap-1">
-                <ClockCountdown size={14} />
-                仅剩 00:59:29
-              </div>
-            </div>
-
+          <div className="bg-cardWhite p-4 md:p-5 rounded-t-3xl -mt-2 flex-1 overflow-y-auto">
             <div className="space-y-3">
-              {rankItems.map((item) => (
-                <div key={item.id} className="rounded-2xl border border-borderLine p-3 flex gap-3 bg-white shadow-[0_2px_8px_rgba(44,62,80,0.05)]">
-                  <div className="relative shrink-0">
-                    <img src={item.image} alt={item.title} className="w-[96px] h-[96px] rounded-lg border border-borderLine object-cover" />
-                    <span className="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-[#f54242] text-white text-[10px]">{item.top}</span>
-                  </div>
+              {initLoading && <div className="text-[13px] text-textMuted text-center py-4">好价商品加载中...</div>}
+              {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
+
+              {shownProducts.map((p, idx) => (
+                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#e9e9ee] p-2.5 flex gap-3 bg-white">
+                  <img src={p.image} alt={p.title} className="block shrink-0 w-[96px] h-[96px] rounded-lg border border-borderLine object-cover" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[14px] text-textMain line-clamp-2">{item.title}</p>
-                    <div className="mt-2 text-[12px] text-[#8f6b5f] bg-[#fff3ee] rounded-lg px-2 py-1 inline-block">约返 {item.rebate} 元 · 爆料价</div>
-                    <div className="mt-2 flex items-end justify-between">
-                      <div className="text-[#f54242]">
-                        <span className="text-[12px]">¥</span>
-                        <span className="text-[22px] font-bold">{item.price}</span>
-                      </div>
-                      <button className="h-8 px-3 rounded-lg bg-[#f54242] text-white text-[12px]">抢神价</button>
+                    <p className="text-[14px] font-medium text-[#2c3440] whitespace-nowrap overflow-hidden">{p.title}</p>
+                    <div className="mt-1 text-[12px] text-textMuted flex items-center justify-between gap-2">
+                      <span className="truncate text-[#8a93a0]">{p.shopName}</span>
+                      {p.brandName && p.brandName !== '其他' ? <span className="shrink-0">{p.brandName}</span> : null}
                     </div>
-                    <div className="text-[11px] text-textMuted mt-1">{item.extra}</div>
+                    <div className="mt-1.5 h-8 rounded-lg bg-[#fff6ef] border border-[#f9e5d8] px-2 text-[12px] text-[#be925f] flex items-center">
+                      约返{Math.round(Number(p.rebate || 0))}元，到手更划算
+                    </div>
+                    <div className="mt-1.5 flex items-end justify-between gap-2">
+                      <div>
+                        <div className="text-[#f54242]">
+                          <span className="text-[12px]">¥</span>
+                          <span className="text-[22px] font-bold">{p.price}</span>
+                          <span className="ml-1 text-[15px] font-bold">爆料价</span>
+                        </div>
+                        <div className="text-[12px] text-[#8f96a3]">月销{p.sales}</div>
+                      </div>
+
+                      {p.couponPrice > 0 ? (
+                        <div className="h-8 rounded-md bg-[#fff1f1] border border-[#ffdada] flex items-center overflow-hidden shrink-0">
+                          <span className="px-2 text-[#ef4444] text-[12px] font-semibold">¥{p.couponPrice} 优惠券</span>
+                          <button className="h-full px-2 bg-[#ffe3e3] text-[#ef4444] text-[12px] font-medium border-l border-[#ffd1d1]">领取</button>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
               ))}
+              {!initLoading && shownProducts.length === 0 ? (
+                <div className="text-[13px] text-textMuted text-center py-4">没有匹配的商品</div>
+              ) : null}
+
+              <div ref={loadMoreRef} className={`flex items-center justify-center text-[12px] text-textMuted ${hasMore ? 'h-10' : 'h-6 pb-1'}`}>
+                {loading && !initLoading ? '加载更多中...' : hasMore ? '下滑加载更多' : '没有更多了'}
+              </div>
             </div>
           </div>
         </div>

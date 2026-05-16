@@ -1,5 +1,5 @@
 import { Gift, Lightning, MagnifyingGlass, Medal, SealPercent, ShoppingCartSimple, Ticket } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const channels = [
   { name: '品牌特卖', icon: Medal },
@@ -11,17 +11,42 @@ const channels = [
 ];
 const channelIconBg = ['#ff4d8b', '#ff2b2b', '#3b82f6', '#22c55e', '#ef4444', '#10b981'];
 
-const products = [
-  { id: 'h1', title: '【神价精选】防蚊裤子 巴布豆儿童夏季透气薄款', price: '19.90', rebate: '2.68', image: 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=TOP' },
-  { id: 'h2', title: '【天猫】运动短袖速干T恤 男士夏季轻薄款', price: '39.00', rebate: '3.10', image: 'https://placehold.co/220x220/EEF2FF/5165A7?text=HOT' },
-  { id: 'h3', title: '【U选】厨房纸巾实惠装 4提组合', price: '25.80', rebate: '1.70', image: 'https://placehold.co/220x220/E8F7EF/4D8668?text=SAVE' }
-];
+const GOODS_API_URL = '/home/getGoodsList';
+const PAGE_SIZE = 20;
+
+function toCurrency(value) {
+  const n = Number(value || 0);
+  return Number.isFinite(n) ? n.toFixed(2) : '0.00';
+}
+
+function mapGoodsItem(raw = {}) {
+  return {
+    id: raw.id ?? raw.goodsId ?? Math.random(),
+    title: raw.dtitle || raw.title || '未命名商品',
+    image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
+    price: toCurrency(raw.actualPrice ?? raw.originalPrice ?? 0),
+    rebate: toCurrency(raw.commissionRate ?? 0),
+    sales: raw.monthSales ?? 0,
+    shopName: raw.shopName || '店铺',
+    brandName: raw.brandName || '其他',
+    couponPrice: Number(raw.couponPrice ?? 0)
+  };
+}
 
 export default function HomeDealsPage() {
   const [channelPage, setChannelPage] = useState(0);
   const [campaignPage, setCampaignPage] = useState(0);
   const [channelTouchX, setChannelTouchX] = useState(0);
   const [campaignTouchX, setCampaignTouchX] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [pageId, setPageId] = useState('1');
+  const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const loadMoreRef = useRef(null);
+  const inFlightRef = useRef(false);
+  const loadThrottleRef = useRef(0);
 
   const channelPages = [channels.slice(0, 4), channels.slice(4, 6)];
   const campaignPages = [
@@ -62,6 +87,58 @@ export default function HomeDealsPage() {
     if (delta < 0) goCampaignNext();
     else goCampaignPrev();
   };
+
+  const fetchGoods = async ({ append }) => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setLoadError('');
+    try {
+      const resp = await fetch(GOODS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId, pageSize: PAGE_SIZE })
+      });
+      if (!resp.ok) {
+        throw new Error(`商品接口请求失败: ${resp.status}`);
+      }
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const list = Array.isArray(payload?.list) ? payload.list : [];
+      const mapped = list.map(mapGoodsItem);
+      const nextPageId = list.length >= PAGE_SIZE ? String(Number(pageId || '1') + 1) : '';
+
+      setProducts((prev) => (append ? [...prev, ...mapped] : mapped));
+      setPageId(nextPageId || '');
+      setHasMore(Boolean(nextPageId));
+    } catch (e) {
+      setLoadError(e.message || '商品加载失败');
+    } finally {
+      inFlightRef.current = false;
+      setLoading(false);
+      setInitLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoods({ append: false });
+  }, []);
+
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver((entries) => {
+      const first = entries[0];
+      if (!first?.isIntersecting) return;
+      if (loading || initLoading || !hasMore) return;
+      const now = Date.now();
+      if (now - loadThrottleRef.current < 800) return;
+      loadThrottleRef.current = now;
+      fetchGoods({ append: true });
+    }, { threshold: 0.2 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, initLoading, hasMore, pageId]);
 
   return (
     <section className="page pb-[80px]">
@@ -116,22 +193,38 @@ export default function HomeDealsPage() {
         </div>
 
         <div className="space-y-3">
+          {initLoading && <div className="text-[13px] text-textMuted text-center py-4">商品加载中...</div>}
+          {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
           {products.map((p) => (
             <div key={p.id} className="bg-cardWhite border border-borderLine rounded-2xl p-3 flex gap-3">
-              <img src={p.image} alt={p.title} className="w-[110px] h-[110px] rounded-lg border border-borderLine object-cover" />
+              <img src={p.image} alt={p.title} className="block shrink-0 w-[110px] h-[110px] rounded-lg border border-borderLine object-cover" />
               <div className="flex-1 min-w-0">
-                <p className="text-[14px] text-textMain line-clamp-2">{p.title}</p>
-                <div className="mt-2 text-[12px] text-textMuted">全网比价低 · 月销2w+</div>
+                <p className="text-[14px] text-textMain whitespace-nowrap overflow-hidden">{p.title}</p>
+                <div className="mt-1 text-[12px] text-textMuted flex items-center justify-between gap-2">
+                  <span className="truncate">{p.shopName}</span>
+                  {p.brandName && p.brandName !== '其他' ? (
+                    <span className="shrink-0">{p.brandName}</span>
+                  ) : null}
+                </div>
+                <div className="mt-1 text-[12px] text-textMuted">月销{p.sales}</div>
                 <div className="mt-3 flex items-end justify-between">
                   <div>
                     <div className="text-[20px] font-bold text-[#d94b3d]">¥ {p.price}</div>
                     <div className="text-[12px] text-[#d94b3d]">约返 ¥ {p.rebate}</div>
                   </div>
-                  <button className="h-8 px-3 rounded-lg bg-primary text-white text-[12px]">领券购买</button>
+                  {p.couponPrice > 0 ? (
+                    <div className="h-8 rounded-md bg-[#fff1f1] border border-[#ffdada] flex items-center overflow-hidden">
+                      <span className="px-2 text-[#ef4444] text-[12px] font-semibold">¥{p.couponPrice} 优惠券</span>
+                      <button className="h-full px-2 bg-[#ffe3e3] text-[#ef4444] text-[12px] font-medium border-l border-[#ffd1d1]">领取</button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
           ))}
+          <div ref={loadMoreRef} className="h-10 flex items-center justify-center text-[12px] text-textMuted">
+            {loading && !initLoading ? '加载更多中...' : hasMore ? '下滑加载更多' : '没有更多了'}
+          </div>
         </div>
 
       </div>

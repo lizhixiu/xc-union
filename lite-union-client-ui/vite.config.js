@@ -10,6 +10,10 @@ export default defineConfig({
       '/dtk': {
         target: 'http://localhost:18090',
         changeOrigin: true
+      },
+      '/home': {
+        target: 'http://localhost:18090',
+        changeOrigin: true
       }
     }
   }

@@ -10,7 +10,7 @@ public class DtkConfig {
 
     private String appKey;
     private String appSecret;
-    private String apiUrl = "https://openapi.dataoke.com/api";
+    private String apiUrl = "https://openapi.dataoke.com";
     private boolean debug;
 
 }

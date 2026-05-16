@@ -163,8 +163,8 @@ export default function App() {
 
   if (isGoodPriceRoute) {
     return (
-      <div className="min-h-screen bg-appBg">
-        <div className="max-w-[1200px] mx-auto md:px-8">
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
           <HotDealsRankPage standalone />
         </div>
       </div>
