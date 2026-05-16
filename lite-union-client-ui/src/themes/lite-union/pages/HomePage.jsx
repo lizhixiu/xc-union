@@ -1,4 +1,4 @@
-import { Gift, Lightning, MagnifyingGlass, Medal, SealPercent, ShoppingCartSimple, Ticket, TrendUp } from '@phosphor-icons/react';
+import { Gift, Lightning, MagnifyingGlass, Medal, SealPercent, ShoppingCartSimple, Ticket } from '@phosphor-icons/react';
 import { useState } from 'react';
 
 const channels = [
@@ -134,10 +134,6 @@ export default function HomeDealsPage() {
           ))}
         </div>
 
-        <div className="fixed right-3 bottom-[92px] md:bottom-6 rounded-full bg-cardWhite border border-borderLine shadow px-3 py-2 text-[12px] text-textMain flex items-center gap-1">
-          <TrendUp size={14} className="text-primary" />
-          点击3个商品领红包
-        </div>
       </div>
     </section>
   );

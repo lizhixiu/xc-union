@@ -71,6 +71,7 @@ async function copyTextWithFallback(text) {
 }
 
 export default function App() {
+  const isGoodPriceRoute = typeof window !== 'undefined' && window.location.pathname === '/good-price';
   const [page, setPage] = useState('home');
   const [toast, setToast] = useState('');
 
@@ -160,6 +161,16 @@ export default function App() {
 
   const activeDesktopNav = useMemo(() => (page === 'detail' ? 'home' : page), [page]);
 
+  if (isGoodPriceRoute) {
+    return (
+      <div className="min-h-screen bg-appBg">
+        <div className="max-w-[1200px] mx-auto md:px-8">
+          <HotDealsRankPage standalone />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <header className="hidden md:flex bg-cardWhite border-b border-borderLine sticky top-0 z-50 h-[72px] items-center justify-between px-8">
@@ -167,7 +178,11 @@ export default function App() {
           <h1 className="text-[22px] font-bold text-textMain tracking-wide flex items-center gap-2"><Leaf size={22} className="text-primary" />轻购</h1>
           <nav className="flex gap-6">
             {['home', 'rank', 'profile'].map((n) => (
-              <button key={n} onClick={() => setPage(n)} className={`text-[15px] py-6 ${activeDesktopNav === n ? 'font-medium text-primary border-b-2 border-primary' : 'text-textMuted hover:text-textMain'}`}>
+              <button
+                key={n}
+                onClick={() => (n === 'rank' ? window.location.assign('/good-price') : setPage(n))}
+                className={`text-[15px] py-6 ${activeDesktopNav === n ? 'font-medium text-primary border-b-2 border-primary' : 'text-textMuted hover:text-textMain'}`}
+              >
                 {n === 'home' ? '首页' : n === 'rank' ? '好价' : '我'}
               </button>
             ))}
@@ -244,17 +259,13 @@ export default function App() {
           </section>
         )}
 
-        {page === 'rank' && (
-          <HotDealsRankPage />
-        )}
-
         {page === 'profile' && (
           <section className="page p-4 md:px-0 md:py-8 pb-[80px]">
             <MailboxAuthPanel onToast={showToast} />
           </section>
         )}
 
-        {page !== 'detail' && <BottomNav page={page} onSwitch={setPage} />}
+        {page !== 'detail' && <BottomNav page={page} onSwitch={(next) => (next === 'rank' ? window.location.assign('/good-price') : setPage(next))} />}
         <Toast message={toast} />
         {showQrModal && (
           <div className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] flex items-center justify-center p-4" onClick={() => setShowQrModal(false)}>
