@@ -10,13 +10,16 @@ function toCurrency(value) {
 }
 
 function mapGoodsItem(raw = {}) {
+  const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
+  const commissionRate = Number(raw.commissionRate ?? 0);
+  const rebateAmount = finalPrice * (commissionRate / 100);
   return {
     id: raw.id ?? raw.goodsId ?? Math.random(),
     goodsId: raw.goodsId ?? '',
     title: raw.dtitle || raw.title || '未命名商品',
     image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
-    price: toCurrency(raw.actualPrice ?? raw.originalPrice ?? 0),
-    rebate: toCurrency(raw.commissionRate ?? 0),
+    price: toCurrency(finalPrice),
+    rebate: toCurrency(rebateAmount),
     sales: raw.monthSales ?? 0,
     shopName: raw.shopName || '店铺',
     brandName: raw.brandName || '其他',
