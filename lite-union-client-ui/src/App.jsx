@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, Clock, Copy, Leaf, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
+import { ArrowLeft, Clock, Copy, Leaf, MagnifyingGlass, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
 import BottomNav from './components/BottomNav';
 import SearchBar from './components/SearchBar';
 import Toast from './components/Toast';
@@ -172,6 +172,35 @@ export default function App() {
   };
 
   const activeDesktopNav = useMemo(() => (page === 'detail' ? 'home' : page), [page]);
+  const footprintImages = [
+    'https://img.alicdn.com/bao/uploaded/i2/2217402909158/O1CN01dMZ5Wx2HWQIOb1fM0_!!2217402909158.jpg',
+    'https://img.alicdn.com/bao/uploaded/i3/2219113300539/O1CN01AoiRFw1FquZDcbMh6_!!4611686018427380283-0-item_pic.jpg',
+    'https://img.alicdn.com/bao/uploaded/i4/2216944218317/O1CN01YIG2ax2BJFD1mzttl_!!4611686018427384013-0-item_pic.jpg'
+  ];
+  const footprintGroups = [
+    {
+      date: '05月17日',
+      items: [
+        { id: 1, shop: '丹娜丝芊紫专卖店', title: '悬挂抽纸可湿水整箱实惠装', price: '3.66', rebate: '1.35', coupon: '' },
+        { id: 2, shop: '天猫超市', title: 'Pigeon贝亲桃叶洗发沐浴植物洗净', price: '34.69', rebate: '1.82', coupon: '一淘券 20元' },
+        { id: 3, shop: '阿里健康大药房', title: '【自营】多维元素补充片', price: '84.85', rebate: '2.17', coupon: '' }
+      ]
+    },
+    {
+      date: '05月16日',
+      items: [
+        { id: 4, shop: '薄爱旗舰店', title: '超薄避孕套4盒组合装', price: '9.90', rebate: '0.98', coupon: '一淘券 10元' },
+        { id: 5, shop: '国货严选企业工厂店', title: '蓝帽认证肉碱茶多酚胶囊', price: '29.90', rebate: '2.54', coupon: '' }
+      ]
+    },
+    {
+      date: '05月15日',
+      items: [
+        { id: 6, shop: '瑞幸即享咖啡旗舰店', title: '浓缩咖啡液32杯无糖黑咖啡', price: '44.70', rebate: '4.47', coupon: '' },
+        { id: 7, shop: 'bobdoghouse童鞋旗舰店', title: '儿童防蚊裤夏季透气两条装', price: '19.90', rebate: '0.72', coupon: '一淘券 5元' }
+      ]
+    }
+  ];
 
   if (isGoodPriceRoute) {
     return (
@@ -280,6 +309,70 @@ export default function App() {
       <div className="app-wrapper md:px-8">
         {page === 'home' && (
           <HomeDealsPage />
+        )}
+
+        {page === 'footprint' && (
+          <section className="page px-0 md:px-0 md:py-8 pb-[80px] bg-white">
+            <div className="bg-white px-0 pt-0 pb-2">
+              <div className="rounded-none bg-gradient-to-r from-[#F8EDE8] via-[#F8EBE8] to-[#F6E6E9] px-3 pt-3 pb-0">
+                <div className="flex items-center gap-2">
+                  <div className="text-[20px] font-bold text-[#222222] shrink-0">足迹返利</div>
+                  <div className="h-10 bg-white rounded-xl px-2 flex items-center gap-1.5 flex-1 min-w-0">
+                    <MagnifyingGlass size={16} className="text-[#B0B4BB] shrink-0" />
+                    <input className="flex-1 min-w-0 text-[14px] text-[#111111] placeholder:text-[#B0B4BB] outline-none bg-transparent" placeholder="搜索商品" />
+                    <button className="h-8 px-4 rounded-lg bg-[#FF3A3A] text-white text-[14px] font-semibold shrink-0">搜索</button>
+                  </div>
+                  <button className="shrink-0 text-[13px] text-[#333333] leading-none">攻略</button>
+                </div>
+                <div className="mt-3 grid grid-cols-3 h-10">
+                  {['查券', '足迹', '收藏夹'].map((tab, idx) => (
+                    <button key={tab} className="h-10 flex flex-col items-center justify-center relative">
+                      <span className={`text-[14px] ${idx === 0 ? 'text-[#111111] font-bold' : 'text-[#666666]'}`}>{tab}</span>
+                      {idx === 0 ? <span className="absolute bottom-0 h-[3px] w-5 rounded-full bg-[#FF3A3A]" /> : null}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="px-0 pb-3 space-y-2.5 bg-white">
+              <div className="px-3 space-y-3">
+                {footprintGroups.map((group) => (
+                  <div key={group.date} className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1 h-3.5 rounded-sm bg-[#FF0036] shrink-0" />
+                      <span className="text-[16px] text-[#333333] font-bold leading-none">{group.date}</span>
+                    </div>
+                    {group.items.map((item, idx) => (
+                      <div key={item.id} className="bg-white rounded-2xl border border-[#EBEDF1] p-2 flex gap-2 items-stretch">
+                        <div className="w-[88px] rounded-lg bg-[#F7F8FA] shrink-0 overflow-hidden">
+                          <img src={footprintImages[(item.id + idx) % footprintImages.length]} alt={item.title} className="w-full h-full object-cover" />
+                        </div>
+                    <div className="flex-1 min-w-0 min-h-[88px] flex flex-col">
+                      <div className="text-[12px] text-[#9C9EA5] truncate">{item.shop}</div>
+                      <div className="mt-0.5 text-[14px] text-[#222222] font-semibold leading-[1.25] truncate whitespace-nowrap">{item.title}</div>
+                      <div className="mt-auto flex justify-between items-end gap-2">
+                        <div className="min-w-0">
+                          <div className="text-[#FF3A3A] font-bold leading-none">
+                            <span className="text-[13px] mr-0.5">¥</span>
+                            <span className="text-[22px]">{item.price.split('.')[0]}</span>
+                            <span className="text-[13px]">.{item.price.split('.')[1] || '00'}</span>
+                          </div>
+                          <div className="mt-1 flex items-center gap-1 min-w-0">
+                            <span className="h-[20px] px-1.5 rounded-md bg-[#FFF0EA] text-[#FF4A3D] text-[12px] font-semibold inline-flex items-center whitespace-nowrap shrink-0">约返{item.rebate}元</span>
+                            {item.coupon ? <span className="h-[20px] px-1.5 rounded-md border border-[#FFDAD5] text-[#FF4A3D] text-[12px] inline-flex items-center whitespace-nowrap shrink-0">{item.coupon}</span> : null}
+                          </div>
+                        </div>
+                        <button className="shrink-0 bg-gradient-to-r from-[#FF5733] to-[#FF0036] text-white text-[12px] px-3 py-1.5 rounded-full font-medium">去购买</button>
+                      </div>
+                    </div>
+                  </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         )}
 
         {page === 'detail' && detail && (

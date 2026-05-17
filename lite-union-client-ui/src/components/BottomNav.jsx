@@ -1,7 +1,8 @@
-import { Leaf, TrendUp, User } from '@phosphor-icons/react';
+import { ClockCounterClockwise, Leaf, TrendUp, User } from '@phosphor-icons/react';
 
 const tabs = [
   { key: 'home', label: '首页', icon: Leaf },
+  { key: 'footprint', label: '足迹返利', icon: ClockCounterClockwise },
   { key: 'rank', label: '好价', icon: TrendUp },
   { key: 'profile', label: '我', icon: User }
 ];
