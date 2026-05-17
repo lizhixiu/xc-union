@@ -12,6 +12,7 @@ import BrandSaleRankPage from './themes/lite-union/pages/BrandSaleRankPage';
 import TaobaoFlashSalePage from './themes/lite-union/pages/TaobaoFlashSalePage';
 import CheckinRewardPage from './themes/lite-union/pages/CheckinRewardPage';
 import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
+import ProductDetailPage from './themes/lite-union/pages/ProductDetailPage';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 
@@ -44,6 +45,15 @@ function mapParseItem(raw = {}) {
     shortUrl: raw.shortUrl || '',
     itemLink: raw.itemLink || raw.shortUrl || raw.originUrl || ''
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+  } catch {
+    // ignore
+  }
+  window.location.assign('/product-detail');
 }
 
 async function copyTextWithFallback(text) {
@@ -84,6 +94,7 @@ export default function App() {
   const isFlashSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/flash-sale';
   const isCheckinRewardRoute = typeof window !== 'undefined' && window.location.pathname === '/checkin-reward';
   const isBillionSubsidyRoute = typeof window !== 'undefined' && window.location.pathname === '/billion-subsidy';
+  const isProductDetailRoute = typeof window !== 'undefined' && window.location.pathname === '/product-detail';
   const [page, setPage] = useState('home');
   const [toast, setToast] = useState('');
 
@@ -181,23 +192,23 @@ export default function App() {
     {
       date: '05月17日',
       items: [
-        { id: 1, shop: '丹娜丝芊紫专卖店', title: '悬挂抽纸可湿水整箱实惠装', price: '3.66', rebate: '1.35', coupon: '' },
-        { id: 2, shop: '天猫超市', title: 'Pigeon贝亲桃叶洗发沐浴植物洗净', price: '34.69', rebate: '1.82', coupon: '一淘券 20元' },
-        { id: 3, shop: '阿里健康大药房', title: '【自营】多维元素补充片', price: '84.85', rebate: '2.17', coupon: '' }
+        { id: 1, shop: '丹娜丝芊紫专卖店', title: '悬挂抽纸可湿水整箱实惠装', price: '3.66', originalPrice: '9.90', rebate: '1.35', coupon: '' },
+        { id: 2, shop: '天猫超市', title: 'Pigeon贝亲桃叶洗发沐浴植物洗净', price: '34.69', originalPrice: '59.00', rebate: '1.82', coupon: '一淘券 20元' },
+        { id: 3, shop: '阿里健康大药房', title: '【自营】多维元素补充片', price: '84.85', originalPrice: '129.00', rebate: '2.17', coupon: '' }
       ]
     },
     {
       date: '05月16日',
       items: [
-        { id: 4, shop: '薄爱旗舰店', title: '超薄避孕套4盒组合装', price: '9.90', rebate: '0.98', coupon: '一淘券 10元' },
-        { id: 5, shop: '国货严选企业工厂店', title: '蓝帽认证肉碱茶多酚胶囊', price: '29.90', rebate: '2.54', coupon: '' }
+        { id: 4, shop: '薄爱旗舰店', title: '超薄避孕套4盒组合装', price: '9.90', originalPrice: '29.90', rebate: '0.98', coupon: '一淘券 10元' },
+        { id: 5, shop: '国货严选企业工厂店', title: '蓝帽认证肉碱茶多酚胶囊', price: '29.90', originalPrice: '69.90', rebate: '2.54', coupon: '' }
       ]
     },
     {
       date: '05月15日',
       items: [
-        { id: 6, shop: '瑞幸即享咖啡旗舰店', title: '浓缩咖啡液32杯无糖黑咖啡', price: '44.70', rebate: '4.47', coupon: '' },
-        { id: 7, shop: 'bobdoghouse童鞋旗舰店', title: '儿童防蚊裤夏季透气两条装', price: '19.90', rebate: '0.72', coupon: '一淘券 5元' }
+        { id: 6, shop: '瑞幸即享咖啡旗舰店', title: '浓缩咖啡液32杯无糖黑咖啡', price: '44.70', originalPrice: '69.00', rebate: '4.47', coupon: '' },
+        { id: 7, shop: 'bobdoghouse童鞋旗舰店', title: '儿童防蚊裤夏季透气两条装', price: '19.90', originalPrice: '39.90', rebate: '0.72', coupon: '一淘券 5元' }
       ]
     }
   ];
@@ -267,6 +278,16 @@ export default function App() {
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
           <BillionSubsidyPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isProductDetailRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <ProductDetailPage standalone />
         </div>
       </div>
     );
@@ -344,7 +365,18 @@ export default function App() {
                       <span className="text-[16px] text-[#333333] font-bold leading-none">{group.date}</span>
                     </div>
                     {group.items.map((item, idx) => (
-                      <div key={item.id} className="bg-white rounded-2xl border border-[#EBEDF1] p-2 flex gap-2 items-stretch">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openProductDetail({
+                            source: 'footprint',
+                            ...item,
+                            image: footprintImages[(item.id + idx) % footprintImages.length]
+                          })
+                        }
+                        key={item.id}
+                        className="w-full text-left bg-white rounded-2xl border border-[#EBEDF1] p-2 flex gap-2 items-stretch"
+                      >
                         <div className="w-[88px] rounded-lg bg-[#F7F8FA] shrink-0 overflow-hidden">
                           <img src={footprintImages[(item.id + idx) % footprintImages.length]} alt={item.title} className="w-full h-full object-cover" />
                         </div>
@@ -366,7 +398,7 @@ export default function App() {
                         <button className="shrink-0 bg-gradient-to-r from-[#FF5733] to-[#FF0036] text-white text-[12px] px-3 py-1.5 rounded-full font-medium">去购买</button>
                       </div>
                     </div>
-                  </div>
+                  </button>
                     ))}
                   </div>
                 ))}

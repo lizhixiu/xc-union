@@ -23,6 +23,7 @@ function toCurrency(value) {
 
 function mapGoodsItem(raw = {}) {
   const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
+  const originPrice = Number(raw.originalPrice ?? finalPrice ?? 0);
   const commissionRate = Number(raw.commissionRate ?? 0);
   const rebateAmount = finalPrice * (commissionRate / 100);
   return {
@@ -30,12 +31,22 @@ function mapGoodsItem(raw = {}) {
     title: raw.dtitle || raw.title || '未命名商品',
     image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
     price: toCurrency(finalPrice),
+    originalPrice: toCurrency(originPrice),
     rebate: toCurrency(rebateAmount),
     sales: raw.monthSales ?? 0,
     shopName: raw.shopName || '店铺',
     brandName: raw.brandName || '其他',
     couponPrice: Number(raw.couponPrice ?? 0)
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+  } catch {
+    // ignore
+  }
+  window.location.assign('/product-detail');
 }
 
 export default function HomeDealsPage() {
@@ -232,7 +243,17 @@ export default function HomeDealsPage() {
           {initLoading && <div className="text-[13px] text-textMuted text-center py-4">商品加载中...</div>}
           {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
           {products.map((p) => (
-            <div key={p.id} className="bg-white border border-[#E6EAF0] rounded-2xl p-2.5 flex gap-2.5 items-stretch">
+            <button
+              type="button"
+              onClick={() =>
+                openProductDetail({
+                  source: 'home',
+                  ...p
+                })
+              }
+              key={p.id}
+              className="w-full text-left bg-white border border-[#E6EAF0] rounded-2xl p-2.5 flex gap-2.5 items-stretch"
+            >
               <div className="block shrink-0 w-[100px] rounded-lg bg-[#F7F8FA] overflow-hidden">
                 <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
               </div>
@@ -268,7 +289,7 @@ export default function HomeDealsPage() {
                   ) : null}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
           <div ref={loadMoreRef} className="h-10 flex items-center justify-center text-[12px] text-textMuted">
             {loading && !initLoading ? '加载更多中...' : hasMore ? '下滑加载更多' : '没有更多了'}
