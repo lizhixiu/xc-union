@@ -43,6 +43,7 @@ function mapGoodsItem(raw = {}) {
 function openProductDetail(payload) {
   try {
     sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+    sessionStorage.setItem('lite_union_return_path', '/');
   } catch {
     // ignore
   }

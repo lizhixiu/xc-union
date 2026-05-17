@@ -32,6 +32,13 @@ export default function ProductDetailPage({ standalone = false }) {
   const carouselImages = [mainImage, ...heroImages.filter((img) => img !== mainImage)].slice(0, 3);
 
   const currentImage = useMemo(() => carouselImages[activeIndex % carouselImages.length], [activeIndex, carouselImages]);
+  const returnPath = useMemo(() => {
+    try {
+      return sessionStorage.getItem('lite_union_return_path') || '/';
+    } catch {
+      return '/';
+    }
+  }, []);
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
@@ -40,7 +47,7 @@ export default function ProductDetailPage({ standalone = false }) {
           <div className="relative bg-white flex items-center justify-center overflow-hidden">
             <img src={currentImage} alt="商品主图" className="w-full h-[375px] object-cover" />
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-              <button onClick={() => window.location.assign('/')} className="w-9 h-9 rounded-full bg-black/25 text-white flex items-center justify-center backdrop-blur-sm">
+              <button onClick={() => window.location.assign(returnPath)} className="w-9 h-9 rounded-full bg-black/25 text-white flex items-center justify-center backdrop-blur-sm">
                 <ArrowLeft size={18} />
               </button>
             </div>

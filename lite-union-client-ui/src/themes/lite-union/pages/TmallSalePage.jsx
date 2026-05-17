@@ -33,29 +33,28 @@ function formatSales(value) {
 
 function mapGoodsItem(raw = {}) {
   const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
-  const originalPrice = Number(raw.originalPrice ?? 0);
+  const originalPrice = Number(raw.originalPrice ?? finalPrice * 1.25);
   const commissionRate = Number(raw.commissionRate ?? 0);
   const rebateAmount = finalPrice * (commissionRate / 100);
-  const discount = Number(raw.discounts ?? 0);
   return {
     id: raw.id ?? raw.goodsId ?? Math.random(),
     goodsId: raw.goodsId ?? '',
     title: raw.dtitle || raw.title || '未命名商品',
     image: raw.mainPic || 'https://placehold.co/300x300/F2F7EF/5B8A4D?text=GOODS',
     price: toCurrency(finalPrice),
-    oldPrice: originalPrice > 0 ? `¥${toCurrency(originalPrice)}` : '',
-    discountText: discount > 0 ? `${(discount * 10).toFixed(1)}折` : '',
+    oldPrice: originalPrice > finalPrice ? `¥${toCurrency(originalPrice)}` : `¥${toCurrency(finalPrice * 1.25)}`,
     couponPrice: Number(raw.couponPrice ?? 0),
     rebate: toCurrency(rebateAmount),
     sold: `已售${formatSales(raw.monthSales)}件`,
     activityName: raw.activityInfo?.[0]?.activityName || '天猫超市特卖',
-    shopName: raw.shopName || '天猫超市'
+    shopName: raw.shopName || '天猫超市',
+    badgeText: raw.activityInfo?.[0]?.activityName || '热销爆品'
   };
 }
 
 export default function TmallSalePage({ standalone = false }) {
   const [keyword, setKeyword] = useState('');
-  const [activeTab, setActiveTab] = useState('单品包邮');
+  const [activeTab, setActiveTab] = useState('精选推荐');
   const [goods, setGoods] = useState([]);
   const [pageId, setPageId] = useState('1');
   const [loading, setLoading] = useState(false);
@@ -138,11 +137,21 @@ export default function TmallSalePage({ standalone = false }) {
     return goods.filter((g) => `${g.title} ${g.shopName}`.toLowerCase().includes(q));
   }, [goods, keyword]);
 
+  const openProductDetail = (payload) => {
+    try {
+      sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+      sessionStorage.setItem('lite_union_return_path', '/tmall-sale');
+    } catch {
+      // ignore
+    }
+    window.location.assign('/product-detail');
+  };
+
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
         <div className="h-full flex flex-col bg-[#f3fbf4] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#b9e0bf] md:shadow-[0_12px_30px_rgba(54,135,83,0.18)]">
-          <div className="sticky top-0 z-20 bg-[linear-gradient(160deg,#30ae61_0%,#279e57_100%)] p-4 text-white">
+          <div className="sticky top-0 z-20 bg-gradient-to-b from-[#00B262] to-[#009A55] p-4 text-white">
             <div className="flex items-center gap-3">
               {standalone ? (
                 <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -164,9 +173,11 @@ export default function TmallSalePage({ standalone = false }) {
               <button className="h-8 min-w-[88px] rounded-full bg-[#2ea85d] text-white text-[14px] font-semibold">搜索</button>
             </div>
 
-            <div className="mt-3 grid grid-cols-3 gap-2 text-[12px]">
-              {['品牌好货', '9.9秒杀', '补贴专区'].map((item) => (
-                <div key={item} className="h-8 rounded-full bg-white/18 flex items-center justify-center">{item}</div>
+            <div className="mt-3 flex items-center gap-5 text-[12px] text-white/82">
+              {['品牌好货', '9.9秒杀', '补贴专区'].map((item, idx) => (
+                <span key={item} className={idx === 0 ? 'font-bold text-white' : 'font-normal'}>
+                  {item}
+                </span>
               ))}
             </div>
           </div>
@@ -194,7 +205,7 @@ export default function TmallSalePage({ standalone = false }) {
                   <button
                     key={t}
                     onClick={() => setActiveTab(t)}
-                    className={`h-9 px-4 rounded-full text-[13px] font-semibold ${active ? 'bg-[#2ca95d] text-white shadow-[0_6px_12px_rgba(44,169,93,0.25)]' : 'bg-[#f0f8f2] text-[#4e765f]'}`}
+                    className={`h-9 px-4 rounded-full text-[13px] font-semibold relative ${active ? 'bg-[#E8F8F0] text-[#00B262] font-bold' : 'bg-[#f0f8f2] text-[#4e765f]'}`}
                   >
                     {t}
                   </button>
@@ -207,33 +218,39 @@ export default function TmallSalePage({ standalone = false }) {
 
             <div className="grid grid-cols-2 gap-2">
               {shownGoods.map((g, idx) => (
-                <div key={`${g.id}-${g.goodsId || 'g'}-${idx}`} className="bg-white rounded-2xl border border-[#cfe8d4] overflow-hidden shadow-[0_2px_8px_rgba(57,117,77,0.08)]">
-                  <div className="px-2 pt-2">
-                    <div className="inline-flex items-center gap-1 rounded-full bg-[#eaf7ee] text-[#2a8f53] text-[10px] px-2 py-0.5">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openProductDetail({
+                      source: 'tmall-sale',
+                      ...g,
+                      originalPrice: (g.oldPrice || '').replace('¥', '')
+                    })
+                  }
+                  key={`${g.id}-${g.goodsId || 'g'}-${idx}`}
+                  className="w-full text-left rounded-[8px] overflow-hidden bg-white shadow-[0_2px_8px_rgba(57,117,77,0.08)]"
+                >
+                  <div className="relative aspect-square bg-[#F7F8FA] overflow-hidden">
+                    <img src={g.image} alt={g.title} className="w-full h-full object-cover" />
+                    <div className="absolute top-0 left-0 inline-flex items-center gap-1 rounded-br-[8px] bg-gradient-to-br from-[#00C261] to-[#009A55] text-white text-[10px] px-2 py-1">
                       <Sparkle size={10} />
-                      {g.activityName}
+                      {g.badgeText}
                     </div>
                   </div>
-                  <div className="mt-1 px-2">
-                    <div className="w-full aspect-square rounded-xl bg-[#f3fbf4] border border-[#deefe1] p-2 flex items-center justify-center overflow-hidden">
-                      <img src={g.image} alt={g.title} className="w-full h-full object-contain" />
+                  <div className="px-2.5 py-2.5">
+                    <p className="text-[13px] text-[#111111] font-semibold leading-[1.35] line-clamp-2 min-h-[36px]">{g.title}</p>
+                    <div className="mt-1 inline-flex items-center px-1.5 py-[2px] rounded-[3px] border border-[#FFD8B2] bg-[#FFF4ED] text-[#FF5000] text-[10px] leading-none">
+                      返¥{g.rebate}
                     </div>
-                  </div>
-                  <div className="p-2.5">
-                    <p className="text-[12px] text-[#2d4b39] line-clamp-2 min-h-[32px]">{g.discountText ? <span className="text-[#2b9a56] font-semibold mr-1">{g.discountText}</span> : null}{g.title}</p>
-                    <div className="mt-1 text-[11px] text-[#5f8c71] flex items-center justify-between">
-                      <span>{g.couponPrice > 0 ? `券¥${g.couponPrice}` : '无券'}</span>
-                      <span className="text-[#4f8768]">返¥{g.rebate}</span>
-                    </div>
-                    <div className="mt-1.5 flex items-end justify-between">
+                    <div className="mt-1.5 flex items-end justify-between gap-2">
                       <div>
-                        <div className="text-[#ef4444]"><span className="text-[11px]">¥</span><span className="text-[18px] font-bold">{g.price}</span></div>
-                        {g.oldPrice ? <div className="text-[11px] text-[#9fb2a4] line-through">{g.oldPrice}</div> : null}
+                        <div className="text-[#FF0036]"><span className="text-[11px]">¥</span><span className="text-[18px] font-bold">{g.price}</span></div>
+                        {g.oldPrice ? <div className="text-[11px] text-[#9AA1AC] line-through">{g.oldPrice}</div> : null}
                       </div>
                       <div className="text-[10px] text-[#5d8b70]">{g.sold}</div>
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 
