@@ -13,8 +13,8 @@ const taskGoods = [
 export default function CheckinRewardPage({ standalone = false }) {
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="h-full rounded-3xl overflow-hidden border border-[#b8d4ff] bg-[#f4f8ff] shadow-[0_12px_30px_rgba(59,130,246,0.16)] flex flex-col">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#f4f8ff] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#b8d4ff] md:shadow-[0_12px_30px_rgba(59,130,246,0.16)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#4f86ff_0%,#3b78f0_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone ? <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}

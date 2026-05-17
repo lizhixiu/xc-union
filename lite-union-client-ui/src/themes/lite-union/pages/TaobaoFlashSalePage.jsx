@@ -9,8 +9,8 @@ const items = [
 export default function TaobaoFlashSalePage({ standalone = false }) {
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="h-full rounded-3xl overflow-hidden border border-[#ffb8b8] bg-[#fff5f5] shadow-[0_12px_30px_rgba(236,72,72,0.18)] flex flex-col">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#fff5f5] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffb8b8] md:shadow-[0_12px_30px_rgba(236,72,72,0.18)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#ff5959_0%,#ef4444_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone ? <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}

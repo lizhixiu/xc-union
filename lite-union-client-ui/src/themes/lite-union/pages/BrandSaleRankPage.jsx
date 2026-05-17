@@ -57,8 +57,8 @@ export default function BrandSaleRankPage({ standalone = false }) {
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="h-full rounded-3xl overflow-hidden border border-[#ffcadb] bg-[#fff6fa] shadow-[0_12px_28px_rgba(218,83,137,0.2)] flex flex-col">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#fff6fa] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffcadb] md:shadow-[0_12px_28px_rgba(218,83,137,0.2)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#ff6da1_0%,#ff5a93_60%,#f94f89_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone ? (

@@ -140,8 +140,8 @@ export default function TmallSalePage({ standalone = false }) {
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="h-full rounded-3xl overflow-hidden border border-[#b9e0bf] bg-[#f3fbf4] shadow-[0_12px_30px_rgba(54,135,83,0.18)] flex flex-col">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#f3fbf4] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#b9e0bf] md:shadow-[0_12px_30px_rgba(54,135,83,0.18)]">
           <div className="sticky top-0 z-20 bg-[linear-gradient(160deg,#30ae61_0%,#279e57_100%)] p-4 text-white">
             <div className="flex items-center gap-3">
               {standalone ? (

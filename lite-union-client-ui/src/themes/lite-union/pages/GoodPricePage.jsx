@@ -144,8 +144,8 @@ export default function GoodPricePage({ standalone = false }) {
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="rounded-3xl overflow-hidden border border-[#ffb7ab] shadow-[0_12px_30px_rgba(245,66,66,0.16)] h-full flex flex-col bg-[#fff8f7]">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#fff8f7] border-0 rounded-none md:rounded-3xl md:border md:border-[#ffb7ab] md:shadow-[0_12px_30px_rgba(245,66,66,0.16)]">
           <div className="sticky top-0 z-20 p-4 md:p-5 bg-[linear-gradient(145deg,#ff4f58_0%,#ff3b49_65%,#ff3342_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone && (

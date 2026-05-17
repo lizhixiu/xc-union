@@ -14,8 +14,8 @@ export default function BillionSubsidyPage({ standalone = false }) {
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
-      <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="h-full rounded-3xl overflow-hidden border border-[#ffc7b7] bg-[#fff6f4] shadow-[0_12px_30px_rgba(234,88,12,0.16)] flex flex-col">
+      <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
+        <div className="h-full flex flex-col bg-[#fff6f4] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffc7b7] md:shadow-[0_12px_30px_rgba(234,88,12,0.16)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#ff6f4f_0%,#ff5a3f_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone ? <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}
