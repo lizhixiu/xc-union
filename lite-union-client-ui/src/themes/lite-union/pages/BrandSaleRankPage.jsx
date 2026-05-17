@@ -10,10 +10,10 @@ const brandStrip = [
 ];
 
 const featuredGoods = [
-  { id: 'f1', title: '海飞丝去屑洗发露 750ml', price: '39.9', tag: '领券', image: 'https://placehold.co/180x180/FCEAF3/BE5E8D?text=HOT' },
-  { id: 'f2', title: '美的空气炸锅 4L', price: '179.0', tag: '同款低价', image: 'https://placehold.co/180x180/F9EEF5/A96988?text=HOT' },
-  { id: 'f3', title: '小米无线耳机青春版', price: '89.0', tag: '约返', image: 'https://placehold.co/180x180/F8ECF3/9A6385?text=HOT' },
-  { id: 'f4', title: '百雀羚护肤套装', price: '99.0', tag: '领券', image: 'https://placehold.co/180x180/FDEEF4/BC6C96?text=HOT' }
+  { id: 'f1', title: '海飞丝去屑洗发露 750ml', price: '39.9', tag: '领券', image: 'https://picsum.photos/seed/brand-hot-1/240/240' },
+  { id: 'f2', title: '美的空气炸锅 4L', price: '179.0', tag: '同款低价', image: 'https://picsum.photos/seed/brand-hot-2/240/240' },
+  { id: 'f3', title: '小米无线耳机青春版', price: '89.0', tag: '约返', image: 'https://picsum.photos/seed/brand-hot-3/240/240' },
+  { id: 'f4', title: '百雀羚护肤套装', price: '99.0', tag: '领券', image: 'https://picsum.photos/seed/brand-hot-4/240/240' }
 ];
 
 const tabs = ['精选品牌', '上新', '美妆', '个护', '食品', '母婴'];
@@ -24,11 +24,11 @@ const stores = [
     name: '美的官方旗舰店',
     count: 326,
     discount: '低至3.6折',
-    logo: 'https://placehold.co/88x88/FFE7EF/BE5E8D?text=M',
+    logo: 'https://picsum.photos/seed/store-logo-1/88/88',
     goods: [
-      { id: 's1g1', price: '¥199', tag: '超值', image: 'https://placehold.co/120x120/FDF1F6/BF6F92?text=1' },
-      { id: 's1g2', price: '¥89', tag: '同款低价', image: 'https://placehold.co/120x120/FDF0F5/AB6A88?text=2' },
-      { id: 's1g3', price: '¥329', tag: '最低价', image: 'https://placehold.co/120x120/FAEAF2/AE5C84?text=3' }
+      { id: 's1g1', price: '¥199', tag: '超值', image: 'https://picsum.photos/seed/store-1-1/180/180' },
+      { id: 's1g2', price: '¥89', tag: '同款低价', image: 'https://picsum.photos/seed/store-1-2/180/180' },
+      { id: 's1g3', price: '¥329', tag: '最低价', image: 'https://picsum.photos/seed/store-1-3/180/180' }
     ]
   },
   {
@@ -36,11 +36,11 @@ const stores = [
     name: '小米品牌专场',
     count: 218,
     discount: '低至4.1折',
-    logo: 'https://placehold.co/88x88/FFE8EE/C86A89?text=MI',
+    logo: 'https://picsum.photos/seed/store-logo-2/88/88',
     goods: [
-      { id: 's2g1', price: '¥79', tag: '超值', image: 'https://placehold.co/120x120/FCECF3/BB6A8B?text=1' },
-      { id: 's2g2', price: '¥149', tag: '同款低价', image: 'https://placehold.co/120x120/FBEAF2/BF6F91?text=2' },
-      { id: 's2g3', price: '¥269', tag: '最低价', image: 'https://placehold.co/120x120/F9E8F0/AE5E86?text=3' }
+      { id: 's2g1', price: '¥79', tag: '超值', image: 'https://picsum.photos/seed/store-2-1/180/180' },
+      { id: 's2g2', price: '¥149', tag: '同款低价', image: 'https://picsum.photos/seed/store-2-2/180/180' },
+      { id: 's2g3', price: '¥269', tag: '最低价', image: 'https://picsum.photos/seed/store-2-3/180/180' }
     ]
   }
 ];
@@ -111,9 +111,9 @@ export default function BrandSaleRankPage({ standalone = false }) {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-[15px] font-bold text-[#553a7a]">特卖精选</div>
-                  <div className="text-[12px] text-[#8b73ac]">精选好物合集</div>
+                  <div className="text-[12px] text-[#8b73ac]">品牌热门单品</div>
                 </div>
-                <button className="h-7 px-3 rounded-full bg-white text-[#7d63a6] text-[12px] border border-[#e1d2f8]">看更多</button>
+                <button className="h-7 px-3 rounded-full bg-white text-[#7d63a6] text-[12px] border border-[#e1d2f8]">更多</button>
               </div>
               <div className="mt-3 overflow-x-auto">
                 <div className="inline-flex gap-2 min-w-max pr-2">

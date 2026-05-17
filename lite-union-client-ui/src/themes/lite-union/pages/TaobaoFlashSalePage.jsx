@@ -1,9 +1,9 @@
 import { ArrowLeft, DotsThree, FireSimple, Lightning } from '@phosphor-icons/react';
 
 const items = [
-  { id: 'm1', title: '蕉下防晒伞 晴雨两用轻量款', desc: '今日秒杀限量 500 件', price: '89.00', drop: '直降¥39', heat: 86, image: 'https://placehold.co/220x220/FDEDEC/CB5D5D?text=SALE' },
-  { id: 'm2', title: '维达抽纸 120抽*24包 家庭装', desc: '大牌日用补货好价', price: '39.90', drop: '直降¥12', heat: 72, image: 'https://placehold.co/220x220/FCEEEF/BF6D7E?text=SALE' },
-  { id: 'm3', title: '美的空气炸锅 4L 智能菜单', desc: '厨房神器限时抢', price: '179.00', drop: '直降¥50', heat: 91, image: 'https://placehold.co/220x220/FBEDEF/C46A7A?text=SALE' }
+  { id: 'm1', title: '蕉下防晒伞 晴雨两用轻量款', desc: '今日秒杀限量 500 件', price: '89.00', drop: '直降¥39', heat: 86, image: 'https://picsum.photos/seed/flashsale-1/320/320' },
+  { id: 'm2', title: '维达抽纸 120抽*24包 家庭装', desc: '大牌日用补货好价', price: '39.90', drop: '直降¥12', heat: 72, image: 'https://picsum.photos/seed/flashsale-2/320/320' },
+  { id: 'm3', title: '美的空气炸锅 4L 智能菜单', desc: '厨房神器限时抢', price: '179.00', drop: '直降¥50', heat: 91, image: 'https://picsum.photos/seed/flashsale-3/320/320' }
 ];
 
 export default function TaobaoFlashSalePage({ standalone = false }) {

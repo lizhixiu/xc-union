@@ -5,9 +5,9 @@ const dayRewards = [
 ];
 
 const taskGoods = [
-  { id: 'c1', title: '逛母婴会场', image: 'https://placehold.co/150x150/EAF3FF/5F88C9?text=TASK' },
-  { id: 'c2', title: '逛零食专场', image: 'https://placehold.co/150x150/EAF3FF/5A7DB8?text=TASK' },
-  { id: 'c3', title: '逛个护精选', image: 'https://placehold.co/150x150/EAF3FF/678FCF?text=TASK' }
+  { id: 'c1', title: '逛母婴会场', image: 'https://picsum.photos/seed/checkin-1/220/220' },
+  { id: 'c2', title: '逛零食专场', image: 'https://picsum.photos/seed/checkin-2/220/220' },
+  { id: 'c3', title: '逛个护精选', image: 'https://picsum.photos/seed/checkin-3/220/220' }
 ];
 
 export default function CheckinRewardPage({ standalone = false }) {

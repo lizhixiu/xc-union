@@ -4,9 +4,9 @@ import { useState } from 'react';
 const tabs = ['精选', '母婴文教', '食品', '美妆', '健康'];
 
 const list = [
-  { id: 'y1', title: '特仑苏纯牛奶250ml*16盒 官方直供', brand: '特仑苏', subsidy: '补后价', rebate: '约返¥0.87', price: '33.90', market: '¥39.90', sales: '已售100万+', image: 'https://placehold.co/220x220/FEEFEF/C17373?text=SUB' },
-  { id: 'y2', title: '认养一头牛纯牛奶200ml*20盒', brand: '认养一头牛', subsidy: '补后价', rebate: '约返¥6.51', price: '64.90', market: '¥74.90', sales: '已售4万+', image: 'https://placehold.co/220x220/FDF1F1/BE7272?text=SUB' },
-  { id: 'y3', title: '婴幼儿维生素D3滴剂 30ml', brand: '健敏思', subsidy: '补后价', rebate: '约返¥5.12', price: '162.00', market: '¥189.00', sales: '已售2万+', image: 'https://placehold.co/220x220/FCEEEF/C67676?text=SUB' }
+  { id: 'y1', title: '特仑苏纯牛奶250ml*16盒 官方直供', brand: '特仑苏', subsidy: '补后价', rebate: '约返¥0.87', price: '33.90', market: '¥39.90', sales: '已售100万+', image: 'https://picsum.photos/seed/subsidy-1/320/320' },
+  { id: 'y2', title: '认养一头牛纯牛奶200ml*20盒', brand: '认养一头牛', subsidy: '补后价', rebate: '约返¥6.51', price: '64.90', market: '¥74.90', sales: '已售4万+', image: 'https://picsum.photos/seed/subsidy-2/320/320' },
+  { id: 'y3', title: '婴幼儿维生素D3滴剂 30ml', brand: '健敏思', subsidy: '补后价', rebate: '约返¥5.12', price: '162.00', market: '¥189.00', sales: '已售2万+', image: 'https://picsum.photos/seed/subsidy-3/320/320' }
 ];
 
 export default function BillionSubsidyPage({ standalone = false }) {
