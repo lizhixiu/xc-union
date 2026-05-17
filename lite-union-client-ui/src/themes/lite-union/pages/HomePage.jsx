@@ -1,4 +1,4 @@
-import { Gift, Lightning, MagnifyingGlass, Medal, SealPercent, ShoppingCartSimple, Ticket } from '@phosphor-icons/react';
+import { BookmarkSimple, Camera, ChatCircleDots, Gift, Lightning, MagnifyingGlass, Medal, QrCode, SealPercent, ShoppingCartSimple, Ticket } from '@phosphor-icons/react';
 import { useEffect, useRef, useState } from 'react';
 
 const channels = [
@@ -10,7 +10,8 @@ const channels = [
   { name: '淘宝秒杀', icon: Lightning },
   { name: '国家补贴', icon: Ticket }
 ];
-const channelIconBg = ['#ff4d8b', '#ff2b2b', '#3b82f6', '#22c55e', '#ef4444', '#10b981'];
+const channelIconBg = ['#FFF0F3', '#FFF4ED', '#EEF4FF', '#EBFFF3', '#FFF4ED', '#FFF0F3', '#EEF4FF'];
+const channelIconColor = ['#FF0036', '#FF5000', '#0066FF', '#00C261', '#FF5000', '#FF0036', '#0066FF'];
 
 const GOODS_API_URL = '/home/getGoodsList';
 const PAGE_SIZE = 20;
@@ -52,7 +53,7 @@ export default function HomeDealsPage() {
   const inFlightRef = useRef(false);
   const loadThrottleRef = useRef(0);
 
-  const channelPages = [channels.slice(0, 4), channels.slice(4, 7)];
+  const channelPages = [channels.slice(0, 6), channels.slice(6, 7)];
   const campaignPages = [
     [
       { title: '下单挑战赛', desc: '完成指定单量，额外返现奖励' },
@@ -146,18 +147,27 @@ export default function HomeDealsPage() {
 
   return (
     <section className="page pb-[80px]">
-      <div className="p-4 md:p-0 space-y-3">
-        <div className="sticky top-0 md:top-[72px] z-30 py-1 bg-appBg/95 backdrop-blur">
-          <div className="flex items-center gap-2 h-11 rounded-xl bg-white border border-[#ffcec2] px-3 shadow-[0_4px_12px_rgba(217,75,61,0.1)]">
-            <MagnifyingGlass size={16} className="text-[#c96c59]" />
-            <span className="text-[13px] text-[#8b3b2d] flex-1">粘贴口令/链接，输入内容后一键解析</span>
-            <button className="h-8 px-3 rounded-lg bg-[#d94b3d] text-white text-[12px]">解析</button>
+      <div className="px-3 pb-3 pt-0 md:p-0 space-y-2 bg-[#F2F4F8]">
+        <div className="sticky top-0 md:top-[72px] z-30 -mx-3 md:mx-0 px-3 md:px-0 pt-2 pb-0 bg-[#F2F4F8]">
+          <div className="h-10 flex items-center gap-1.5">
+            <div className="flex-1 h-full rounded-[12px] bg-white border border-[#FFD0DA] px-2 flex items-center gap-1.5">
+              <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><QrCode size={15} /></span>
+              <span className="text-[13px] text-[#111111] flex-1 font-medium">复合维生素 b</span>
+              <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><Camera size={15} /></span>
+              <button className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95">搜索</button>
+            </div>
+            <button className="w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
+              <BookmarkSimple size={20} />
+            </button>
+            <button className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
+              <ChatCircleDots size={20} />
+              <span className="absolute -right-0.5 -top-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#FF0036] text-white text-[10px] leading-4 text-center">6</span>
+            </button>
           </div>
         </div>
 
-        <div className="bg-cardWhite border border-borderLine rounded-2xl p-3" onTouchStart={onChannelTouchStart} onTouchEnd={onChannelTouchEnd}>
-          <div className="flex items-center gap-2">
-            <div className="grid grid-cols-4 gap-1.5 flex-1">
+        <div className="bg-white border border-[#EBEBEB] rounded-2xl p-2.5" onTouchStart={onChannelTouchStart} onTouchEnd={onChannelTouchEnd}>
+          <div className="grid grid-cols-6 gap-1.5">
             {channelPages[channelPage].map((c, idx) => {
               const Icon = c.icon;
               return (
@@ -183,27 +193,29 @@ export default function HomeDealsPage() {
                       window.location.assign('/billion-subsidy');
                     }
                   }}
-                  className="h-[68px] rounded-xl bg-transparent flex flex-col items-center justify-center gap-1"
+                  className="h-[72px] rounded-xl bg-transparent flex flex-col items-center justify-center gap-1"
                 >
-                  <span className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: channelIconBg[idx % channelIconBg.length] }}>
-                    <Icon size={18} className="text-white" weight="bold" />
+                  <span className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: channelIconBg[idx % channelIconBg.length] }}>
+                    <Icon size={18} style={{ color: channelIconColor[idx % channelIconColor.length] }} weight="bold" />
                   </span>
-                  <span className="text-[12px] text-textMain whitespace-nowrap">{c.name}</span>
+                  <span className="text-[12px] text-[#333333] whitespace-nowrap">{c.name}</span>
                 </button>
               );
             })}
+          </div>
+          {channelPages.length > 1 ? (
+            <div className="mt-1.5 flex justify-center gap-1">
+              {channelPages.map((_, idx) => (
+                <span key={idx} className={`h-1 rounded-full ${idx === channelPage ? 'w-5 bg-[#FF0036]' : 'w-4 bg-[#D7DCE4]'}`} />
+              ))}
             </div>
-          </div>
-          <div className="mt-1 flex justify-center gap-1">
-            {channelPages.map((_, idx) => (
-              <span key={idx} className={`h-1 rounded-full ${idx === channelPage ? 'w-5 bg-[#ff4f4f]' : 'w-4 bg-borderLine'}`} />
-            ))}
-          </div>
+          ) : null}
         </div>
 
-        <div className="bg-[#fff4f2] border border-[#ffd7d1] rounded-2xl p-3 flex items-center justify-between gap-3">
-          <div className="text-[13px] text-textMain">购物车商品找到 <span className="text-[#d94b3d] font-bold">88元</span> 隐藏红包</div>
-          <button className="h-8 px-4 rounded-lg bg-[#d94b3d] text-white text-[13px]">去领取</button>
+        <div className="h-12 bg-[#FFF7F7] border border-[#FCE1E1] rounded-xl px-3 flex items-center gap-2">
+          <span className="w-6 h-6 rounded-md bg-[#FF4142] text-white text-[14px] flex items-center justify-center">￥</span>
+          <div className="flex-1 text-[13px] text-[#111111]">购物车商品找到 <span className="text-[#FF0036] font-semibold">50元隐藏红包</span></div>
+          <button className="h-8 px-4 rounded-lg bg-[#FF0036] text-white text-[13px] font-medium">去领取</button>
         </div>
 
         <div className="grid grid-cols-2 gap-2" onTouchStart={onCampaignTouchStart} onTouchEnd={onCampaignTouchEnd}>
@@ -211,10 +223,10 @@ export default function HomeDealsPage() {
             <button
               key={`${campaignPage}_${item.title}`}
               onClick={goCampaignNext}
-              className="bg-cardWhite border border-borderLine rounded-2xl p-3 text-left min-h-[92px]"
+              className="bg-cardWhite border border-borderLine rounded-2xl p-2 text-left min-h-[70px]"
             >
-              <p className="text-[15px] font-bold text-textMain">{item.title}</p>
-              <p className="text-[12px] text-textMuted mt-1">{item.desc}</p>
+              <p className="text-[14px] font-bold text-textMain leading-[1.2]">{item.title}</p>
+              <p className="text-[12px] text-textMuted mt-0.5 truncate leading-[1.15]">{item.desc}</p>
             </button>
           ))}
         </div>
@@ -223,26 +235,38 @@ export default function HomeDealsPage() {
           {initLoading && <div className="text-[13px] text-textMuted text-center py-4">商品加载中...</div>}
           {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
           {products.map((p) => (
-            <div key={p.id} className="bg-cardWhite border border-borderLine rounded-2xl p-3 flex gap-3">
-              <img src={p.image} alt={p.title} className="block shrink-0 w-[110px] h-[110px] rounded-lg border border-borderLine object-cover" />
+            <div key={p.id} className="bg-white border border-[#E6EAF0] rounded-2xl p-2.5 flex gap-2.5 items-stretch">
+              <div className="block shrink-0 w-[100px] rounded-lg bg-[#F7F8FA] overflow-hidden">
+                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[14px] text-textMain whitespace-nowrap overflow-hidden">{p.title}</p>
-                <div className="mt-1 text-[12px] text-textMuted flex items-center justify-between gap-2">
-                  <span className="truncate">{p.shopName}</span>
+              <p className="text-[15px] text-[#111111] font-medium leading-[1.35] whitespace-nowrap overflow-hidden">{p.title}</p>
+                <div className="mt-2 h-[18px] flex items-center justify-between gap-2">
+                  {p.shopName && p.shopName.includes('旗舰店') ? (
+                    <span className="truncate inline-flex items-center px-1.5 py-[2px] rounded-[4px] bg-[#FCF6ED] border border-[#F3DAB1] text-[#A6742B] text-[10px] leading-none">
+                      <span className="truncate leading-none">{p.shopName}</span>
+                    </span>
+                  ) : (
+                    <span className="truncate inline-flex items-center px-1.5 py-[2px] rounded-[4px] bg-[#F5F5F6] text-[#666666] text-[10px] leading-none">{p.shopName}</span>
+                  )}
                   {p.brandName && p.brandName !== '其他' ? (
-                    <span className="shrink-0">{p.brandName}</span>
+                    <span className="shrink-0 text-[12px] text-[#999999]">{p.brandName}</span>
                   ) : null}
                 </div>
-                <div className="mt-1 text-[12px] text-textMuted">月销{p.sales}</div>
-                <div className="mt-3 flex items-end justify-between">
-                  <div>
-                    <div className="text-[20px] font-bold text-[#d94b3d]">¥ {p.price}</div>
-                    <div className="text-[12px] text-[#d94b3d]">约返 ¥ {p.rebate}</div>
+                <div className="mt-0.5 text-[10px] text-[#999999]">月销{p.sales}</div>
+                <div className="mt-1.5 flex items-end justify-between gap-2">
+                  <div className="flex flex-col gap-1">
+                    <div className="inline-flex items-baseline text-[#FF0036] leading-none font-semibold">
+                      <span className="text-[12px] mr-0.5">¥</span>
+                      <span className="text-[20px]">{p.price}</span>
+                    </div>
+                    <div className="inline-flex items-center px-1.5 py-[2px] rounded border border-[#FFD8B2] bg-[#FFF4ED] text-[#FF5000] text-[11px] leading-none whitespace-nowrap">约返 ¥{p.rebate}</div>
                   </div>
                   {p.couponPrice > 0 ? (
-                    <div className="h-8 rounded-md bg-[#fff1f1] border border-[#ffdada] flex items-center overflow-hidden">
-                      <span className="px-2 text-[#ef4444] text-[12px] font-semibold">¥{p.couponPrice} 优惠券</span>
-                      <button className="h-full px-2 bg-[#ffe3e3] text-[#ef4444] text-[12px] font-medium border-l border-[#ffd1d1]">领取</button>
+                    <div className="h-6 rounded-[4px] bg-[#FF0036] flex items-center overflow-hidden shrink-0 text-white">
+                      <span className="px-2 text-[11px] font-semibold">¥{p.couponPrice} 券</span>
+                      <span className="h-4 border-l border-dashed border-white/60" />
+                      <button className="h-full px-2.5 text-[11px] font-medium text-white">领取</button>
                     </div>
                   ) : null}
                 </div>
