@@ -36,7 +36,7 @@ export default function ProductDetailPage({ standalone = false }) {
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
-        <div className="h-full flex flex-col bg-[#F5F5F6] md:rounded-3xl md:overflow-hidden md:border md:border-[#ECEEF2]">
+        <div className="h-full flex flex-col bg-white md:rounded-3xl md:overflow-hidden md:border md:border-[#ECEEF2]">
           <div className="relative bg-white flex items-center justify-center overflow-hidden">
             <img src={currentImage} alt="商品主图" className="w-full h-[375px] object-cover" />
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
@@ -55,8 +55,8 @@ export default function ProductDetailPage({ standalone = false }) {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto pb-[84px] px-3 space-y-2.5">
-            <div className="bg-white rounded-[12px] px-4 py-2.5">
+          <div className="flex-1 overflow-y-auto pb-[84px] px-0 space-y-0 bg-white">
+            <div className="bg-white px-4 py-2.5 border-b border-[#F0F1F4]">
               <div className="flex items-baseline justify-between gap-2">
                 <div className="flex items-end gap-2 min-w-0">
                   <div className="text-[#FF0036] font-bold leading-none shrink-0">
@@ -78,7 +78,7 @@ export default function ProductDetailPage({ standalone = false }) {
               </div>
             </div>
 
-            <div className="bg-white rounded-[12px] p-3">
+            <div className="bg-white p-3 border-b border-[#F0F1F4]">
               <div className="rounded-xl bg-gradient-to-r from-[#FFF0F2] to-[#FFE4E8] border border-[#FFD5DC] px-3 py-2.5 text-[#FF0036] flex items-center justify-between relative overflow-hidden">
                 <div className="absolute left-[72%] top-[-8px] w-4 h-4 rounded-full bg-white" />
                 <div className="absolute left-[72%] bottom-[-8px] w-4 h-4 rounded-full bg-white" />
@@ -91,7 +91,7 @@ export default function ProductDetailPage({ standalone = false }) {
               </div>
             </div>
 
-            <div className="bg-white rounded-[12px] border border-[#ECEEF2] p-3">
+            <div className="bg-white border-b border-[#F0F1F4] p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-lg bg-[#F7F8FA] border border-[#ECEEF2] flex items-center justify-center text-[#666E7A]"><Storefront size={16} /></span>

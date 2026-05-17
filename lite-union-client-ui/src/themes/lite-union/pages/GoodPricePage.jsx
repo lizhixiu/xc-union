@@ -21,6 +21,7 @@ function formatSales(value) {
 
 function mapGoodsItem(raw = {}) {
   const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
+  const originPrice = Number(raw.originalPrice ?? finalPrice ?? 0);
   const commissionRate = Number(raw.commissionRate ?? 0);
   const rebateAmount = finalPrice * (commissionRate / 100);
   return {
@@ -29,12 +30,22 @@ function mapGoodsItem(raw = {}) {
     title: raw.dtitle || raw.title || '未命名商品',
     image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
     price: toCurrency(finalPrice),
+    originalPrice: toCurrency(originPrice),
     rebate: toCurrency(rebateAmount),
     sales: raw.monthSales ?? 0,
     shopName: raw.shopName || '店铺',
     brandName: raw.brandName || '其他',
     couponPrice: Number(raw.couponPrice ?? 0)
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+  } catch {
+    // ignore
+  }
+  window.location.assign('/product-detail');
 }
 
 export default function GoodPricePage({ standalone = false }) {
@@ -206,7 +217,17 @@ export default function GoodPricePage({ standalone = false }) {
               {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
 
               {shownProducts.map((p, idx) => (
-                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#eceef3] p-2.5 flex gap-2.5 bg-white min-h-[136px]">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openProductDetail({
+                      source: 'good-price',
+                      ...p
+                    })
+                  }
+                  key={`${p.id}-${p.goodsId || 'g'}-${idx}`}
+                  className="w-full text-left rounded-2xl border border-[#eceef3] p-2.5 flex gap-2.5 bg-white min-h-[136px]"
+                >
                   <img src={p.image} alt={p.title} className="block shrink-0 w-[110px] h-[110px] rounded-xl object-cover" />
                   <div className="flex flex-col flex-1 min-w-0 h-[110px]">
                     <div>
@@ -240,7 +261,7 @@ export default function GoodPricePage({ standalone = false }) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
               {!initLoading && shownProducts.length === 0 ? (
                 <div className="text-[13px] text-textMuted text-center py-4">没有匹配的商品</div>
