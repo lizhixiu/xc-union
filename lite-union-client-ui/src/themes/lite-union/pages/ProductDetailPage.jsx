@@ -103,7 +103,7 @@ export default function ProductDetailPage({ standalone = false }) {
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-lg bg-[#F7F8FA] border border-[#ECEEF2] flex items-center justify-center text-[#666E7A]"><Storefront size={16} /></span>
                   <div>
-                    <div className="text-[14px] text-[#111111] font-semibold">玛丽安娜旗舰店</div>
+                    <div className="text-[14px] text-[#111111] font-semibold">{shopName}</div>
                     <div className="mt-1 inline-flex h-5 px-2 rounded-md bg-[#FCF6ED] text-[#A6742B] text-[11px] items-center">品牌直营 · 正品保障</div>
                   </div>
                 </div>

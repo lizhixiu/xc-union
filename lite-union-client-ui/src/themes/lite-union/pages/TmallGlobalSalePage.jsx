@@ -1,20 +1,18 @@
-import { ArrowLeft, MagnifyingGlass, SealCheck, ShareNetwork, ShieldCheck, Sparkle } from '@phosphor-icons/react';
+import { AirplaneTilt, ArrowLeft, MagnifyingGlass, ShareNetwork, Sparkle } from '@phosphor-icons/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-const categories = [
-  { name: '美妆好物', emoji: '💄' },
-  { name: '宝妈萌娃', emoji: '🍼' },
-  { name: '医药保健', emoji: '💊' },
-  { name: '清洁个护', emoji: '🧴' },
-  { name: '关爱萌宠', emoji: '🐶' },
-  { name: '数码家电', emoji: '📱' },
-  { name: '潮流服饰', emoji: '👕' },
-  { name: '时尚箱包', emoji: '👜' },
-  { name: '家居生活', emoji: '🏠' },
-  { name: '全球美食', emoji: '🍫' }
+const categoryList = [
+  { name: '全球美妆', emoji: '💄' },
+  { name: '母婴专区', emoji: '🍼' },
+  { name: '营养保健', emoji: '💊' },
+  { name: '个护清洁', emoji: '🧴' },
+  { name: '宠物优选', emoji: '🐶' },
+  { name: '潮流数码', emoji: '📱' },
+  { name: '服饰箱包', emoji: '👜' },
+  { name: '进口零食', emoji: '🍫' }
 ];
 
-const tabs = ['精选', '热销', '超值', '新品'];
+const filterTabs = ['精选推荐', '进口爆款', '品牌直降'];
 const GOODS_API_URL = '/home/getTmallInternationalGoodsList';
 const PAGE_SIZE = 20;
 
@@ -35,30 +33,28 @@ function formatSales(value) {
 
 function mapGoodsItem(raw = {}) {
   const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
-  const originalPrice = Number(raw.originalPrice ?? 0);
+  const originalPrice = Number(raw.originalPrice ?? finalPrice * 1.25);
   const commissionRate = Number(raw.commissionRate ?? 0);
   const rebateAmount = finalPrice * (commissionRate / 100);
-  const discount = Number(raw.discounts ?? 0);
   return {
     id: raw.id ?? raw.goodsId ?? Math.random(),
     goodsId: raw.goodsId ?? '',
     title: raw.dtitle || raw.title || '未命名商品',
-    image: raw.mainPic || 'https://placehold.co/300x300/F6F2FF/6C4BB8?text=GLOBAL',
+    image: raw.mainPic || 'https://placehold.co/300x300/F1F5FF/4A64B8?text=GLOBAL',
     price: toCurrency(finalPrice),
-    oldPrice: originalPrice > 0 ? `¥${toCurrency(originalPrice)}` : '',
-    discountText: discount > 0 ? `${(discount * 10).toFixed(1)}折` : '',
+    oldPrice: originalPrice > finalPrice ? `¥${toCurrency(originalPrice)}` : `¥${toCurrency(finalPrice * 1.25)}`,
     couponPrice: Number(raw.couponPrice ?? 0),
     rebate: toCurrency(rebateAmount),
-    sold: `已售${formatSales(raw.monthSales)}`,
+    sold: `已售${formatSales(raw.monthSales)}件`,
     activityName: raw.activityInfo?.[0]?.activityName || '天猫国际特卖',
-    tag: raw.lowest ? '低价好物' : '优质素材',
-    shopName: raw.shopName || '天猫国际'
+    shopName: raw.shopName || '天猫国际',
+    badgeText: raw.activityInfo?.[0]?.activityName || '进口优选'
   };
 }
 
 export default function TmallGlobalSalePage({ standalone = false }) {
   const [keyword, setKeyword] = useState('');
-  const [activeTab, setActiveTab] = useState('精选');
+  const [activeTab, setActiveTab] = useState('精选推荐');
   const [goods, setGoods] = useState([]);
   const [pageId, setPageId] = useState('1');
   const [loading, setLoading] = useState(false);
@@ -135,17 +131,27 @@ export default function TmallGlobalSalePage({ standalone = false }) {
     return () => observer.disconnect();
   }, [loading, initLoading, hasMore, pageId]);
 
-  const shown = useMemo(() => {
+  const shownGoods = useMemo(() => {
     const q = keyword.trim().toLowerCase();
     if (!q) return goods;
     return goods.filter((g) => `${g.title} ${g.shopName}`.toLowerCase().includes(q));
   }, [goods, keyword]);
 
+  const openProductDetail = (payload) => {
+    try {
+      sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+      sessionStorage.setItem('lite_union_return_path', '/tmall-global-sale');
+    } catch {
+      // ignore
+    }
+    window.location.assign('/product-detail');
+  };
+
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
-        <div className="h-full flex flex-col bg-[#f7f5ff] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#d5c7ff] md:shadow-[0_12px_30px_rgba(91,64,184,0.18)]">
-          <div className="sticky top-0 z-20 bg-[linear-gradient(155deg,#6f4cd1_0%,#5b3fc4_55%,#4f33b8_100%)] p-4 text-white">
+        <div className="h-full flex flex-col bg-[#f2f6ff] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#c9d9ff] md:shadow-[0_12px_30px_rgba(58,95,182,0.16)]">
+          <div className="sticky top-0 z-20 bg-gradient-to-b from-[#3D6CFF] to-[#2E56D8] p-4 text-white">
             <div className="flex items-center gap-3">
               {standalone ? (
                 <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -156,44 +162,50 @@ export default function TmallGlobalSalePage({ standalone = false }) {
               <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><ShareNetwork size={17} /></button>
             </div>
 
-            <div className="mt-3 h-11 rounded-full bg-white pl-4 pr-1.5 flex items-center gap-2 border border-[#d9cfff]">
-              <MagnifyingGlass size={16} className="text-[#7868a8]" />
+            <div className="mt-3 h-11 rounded-full bg-white pl-4 pr-1.5 flex items-center gap-2 border border-[#d8e2ff]">
+              <MagnifyingGlass size={16} className="text-[#6b80bf]" />
               <input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                placeholder="搜索跨境好物"
-                className="flex-1 min-w-0 bg-transparent text-[14px] text-[#3e3163] placeholder:text-[#9a8dbc] outline-none"
+                placeholder="搜索全球好物"
+                className="flex-1 min-w-0 bg-transparent text-[14px] text-[#2d3f72] placeholder:text-[#8f9fc9] outline-none"
               />
-              <button className="h-8 min-w-[88px] rounded-full bg-[#6a4fd4] text-white text-[14px] font-semibold">搜索</button>
+              <button className="h-8 min-w-[88px] rounded-full bg-[#3d6cff] text-white text-[14px] font-semibold">搜索</button>
             </div>
 
-            <div className="mt-3 grid grid-cols-3 gap-2 text-[12px]">
-              <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><ShieldCheck size={13} />正品保障</div>
-              <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><Sparkle size={13} />补贴加码</div>
-              <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><SealCheck size={13} />售后无忧</div>
+            <div className="mt-3 flex items-center gap-5 text-[12px] text-white/84">
+              {['海外直采', '国际品牌', '官方补贴'].map((item, idx) => (
+                <span key={item} className={idx === 0 ? 'font-bold text-white' : 'font-normal'}>
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
 
           <div ref={scrollRootRef} className="flex-1 overflow-y-auto p-3 space-y-3">
-            <div className="bg-white rounded-2xl border border-[#e3dbff] p-3">
-              <div className="grid grid-cols-5 gap-y-3">
-                {categories.map((c) => (
+            <div className="bg-white rounded-2xl border border-[#d9e4ff] p-3">
+              <div className="flex items-center justify-between">
+                <div className="text-[15px] font-bold text-[#243a73]">国际会场</div>
+                <div className="text-[12px] text-[#5570b4]">海淘尖货 · 每日上新</div>
+              </div>
+              <div className="mt-3 grid grid-cols-4 gap-y-3">
+                {categoryList.map((c) => (
                   <button key={c.name} className="flex flex-col items-center gap-1">
-                    <span className="w-11 h-11 rounded-full bg-[#f4f0ff] border border-[#e7ddff] flex items-center justify-center text-[19px]">{c.emoji}</span>
-                    <span className="text-[11px] text-[#5a4a88] whitespace-nowrap">{c.name}</span>
+                    <span className="w-11 h-11 rounded-full bg-[#eef3ff] border border-[#dce6ff] flex items-center justify-center text-[20px]">{c.emoji}</span>
+                    <span className="text-[11px] text-[#4b5f94] whitespace-nowrap">{c.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-[#e3dbff] p-2 flex gap-2">
-              {tabs.map((t) => {
+            <div className="bg-white rounded-2xl border border-[#d9e4ff] p-2 flex gap-2">
+              {filterTabs.map((t) => {
                 const active = t === activeTab;
                 return (
                   <button
                     key={t}
                     onClick={() => setActiveTab(t)}
-                    className={`h-9 px-4 rounded-full text-[13px] font-semibold ${active ? 'bg-[#674bd1] text-white shadow-[0_6px_12px_rgba(103,75,209,0.3)]' : 'bg-[#f4f0ff] text-[#605085]'}`}
+                    className={`h-9 px-4 rounded-full text-[13px] relative ${active ? 'bg-[#EAF0FF] text-[#3D6CFF] font-bold' : 'bg-[#f2f6ff] text-[#5f73aa] font-medium'}`}
                   >
                     {t}
                   </button>
@@ -201,38 +213,50 @@ export default function TmallGlobalSalePage({ standalone = false }) {
               })}
             </div>
 
-            {initLoading ? <div className="text-[13px] text-[#7a6fa2] text-center py-3">商品加载中...</div> : null}
+            {initLoading ? <div className="text-[13px] text-[#5d75af] text-center py-3">商品加载中...</div> : null}
             {!initLoading && loadError ? <div className="text-[13px] text-[#d94b3d] text-center py-3">{loadError}</div> : null}
 
             <div className="grid grid-cols-2 gap-2">
-              {shown.map((g, idx) => (
-                <div key={`${g.id}-${g.goodsId || 'g'}-${idx}`} className="bg-white rounded-2xl border border-[#e5deff] overflow-hidden">
-                  <div className="relative px-2 pt-2">
-                    <img src={g.image} alt={g.title} className="w-full aspect-square rounded-xl object-cover" />
-                    {g.discountText ? <span className="absolute left-3 top-3 bg-[#6d52d5] text-white text-[10px] px-1.5 py-0.5 rounded-md">{g.discountText}</span> : null}
-                  </div>
-                  <div className="p-2.5">
-                    <p className="text-[12px] text-[#372c58] line-clamp-2 min-h-[32px]">{g.title}</p>
-                    <div className="mt-1 flex items-center justify-between text-[11px] text-[#887ab0]">
-                      <span>{g.couponPrice > 0 ? `券¥${g.couponPrice}` : '无券'}</span>
-                      <span>返¥{g.rebate}</span>
+              {shownGoods.map((g, idx) => (
+                <button
+                  type="button"
+                  onClick={() =>
+                    openProductDetail({
+                      source: 'tmall-global-sale',
+                      ...g,
+                      originalPrice: (g.oldPrice || '').replace('¥', '')
+                    })
+                  }
+                  key={`${g.id}-${g.goodsId || 'g'}-${idx}`}
+                  className="w-full text-left rounded-[8px] overflow-hidden bg-white shadow-[0_2px_8px_rgba(56,87,171,0.08)]"
+                >
+                  <div className="relative aspect-square bg-[#F7F8FA] overflow-hidden">
+                    <img src={g.image} alt={g.title} className="w-full h-full object-cover" />
+                    <div className="absolute top-0 left-0 inline-flex items-center gap-1 rounded-br-[8px] bg-gradient-to-br from-[#4F7BFF] to-[#315BDC] text-white text-[10px] px-2 py-1">
+                      <AirplaneTilt size={10} />
+                      {g.badgeText}
                     </div>
-                    <div className="mt-1.5 flex items-end justify-between">
+                  </div>
+                  <div className="px-2.5 py-2.5">
+                    <p className="text-[13px] text-[#111111] font-semibold leading-[1.35] line-clamp-2 min-h-[36px]">{g.title}</p>
+                    <div className="mt-1 inline-flex items-center px-1.5 py-[2px] rounded-[3px] border border-[#FFD8B2] bg-[#FFF4ED] text-[#FF5000] text-[10px] leading-none">
+                      返¥{g.rebate}
+                    </div>
+                    <div className="mt-1.5 flex items-end justify-between gap-2">
                       <div>
-                        <div className="text-[#ef4444]"><span className="text-[11px]">¥</span><span className="text-[18px] font-bold">{g.price}</span></div>
-                        {g.oldPrice ? <div className="text-[11px] text-[#a49abb] line-through">{g.oldPrice}</div> : null}
+                        <div className="text-[#FF0036]"><span className="text-[11px]">¥</span><span className="text-[18px] font-bold">{g.price}</span></div>
+                        {g.oldPrice ? <div className="text-[11px] text-[#98A3BE] line-through">{g.oldPrice}</div> : null}
                       </div>
-                      <span className="text-[10px] text-[#9588b8]">{g.sold}</span>
+                      <div className="text-[10px] text-[#5b70a9]">{g.sold}</div>
                     </div>
-                    <div className="mt-1 inline-flex rounded-full bg-[#f4f0ff] text-[#624fa4] text-[10px] px-2 py-0.5">{g.tag}</div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 
-            {!initLoading && shown.length === 0 ? <div className="text-[13px] text-[#6b7280] text-center py-3">没有匹配的商品</div> : null}
+            {!initLoading && shownGoods.length === 0 ? <div className="text-[13px] text-[#6b7280] text-center py-3">没有匹配的商品</div> : null}
 
-            <div ref={loadMoreRef} className="h-10 flex items-center justify-center text-[12px] text-[#7a6fa2]">
+            <div ref={loadMoreRef} className="h-10 flex items-center justify-center text-[12px] text-[#6b7280]">
               {loading && !initLoading ? '加载更多中...' : hasMore ? '下滑加载更多' : '没有更多了'}
             </div>
           </div>
