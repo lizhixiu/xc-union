@@ -6,6 +6,12 @@ import Toast from './components/Toast';
 import MailboxAuthPanel from './components/MailboxAuthPanel';
 import HomeDealsPage from './themes/lite-union/pages/HomePage';
 import HotDealsRankPage from './themes/lite-union/pages/GoodPricePage';
+import TmallSalePage from './themes/lite-union/pages/TmallSalePage';
+import TmallGlobalSalePage from './themes/lite-union/pages/TmallGlobalSalePage';
+import BrandSaleRankPage from './themes/lite-union/pages/BrandSaleRankPage';
+import TaobaoFlashSalePage from './themes/lite-union/pages/TaobaoFlashSalePage';
+import CheckinRewardPage from './themes/lite-union/pages/CheckinRewardPage';
+import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 
@@ -72,6 +78,12 @@ async function copyTextWithFallback(text) {
 
 export default function App() {
   const isGoodPriceRoute = typeof window !== 'undefined' && window.location.pathname === '/good-price';
+  const isTmallSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/tmall-sale';
+  const isTmallGlobalSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/tmall-global-sale';
+  const isBrandSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/brand-sale';
+  const isFlashSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/flash-sale';
+  const isCheckinRewardRoute = typeof window !== 'undefined' && window.location.pathname === '/checkin-reward';
+  const isBillionSubsidyRoute = typeof window !== 'undefined' && window.location.pathname === '/billion-subsidy';
   const [page, setPage] = useState('home');
   const [toast, setToast] = useState('');
 
@@ -166,6 +178,66 @@ export default function App() {
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
           <HotDealsRankPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isTmallSaleRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <TmallSalePage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isTmallGlobalSaleRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <TmallGlobalSalePage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isBrandSaleRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <BrandSaleRankPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isFlashSaleRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <TaobaoFlashSalePage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isCheckinRewardRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <CheckinRewardPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isBillionSubsidyRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <BillionSubsidyPage standalone />
         </div>
       </div>
     );

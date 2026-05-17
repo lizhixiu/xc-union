@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 const channels = [
   { name: '品牌特卖', icon: Medal },
   { name: '百亿补贴', icon: SealPercent },
+  { name: '天猫国际', icon: Ticket },
   { name: '签到领钱', icon: Gift },
   { name: '猫超特卖', icon: ShoppingCartSimple },
   { name: '淘宝秒杀', icon: Lightning },
@@ -51,7 +52,7 @@ export default function HomeDealsPage() {
   const inFlightRef = useRef(false);
   const loadThrottleRef = useRef(0);
 
-  const channelPages = [channels.slice(0, 4), channels.slice(4, 6)];
+  const channelPages = [channels.slice(0, 4), channels.slice(4, 7)];
   const campaignPages = [
     [
       { title: '下单挑战赛', desc: '完成指定单量，额外返现奖励' },
@@ -160,7 +161,30 @@ export default function HomeDealsPage() {
             {channelPages[channelPage].map((c, idx) => {
               const Icon = c.icon;
               return (
-                <button key={`${channelPage}_${c.name}`} className="h-[68px] rounded-xl bg-transparent flex flex-col items-center justify-center gap-1">
+                <button
+                  key={`${channelPage}_${c.name}`}
+                  onClick={() => {
+                    if (c.name === '品牌特卖') {
+                      window.location.assign('/brand-sale');
+                    }
+                    if (c.name === '猫超特卖') {
+                      window.location.assign('/tmall-sale');
+                    }
+                    if (c.name === '天猫国际') {
+                      window.location.assign('/tmall-global-sale');
+                    }
+                    if (c.name === '淘宝秒杀') {
+                      window.location.assign('/flash-sale');
+                    }
+                    if (c.name === '签到领钱') {
+                      window.location.assign('/checkin-reward');
+                    }
+                    if (c.name === '百亿补贴') {
+                      window.location.assign('/billion-subsidy');
+                    }
+                  }}
+                  className="h-[68px] rounded-xl bg-transparent flex flex-col items-center justify-center gap-1"
+                >
                   <span className="w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: channelIconBg[idx % channelIconBg.length] }}>
                     <Icon size={18} className="text-white" weight="bold" />
                   </span>

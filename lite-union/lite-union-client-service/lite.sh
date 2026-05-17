@@ -2,7 +2,7 @@
 
 MAIN_CLASS=com.lite.union.client.ClientApp
 COMMAND="$1"
-PORT="8090"
+PORT="28090"
 
 if [[ -n "$2" ]]; then
   PORT="$2"

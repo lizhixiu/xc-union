@@ -9,6 +9,16 @@ function toCurrency(value) {
   return Number.isFinite(n) ? n.toFixed(2) : '0.00';
 }
 
+function formatSales(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n) || n <= 0) return '0';
+  if (n >= 10000) {
+    const w = n / 10000;
+    return `${w >= 100 ? w.toFixed(0) : w.toFixed(1)}万`;
+  }
+  return String(n);
+}
+
 function mapGoodsItem(raw = {}) {
   const finalPrice = Number(raw.actualPrice ?? raw.originalPrice ?? 0);
   const commissionRate = Number(raw.commissionRate ?? 0);
@@ -135,15 +145,15 @@ export default function GoodPricePage({ standalone = false }) {
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-4' : 'p-4 md:p-0'}`}>
-        <div className="rounded-3xl overflow-hidden border border-[#ffaea6] shadow-[0_10px_24px_rgba(245,66,66,0.2)] h-full flex flex-col">
-          <div className="sticky top-0 z-20 p-4 md:p-5 bg-[linear-gradient(135deg,#ff4f4f_0%,#f33c3c_100%)] text-white">
+        <div className="rounded-3xl overflow-hidden border border-[#ffb7ab] shadow-[0_12px_30px_rgba(245,66,66,0.16)] h-full flex flex-col bg-[#fff8f7]">
+          <div className="sticky top-0 z-20 p-4 md:p-5 bg-[linear-gradient(145deg,#ff4f58_0%,#ff3b49_65%,#ff3342_100%)] text-white">
             <div className="flex items-center gap-2">
               {standalone && (
                 <button onClick={() => window.location.assign('/')} className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowLeft size={18} />
                 </button>
               )}
-              <div className="text-[20px] md:text-[22px] font-bold tracking-wide flex-1 min-w-0">好价</div>
+              <div className="text-[22px] md:text-[24px] font-bold tracking-wide flex-1 min-w-0">好价</div>
               {standalone && (
                 <>
                   <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><Info size={16} /></button>
@@ -151,7 +161,7 @@ export default function GoodPricePage({ standalone = false }) {
                 </>
               )}
             </div>
-            <div className={`mt-3 h-10 rounded-full bg-white pl-3 pr-1 flex items-center gap-2 border ${inputFocused ? 'border-[#ffd1dd] shadow-[0_0_0_2px_rgba(255,255,255,0.35)]' : 'border-[#ffdbe4]'}`}>
+            <div className={`mt-4 h-11 rounded-full bg-white pl-4 pr-1.5 flex items-center gap-2 border ${inputFocused ? 'border-[#ffc7d6] shadow-[0_0_0_3px_rgba(255,255,255,0.3)]' : 'border-[#ffdbe4]'}`}>
               <MagnifyingGlass size={16} className="text-[#9aa4b2] shrink-0" />
               <input
                 value={searchKeyword}
@@ -162,24 +172,24 @@ export default function GoodPricePage({ standalone = false }) {
                   if (e.key === 'Enter') handleSearch();
                 }}
                 placeholder="复合维生素"
-                className="flex-1 min-w-0 bg-transparent text-[14px] font-medium text-[#354052] placeholder:text-[#9aa4b2] outline-none"
+                className="flex-1 min-w-0 bg-transparent text-[15px] font-medium text-[#354052] placeholder:text-[#9aa4b2] outline-none"
               />
               <button
                 onClick={handleSearch}
-                className="h-8 w-[96px] rounded-full text-[16px] font-bold shrink-0"
-                style={{ backgroundColor: '#ff2f5b', color: '#ffffff', border: '1px solid #ff6f90' }}
+                className="h-8 w-[98px] rounded-full text-[15px] font-bold shrink-0"
+                style={{ backgroundColor: '#ff3e4e', color: '#ffffff', border: '1px solid #ff8b95' }}
               >
                 搜好价
               </button>
             </div>
-            <div className="mt-3 h-11 rounded-full bg-[#ff1f54] text-white px-3 flex items-center justify-between">
+            <div className="mt-3 h-10 rounded-full bg-[#ff3a4b] text-white px-4 flex items-center justify-between shadow-[0_6px_12px_rgba(255,58,75,0.22)]">
               <div className="flex items-center gap-2 font-bold">
-                <FireSimple size={18} weight="fill" />
-                <span className="text-[15px] leading-none">实时爆款精选</span>
+                <FireSimple size={16} weight="fill" />
+                <span className="text-[14px] leading-none">实时爆款精选</span>
               </div>
-              <div className="flex items-center gap-1.5 font-semibold text-[16px]">
-                <ClockCountdown size={16} />
-                <span className="text-[15px]">仅剩:</span>
+              <div className="flex items-center gap-1.5 font-semibold text-[14px] tabular-nums">
+                <ClockCountdown size={15} />
+                <span className="text-[14px]">仅剩:</span>
                 <span className="inline-flex items-center font-mono tabular-nums tracking-tight">
                   <span className="inline-block w-[2ch] text-center">{leftTime.slice(0, 2)}</span>
                   <span className="inline-block w-[1ch] text-center">:</span>
@@ -191,39 +201,41 @@ export default function GoodPricePage({ standalone = false }) {
             </div>
           </div>
 
-          <div className="bg-cardWhite p-4 md:p-5 rounded-t-3xl -mt-2 flex-1 overflow-y-auto">
-            <div className="space-y-3">
+          <div className="bg-cardWhite p-3.5 md:p-5 rounded-t-3xl -mt-2 flex-1 overflow-y-auto">
+            <div className="space-y-2.5">
               {initLoading && <div className="text-[13px] text-textMuted text-center py-4">好价商品加载中...</div>}
               {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
 
               {shownProducts.map((p, idx) => (
-                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#e9e9ee] p-2.5 flex gap-3 bg-white">
-                  <img src={p.image} alt={p.title} className="block shrink-0 w-[96px] h-[96px] rounded-lg border border-borderLine object-cover" />
+                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#eceef3] p-2.5 flex gap-3 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] min-h-[146px]">
+                  <img src={p.image} alt={p.title} className="block shrink-0 w-[102px] h-[102px] rounded-xl border border-[#edf0f5] object-cover" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-medium text-[#2c3440] whitespace-nowrap overflow-hidden">{p.title}</p>
+                    <p className="text-[15px] leading-[1.25] font-semibold text-[#2c3440] whitespace-nowrap overflow-hidden">{p.title}</p>
                     <div className="mt-1 text-[12px] text-textMuted flex items-center justify-between gap-2">
                       <span className="truncate text-[#8a93a0]">{p.shopName}</span>
                       {p.brandName && p.brandName !== '其他' ? <span className="shrink-0">{p.brandName}</span> : null}
                     </div>
-                    <div className="mt-1.5 h-8 rounded-lg bg-[#fff6ef] border border-[#f9e5d8] px-2 text-[12px] text-[#be925f] flex items-center">
-                      约返{Math.round(Number(p.rebate || 0))}元，到手更划算
+                    <div className="mt-1.5 h-8 rounded-lg bg-[#fff7f0] border border-[#f8e4d4] px-2 text-[12px] text-[#b9854f] flex items-center">
+                      约返{toCurrency(p.rebate)}元，到手更划算
                     </div>
-                    <div className="mt-1.5 flex items-end justify-between gap-2">
-                      <div>
-                        <div className="text-[#f54242]">
+                    <div className="mt-2">
+                      <div className="text-[#f54242] flex items-end gap-1">
                           <span className="text-[12px]">¥</span>
-                          <span className="text-[22px] font-bold">{p.price}</span>
-                          <span className="ml-1 text-[15px] font-bold">爆料价</span>
-                        </div>
-                        <div className="text-[12px] text-[#8f96a3]">月销{p.sales}</div>
+                          <span className="text-[22px] leading-none font-bold">{p.price}</span>
+                          <span className="text-[12px] leading-none font-medium whitespace-nowrap text-[#9aa4b2]">爆料价</span>
                       </div>
+                      <div className="mt-1 h-8 flex items-center justify-between gap-2">
+                        <div className="text-[12px] leading-none text-[#9ca3af] whitespace-nowrap">月销{formatSales(p.sales)}</div>
 
                       {p.couponPrice > 0 ? (
-                        <div className="h-8 rounded-md bg-[#fff1f1] border border-[#ffdada] flex items-center overflow-hidden shrink-0">
-                          <span className="px-2 text-[#ef4444] text-[12px] font-semibold">¥{p.couponPrice} 优惠券</span>
-                          <button className="h-full px-2 bg-[#ffe3e3] text-[#ef4444] text-[12px] font-medium border-l border-[#ffd1d1]">领取</button>
+                        <div className="h-7 rounded-md bg-[#fff5f5] border border-[#ffdede] flex items-center shrink-0">
+                          <span className="px-2 text-[#f05a5a] text-[11px] font-medium whitespace-nowrap">¥{p.couponPrice} 优惠券</span>
+                          <button className="h-full min-w-[40px] px-2 bg-[#ffecec] text-[#f05a5a] text-[11px] font-medium border-l border-[#ffdede] whitespace-nowrap">领取</button>
                         </div>
-                      ) : null}
+                      ) : (
+                        <div className="h-8 w-[132px] shrink-0" />
+                      )}
+                      </div>
                     </div>
                   </div>
                 </div>

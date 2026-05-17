@@ -1,7 +1,7 @@
 undertow.resourcePath = classpath:webapp,classpath:static
 
 undertow.devMode=false
-undertow.port=18090
+undertow.port=28090
 undertow.host=0.0.0.0
 
 # gzip 压缩开关

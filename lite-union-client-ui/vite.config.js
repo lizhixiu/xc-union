@@ -8,11 +8,11 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/dtk': {
-        target: 'http://localhost:18090',
+        target: 'http://localhost:28090',
         changeOrigin: true
       },
       '/home': {
-        target: 'http://localhost:18090',
+        target: 'http://localhost:28090',
         changeOrigin: true
       }
     }

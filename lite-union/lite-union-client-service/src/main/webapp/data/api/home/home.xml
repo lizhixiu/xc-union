@@ -45,13 +45,59 @@
     </api>
 
 
+    <api id="getTmallSupermarketGoodsList" name="获取天猫超市接口" caption="获取天猫商品列表" method="POST" path="/getTmallSupermarketGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
+            paraMap.tchaoshi = "1";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+    <api id="getTmallInternationalGoodsList" name="获取天猫国际接口" caption="获取天猫商品列表" method="POST" path="/getTmallInternationalGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
+            paraMap.tmall = "1";
+            paraMap.haitao = "1";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+
     <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tbService/parseContent">
         <script>
             <![CDATA[
             import dtk;
             import log;
             var paraMap = {};
-            paraMap.url = "/tb-service/parse-content";
+            paraMap.url = "/api/tb-service/parse-content";
             paraMap.content = body.content;
 
             var data =  dtk.execute(paraMap);
