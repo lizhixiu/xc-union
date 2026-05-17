@@ -146,43 +146,42 @@ export default function GoodPricePage({ standalone = false }) {
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
         <div className="h-full flex flex-col bg-[#fff8f7] border-0 rounded-none md:rounded-3xl md:border md:border-[#ffb7ab] md:shadow-[0_12px_30px_rgba(245,66,66,0.16)]">
-          <div className="sticky top-0 z-20 p-4 md:p-5 bg-[linear-gradient(145deg,#ff4f58_0%,#ff3b49_65%,#ff3342_100%)] text-white">
+          <div className="sticky top-0 z-20 p-4 md:p-5 bg-gradient-to-b from-[#FF0036] to-[#FF3141] text-white">
             <div className="flex items-center gap-2">
               {standalone && (
-                <button onClick={() => window.location.assign('/')} className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
-                  <ArrowLeft size={18} />
+                <button onClick={() => window.location.assign('/')} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                  <ArrowLeft size={16} />
                 </button>
               )}
-              <div className="text-[22px] md:text-[24px] font-bold tracking-wide flex-1 min-w-0">好价</div>
+              <div className="text-[18px] font-bold tracking-wide shrink-0">好价</div>
+              <div className={`h-8 rounded-full bg-white pl-2.5 pr-1 flex items-center gap-1.5 border flex-1 min-w-0 ${inputFocused ? 'border-[#ffc7d6] shadow-[0_0_0_2px_rgba(255,255,255,0.3)]' : 'border-[#ffdbe4]'}`}>
+                <MagnifyingGlass size={14} className="text-[#9aa4b2] shrink-0" />
+                <input
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSearch();
+                  }}
+                  placeholder="复合维生素"
+                  className="flex-1 min-w-0 bg-transparent text-[12px] font-medium text-[#354052] placeholder:text-[#9aa4b2] outline-none"
+                />
+                <button
+                  onClick={handleSearch}
+                  className="h-6 px-2.5 rounded-full text-[12px] font-bold shrink-0 bg-white text-[#FF0036] border border-[#ffd3dc]"
+                >
+                  搜好价
+                </button>
+              </div>
               {standalone && (
                 <>
-                  <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><Info size={16} /></button>
-                  <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><ShareNetwork size={16} /></button>
+                  <button className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0"><Info size={14} /></button>
+                  <button className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0"><ShareNetwork size={14} /></button>
                 </>
               )}
             </div>
-            <div className={`mt-4 h-11 rounded-full bg-white pl-4 pr-1.5 flex items-center gap-2 border ${inputFocused ? 'border-[#ffc7d6] shadow-[0_0_0_3px_rgba(255,255,255,0.3)]' : 'border-[#ffdbe4]'}`}>
-              <MagnifyingGlass size={16} className="text-[#9aa4b2] shrink-0" />
-              <input
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-                onFocus={() => setInputFocused(true)}
-                onBlur={() => setInputFocused(false)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleSearch();
-                }}
-                placeholder="复合维生素"
-                className="flex-1 min-w-0 bg-transparent text-[15px] font-medium text-[#354052] placeholder:text-[#9aa4b2] outline-none"
-              />
-              <button
-                onClick={handleSearch}
-                className="h-8 w-[98px] rounded-full text-[15px] font-bold shrink-0"
-                style={{ backgroundColor: '#ff3e4e', color: '#ffffff', border: '1px solid #ff8b95' }}
-              >
-                搜好价
-              </button>
-            </div>
-            <div className="mt-3 h-10 rounded-full bg-[#ff3a4b] text-white px-4 flex items-center justify-between shadow-[0_6px_12px_rgba(255,58,75,0.22)]">
+            <div className="mt-3 h-10 rounded-full bg-black/10 backdrop-blur-sm text-white px-4 flex items-center justify-between">
               <div className="flex items-center gap-2 font-bold">
                 <FireSimple size={16} weight="fill" />
                 <span className="text-[14px] leading-none">实时爆款精选</span>
@@ -190,7 +189,7 @@ export default function GoodPricePage({ standalone = false }) {
               <div className="flex items-center gap-1.5 font-semibold text-[14px] tabular-nums">
                 <ClockCountdown size={15} />
                 <span className="text-[14px]">仅剩:</span>
-                <span className="inline-flex items-center font-mono tabular-nums tracking-tight">
+                <span className="inline-flex items-center font-mono font-bold tabular-nums tracking-tight">
                   <span className="inline-block w-[2ch] text-center">{leftTime.slice(0, 2)}</span>
                   <span className="inline-block w-[1ch] text-center">:</span>
                   <span className="inline-block w-[2ch] text-center">{leftTime.slice(3, 5)}</span>
@@ -207,34 +206,37 @@ export default function GoodPricePage({ standalone = false }) {
               {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
 
               {shownProducts.map((p, idx) => (
-                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#eceef3] p-2.5 flex gap-3 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.04)] min-h-[146px]">
-                  <img src={p.image} alt={p.title} className="block shrink-0 w-[102px] h-[102px] rounded-xl border border-[#edf0f5] object-cover" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[15px] leading-[1.25] font-semibold text-[#2c3440] whitespace-nowrap overflow-hidden">{p.title}</p>
-                    <div className="mt-1 text-[12px] text-textMuted flex items-center justify-between gap-2">
-                      <span className="truncate text-[#8a93a0]">{p.shopName}</span>
-                      {p.brandName && p.brandName !== '其他' ? <span className="shrink-0">{p.brandName}</span> : null}
+                <div key={`${p.id}-${p.goodsId || 'g'}-${idx}`} className="rounded-2xl border border-[#eceef3] p-2.5 flex gap-2.5 bg-white min-h-[136px]">
+                  <img src={p.image} alt={p.title} className="block shrink-0 w-[110px] h-[110px] rounded-xl object-cover" />
+                  <div className="flex flex-col flex-1 min-w-0 h-[110px]">
+                    <div>
+                      <p className="text-[15px] leading-[1.25] font-semibold text-[#2c3440] whitespace-nowrap overflow-hidden">{p.title}</p>
+                      <div className="mt-1.5 h-[18px] flex items-center justify-between gap-2">
+                        <span className="truncate inline-flex items-center px-1.5 py-[2px] rounded-[4px] bg-[#FCF6ED] border border-[#F3DAB1] text-[#A6742B] text-[10px] leading-none">{p.shopName}</span>
+                        {p.brandName && p.brandName !== '其他' ? <span className="shrink-0 text-[12px] text-[#999999]">{p.brandName}</span> : null}
+                      </div>
                     </div>
-                    <div className="mt-1.5 h-8 rounded-lg bg-[#fff7f0] border border-[#f8e4d4] px-2 text-[12px] text-[#b9854f] flex items-center">
-                      约返{toCurrency(p.rebate)}元，到手更划算
-                    </div>
-                    <div className="mt-2">
-                      <div className="text-[#f54242] flex items-end gap-1">
+
+                    <div className="mt-auto flex justify-between items-end gap-2">
+                      <div className="flex flex-col gap-1">
+                        <div className="inline-flex items-center px-1.5 py-[2px] rounded border border-[#FFD8B2] bg-[#FFF4ED] text-[#FF5000] text-[10px] leading-none whitespace-nowrap w-fit">
+                          约返 ¥{toCurrency(p.rebate)}
+                        </div>
+                        <div className="text-[#f54242] inline-flex items-baseline gap-0.5 leading-none">
                           <span className="text-[12px]">¥</span>
                           <span className="text-[22px] leading-none font-bold">{p.price}</span>
-                          <span className="text-[12px] leading-none font-medium whitespace-nowrap text-[#9aa4b2]">爆料价</span>
-                      </div>
-                      <div className="mt-1 h-8 flex items-center justify-between gap-2">
-                        <div className="text-[12px] leading-none text-[#9ca3af] whitespace-nowrap">月销{formatSales(p.sales)}</div>
-
-                      {p.couponPrice > 0 ? (
-                        <div className="h-7 rounded-md bg-[#fff5f5] border border-[#ffdede] flex items-center shrink-0">
-                          <span className="px-2 text-[#f05a5a] text-[11px] font-medium whitespace-nowrap">¥{p.couponPrice} 优惠券</span>
-                          <button className="h-full min-w-[40px] px-2 bg-[#ffecec] text-[#f05a5a] text-[11px] font-medium border-l border-[#ffdede] whitespace-nowrap">领取</button>
+                          <span className="inline-flex items-center px-[3px] py-[1px] rounded-[3px] border border-[#FF0036]/50 text-[#FF0036] text-[9px] leading-none">爆料价</span>
                         </div>
-                      ) : (
-                        <div className="h-8 w-[132px] shrink-0" />
-                      )}
+                        <div className="text-[10px] leading-none text-[#999999] whitespace-nowrap">月销{formatSales(p.sales)}</div>
+                      </div>
+                      <div className="shrink-0 h-[24px] flex items-end">
+                        {p.couponPrice > 0 ? (
+                          <div className="h-6 rounded-[4px] bg-[#FF0036] flex items-center overflow-hidden shrink-0 text-white">
+                            <span className="px-2.5 text-[11px] font-semibold whitespace-nowrap">¥{p.couponPrice} 券</span>
+                          </div>
+                        ) : (
+                          <div className="h-6 w-[96px] shrink-0" />
+                        )}
                       </div>
                     </div>
                   </div>
