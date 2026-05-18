@@ -116,7 +116,51 @@
         </script>
     </api>
 
-    <api id="brandListAndGoodsList" name="获取品牌列表和商品列表" caption="获取品牌列表和商品列表" method="POST" path="/brandListAndGoodsList">
+    <api id="getTodayBrandList" name="获取今日品牌列表" caption="获取今日品牌列表" method="POST" path="/getTodayBrandList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/tb-service/get-brand-list";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "10";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData) ? rawData : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+    <api id="getBrandGoodsList" name="获取品牌商品列表" caption="获取品牌商品列表" method="POST" path="/getBrandGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/open-api/goods/scene-pallet";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "1";
+            paraMap.id = "45";
+            paraMap.sortType = "2";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+    <api id="getBrandListAndGoodsList" name="获取品牌列表和商品列表" caption="获取品牌列表和商品列表" method="POST" path="/getBrandListAndGoodsList">
         <script>
             <![CDATA[
             import dtk;
@@ -132,6 +176,30 @@
             var result = {};
             result.total = (rawData && rawData.totalCount != null) ? rawData.totalCount : 0;
             result.list = (rawData && rawData.lists) ? rawData.lists : [];
+            return result;
+      ]]>
+        </script>
+    </api>
+
+
+    <api id="getBillionSubsidyGoodsList" name="获取亿补贴商品列表" caption="获取亿补贴商品列表" method="POST" path="/getBillionSubsidyGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/open-api/goods/scene-pallet";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "1";
+            paraMap.id = "66";
+            paraMap.sortType = "2";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
             return result;
       ]]>
         </script>

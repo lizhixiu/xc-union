@@ -1,5 +1,5 @@
 import { ArrowLeft, MagnifyingGlass, ShieldCheck, Sparkle, TrendDown } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
 const USE_HASH_ROUTING = !import.meta.env.DEV;
@@ -19,15 +19,106 @@ function navigateTo(path) {
 }
 
 const tabs = ['精选', '母婴文教', '食品', '美妆', '健康'];
+const API_URL = '/home/getBillionSubsidyGoodsList';
+const PAGE_SIZE = 20;
 
-const list = [
-  { id: 'y1', title: '特仑苏纯牛奶250ml*16盒 官方直供', brand: '特仑苏', subsidy: '补后价', rebate: '约返¥0.87', price: '33.90', market: '¥39.90', sales: '已售100万+', image: 'https://picsum.photos/seed/subsidy-1/320/320' },
-  { id: 'y2', title: '认养一头牛纯牛奶200ml*20盒', brand: '认养一头牛', subsidy: '补后价', rebate: '约返¥6.51', price: '64.90', market: '¥74.90', sales: '已售4万+', image: 'https://picsum.photos/seed/subsidy-2/320/320' },
-  { id: 'y3', title: '婴幼儿维生素D3滴剂 30ml', brand: '健敏思', subsidy: '补后价', rebate: '约返¥5.12', price: '162.00', market: '¥189.00', sales: '已售2万+', image: 'https://picsum.photos/seed/subsidy-3/320/320' }
-];
+function toCurrency(value) {
+  const n = Number(value || 0);
+  return Number.isFinite(n) ? n.toFixed(2) : '0.00';
+}
+
+function formatSales(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n) || n <= 0) return '0';
+  if (n >= 10000) {
+    const w = n / 10000;
+    return `${w >= 100 ? w.toFixed(0) : w.toFixed(1)}万+`;
+  }
+  return String(n);
+}
+
+function mapGoods(raw = {}) {
+  return {
+    id: raw.sign ?? raw.goodsLink ?? Math.random(),
+    title: raw.title || raw.desc || '补贴好物',
+    brand: raw.brandName || raw.storeName || '品牌',
+    subsidy: Number(raw.ticketPrice || 0) > 0 ? `券后价 满${toCurrency(raw.ticketWorkingCondition)}减${toCurrency(raw.ticketPrice)}` : '补后价',
+    rebate: `约返¥${toCurrency(raw.commission)}`,
+    price: toCurrency(raw.postRollPrice ?? raw.originalPrice ?? 0),
+    market: `¥${toCurrency(raw.originalPrice ?? raw.postRollPrice ?? 0)}`,
+    sales: `已售${formatSales(raw.salesTip || 0)}`,
+    image: raw.pic || 'https://placehold.co/320x320/FDEEE8/B65E4A?text=SUBSIDY'
+  };
+}
 
 export default function BillionSubsidyPage({ standalone = false }) {
   const [activeTab, setActiveTab] = useState('精选');
+  const [list, setList] = useState([]);
+  const [pageId, setPageId] = useState('1');
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const inFlightRef = useRef(false);
+  const loadMoreRef = useRef(null);
+  const loadThrottleRef = useRef(0);
+
+  const hasMore = list.length < total || (total === 0 && pageId === '1');
+
+  const fetchList = async ({ append, reqPageId }) => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setLoadError('');
+    try {
+      const currentPageId = reqPageId || pageId;
+      const resp = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId: currentPageId, pageSize: PAGE_SIZE })
+      });
+      if (!resp.ok) {
+        throw new Error(`百亿补贴接口请求失败: ${resp.status}`);
+      }
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const rawList = Array.isArray(payload.list) ? payload.list : [];
+      const mapped = rawList.map(mapGoods);
+      const nextPage = rawList.length >= PAGE_SIZE ? String(Number(currentPageId) + 1) : '';
+      setTotal(Number(payload.total ?? 0));
+      setList((prev) => (append ? [...prev, ...mapped] : mapped));
+      setPageId(nextPage);
+    } catch (e) {
+      setLoadError(e.message || '加载失败');
+    } finally {
+      inFlightRef.current = false;
+      setLoading(false);
+      setInitLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchList({ append: false, reqPageId: '1' });
+  }, []);
+
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (!first?.isIntersecting) return;
+        if (loading || initLoading || !hasMore || !pageId) return;
+        const now = Date.now();
+        if (now - loadThrottleRef.current < 800) return;
+        loadThrottleRef.current = now;
+        fetchList({ append: true, reqPageId: pageId });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, initLoading, hasMore, pageId]);
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
@@ -63,6 +154,8 @@ export default function BillionSubsidyPage({ standalone = false }) {
             </div>
 
             <div className="space-y-3">
+              {initLoading && <div className="text-[13px] text-[#a66a5c] text-center py-4">补贴商品加载中...</div>}
+              {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
               {list.map((it) => (
                 <div key={it.id} className="bg-white rounded-2xl border border-[#fde1d7] p-3 flex gap-3">
                   <img src={it.image} alt={it.title} className="w-[108px] h-[108px] rounded-xl border border-[#f6ded5] object-cover shrink-0" />
@@ -80,6 +173,10 @@ export default function BillionSubsidyPage({ standalone = false }) {
                   </div>
                 </div>
               ))}
+              {!initLoading && !loadError && list.length === 0 ? <div className="text-[13px] text-[#a66a5c] text-center py-4">暂无补贴商品</div> : null}
+              <div ref={loadMoreRef} className="h-8 flex items-center justify-center text-[12px] text-[#b48474]">
+                {loading && !initLoading ? '加载更多中...' : (!hasMore ? '没有更多了' : '')}
+              </div>
             </div>
           </div>
         </div>

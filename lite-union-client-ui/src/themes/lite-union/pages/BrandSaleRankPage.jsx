@@ -18,23 +18,10 @@ function navigateTo(path) {
   window.location.assign(withBase(path));
 }
 
-const brandStrip = [
-  { name: '小米', off: '低至2.3折' },
-  { name: '美的', off: '低至3.5折' },
-  { name: '海飞丝', off: '低至4.2折' },
-  { name: '优衣库', off: '低至5.0折' },
-  { name: '百雀羚', off: '低至3.8折' }
-];
-
-const featuredGoods = [
-  { id: 'f1', title: '海飞丝去屑洗发露 750ml', price: '39.9', tag: '领券', image: 'https://picsum.photos/seed/brand-hot-1/240/240' },
-  { id: 'f2', title: '美的空气炸锅 4L', price: '179.0', tag: '同款低价', image: 'https://picsum.photos/seed/brand-hot-2/240/240' },
-  { id: 'f3', title: '小米无线耳机青春版', price: '89.0', tag: '约返', image: 'https://picsum.photos/seed/brand-hot-3/240/240' },
-  { id: 'f4', title: '百雀羚护肤套装', price: '99.0', tag: '领券', image: 'https://picsum.photos/seed/brand-hot-4/240/240' }
-];
-
 const tabs = ['精选品牌', '上新', '美妆', '个护', '食品', '母婴'];
-const BRAND_API_URL = '/home/brandListAndGoodsList';
+const BRAND_API_URL = '/home/getBrandListAndGoodsList';
+const TODAY_BRAND_API_URL = '/home/getTodayBrandList';
+const FEATURED_GOODS_API_URL = '/home/getBrandGoodsList';
 const PAGE_SIZE = 20;
 
 function toCurrency(value) {
@@ -71,10 +58,48 @@ function mapBrand(raw = {}) {
   };
 }
 
+function mapTodayBrand(raw = {}) {
+  const labels = (() => {
+    if (Array.isArray(raw.label)) return raw.label;
+    if (typeof raw.label === 'string') {
+      try {
+        const parsed = JSON.parse(raw.label);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
+
+  return {
+    id: raw.brandId ?? Math.random(),
+    name: raw.brandName || '品牌',
+    logo: raw.brandLogo || 'https://placehold.co/80x80/FDEAF3/AD5D7F?text=BR',
+    score: Number(raw.brandScore || 0),
+    simpleLabel: raw.simpleLabel || '',
+    off: raw.position ? `榜单TOP${raw.position}` : (raw.brandScore ? `${raw.brandScore}分` : '今日推荐'),
+    sub: labels[0] || raw.brandEnglish || raw.consumer || ''
+  };
+}
+
+function mapFeaturedGoods(raw = {}) {
+  const activityName = Array.isArray(raw.activityInfo) && raw.activityInfo.length > 0 ? raw.activityInfo[0]?.activityName : '';
+  return {
+    id: raw.sign ?? raw.goodsLink ?? Math.random(),
+    title: raw.title || raw.desc || '品牌商品',
+    image: raw.pic || 'https://placehold.co/240x240/F3E8FF/7C3AED?text=GOODS',
+    price: toCurrency(raw.postRollPrice ?? raw.originalPrice ?? 0),
+    tag: Number(raw.ticketPrice || 0) > 0 ? `券¥${toCurrency(raw.ticketPrice)}` : (activityName || '品牌好货')
+  };
+}
+
 export default function BrandSaleRankPage({ standalone = false }) {
   const [keyword, setKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('精选品牌');
   const [brands, setBrands] = useState([]);
+  const [todayBrands, setTodayBrands] = useState([]);
+  const [featuredGoods, setFeaturedGoods] = useState([]);
   const [pageId, setPageId] = useState('1');
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -124,7 +149,43 @@ export default function BrandSaleRankPage({ standalone = false }) {
     }
   };
 
+  const fetchTodayBrands = async () => {
+    try {
+      const resp = await fetch(TODAY_BRAND_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+      if (!resp.ok) return;
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const list = Array.isArray(payload.list) ? payload.list : [];
+      setTodayBrands(list.map(mapTodayBrand));
+    } catch {
+      setTodayBrands([]);
+    }
+  };
+
+  const fetchFeaturedGoods = async () => {
+    try {
+      const resp = await fetch(FEATURED_GOODS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId: '1', pageSize: 20 })
+      });
+      if (!resp.ok) return;
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const list = Array.isArray(payload.list) ? payload.list : [];
+      setFeaturedGoods(list.map(mapFeaturedGoods));
+    } catch {
+      setFeaturedGoods([]);
+    }
+  };
+
   useEffect(() => {
+    fetchTodayBrands();
+    fetchFeaturedGoods();
     fetchBrands({ append: false, reqPageId: '1' });
   }, []);
 
@@ -201,11 +262,12 @@ export default function BrandSaleRankPage({ standalone = false }) {
               </div>
               <div className="mt-3 overflow-x-auto">
                 <div className="inline-flex gap-2 min-w-max pr-2">
-                  {brandStrip.map((b) => (
-                    <button key={b.name} className="w-[84px] rounded-xl bg-white border border-[#f5d7e4] p-2 text-center">
-                      <div className="w-10 h-10 mx-auto rounded-full bg-[#ffe8f1] text-[#be6288] flex items-center justify-center font-bold text-[12px]">{b.name.slice(0, 2)}</div>
+                  {(todayBrands.length > 0 ? todayBrands : []).map((b) => (
+                    <button key={b.id} className="w-[84px] rounded-xl bg-white border border-[#f5d7e4] p-2 text-center">
+                      <img src={b.logo} alt={b.name} className="w-10 h-10 mx-auto rounded-full object-cover border border-[#f7d8e6]" />
                       <div className="mt-1 text-[11px] text-[#5f4151] truncate">{b.name}</div>
                       <div className="text-[10px] text-[#e75886]">{b.off}</div>
+                      {b.sub ? <div className="text-[10px] text-[#a57a8e] truncate">{b.sub}</div> : null}
                     </button>
                   ))}
                 </div>

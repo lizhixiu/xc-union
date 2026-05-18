@@ -172,7 +172,6 @@ export default function MailboxAuthPanel({ onToast }) {
               <button onClick={() => setMineTab('overview')} className={tabClass(mineTab === 'overview')}>概览</button>
               <button onClick={() => setMineTab('orders')} className={tabClass(mineTab === 'orders')}>订单</button>
               <button onClick={() => setMineTab('withdraw')} className={tabClass(mineTab === 'withdraw')}>提现</button>
-              <button onClick={() => setMineTab('invite')} className={tabClass(mineTab === 'invite')}>邀请</button>
             </div>
           </div>
           {mineTab === 'overview' && (
@@ -264,64 +263,6 @@ export default function MailboxAuthPanel({ onToast }) {
           </div>
           )}
 
-          {mineTab === 'invite' && (
-          <div className="bg-cardWhite border border-borderLine rounded-2xl p-5 shadow-[var(--shadow-card)] space-y-4">
-            <h3 className="text-[15px] font-bold text-textMain">邀请好友</h3>
-            <div
-              className="p-4 rounded-2xl text-white"
-              style={{ background: 'linear-gradient(135deg, #75a8a4 0%, #6b9c98 100%)' }}
-            >
-              <p className="text-[12px] text-white/85">我的邀请码</p>
-              <div className="flex items-center justify-between mt-2">
-                <p className="text-[28px] font-bold tracking-widest">{inviteCode}</p>
-                <button
-                  onClick={() => {
-                    navigator?.clipboard?.writeText?.(inviteCode);
-                    onToast?.('邀请码已复制');
-                  }}
-                  className="h-9 px-3 rounded-lg bg-white/20 hover:bg-white/30 text-[13px]"
-                >
-                  复制邀请码
-                </button>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-3">
-              <div className="p-3 rounded-xl border border-borderLine bg-appBg/50">
-                <p className="text-[12px] text-textMuted">今日邀请奖励</p>
-                <p className="text-[22px] font-bold text-textMain mt-1">¥ 18.30</p>
-              </div>
-              <div className="p-3 rounded-xl border border-borderLine bg-appBg/50">
-                <p className="text-[12px] text-textMuted">累计邀请奖励</p>
-                <p className="text-[22px] font-bold text-textMain mt-1">¥ 206.50</p>
-              </div>
-              <div className="p-3 rounded-xl border border-borderLine bg-appBg/50">
-                <p className="text-[12px] text-textMuted">待结算奖励</p>
-                <p className="text-[22px] font-bold text-textMain mt-1">¥ 33.20</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-[14px] font-bold text-textMain">邀请列表</h4>
-              {inviteList.map((item) => (
-                <div key={item.id} className="p-3 rounded-xl border border-borderLine bg-appBg/40 flex items-center justify-between">
-                  <div>
-                    <p className="text-[13px] text-textMain">{item.name} · {item.status}</p>
-                    <p className="text-[11px] text-textMuted mt-1">{item.time}</p>
-                  </div>
-                  <span className="text-[13px] font-medium text-primary">+¥ {item.reward}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-3 rounded-xl border border-borderLine bg-appBg/30">
-              <h4 className="text-[13px] font-bold text-textMain mb-2">邀请规则</h4>
-              <p className="text-[12px] text-textMuted">1. 被邀请用户完成首单后发放奖励。</p>
-              <p className="text-[12px] text-textMuted mt-1">2. 奖励预计T+1结算到可提现余额。</p>
-              <p className="text-[12px] text-textMuted mt-1">3. 异常订单或退款订单不参与奖励。</p>
-            </div>
-          </div>
-          )}
         </div>
       )}
     </div>
