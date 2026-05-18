@@ -1,5 +1,22 @@
 import { ArrowLeft, MagnifyingGlass, ShareNetwork, Sparkle } from '@phosphor-icons/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
 
 const brandStrip = [
   { name: '小米', off: '低至2.3折' },
@@ -17,57 +34,145 @@ const featuredGoods = [
 ];
 
 const tabs = ['精选品牌', '上新', '美妆', '个护', '食品', '母婴'];
+const BRAND_API_URL = '/home/brandListAndGoodsList';
+const PAGE_SIZE = 20;
 
-const stores = [
-  {
-    id: 's1',
-    name: '美的官方旗舰店',
-    count: 326,
-    discount: '低至3.6折',
-    logo: 'https://picsum.photos/seed/store-logo-1/88/88',
-    goods: [
-      { id: 's1g1', price: '¥199', tag: '超值', image: 'https://picsum.photos/seed/store-1-1/180/180' },
-      { id: 's1g2', price: '¥89', tag: '同款低价', image: 'https://picsum.photos/seed/store-1-2/180/180' },
-      { id: 's1g3', price: '¥329', tag: '最低价', image: 'https://picsum.photos/seed/store-1-3/180/180' }
-    ]
-  },
-  {
-    id: 's2',
-    name: '小米品牌专场',
-    count: 218,
-    discount: '低至4.1折',
-    logo: 'https://picsum.photos/seed/store-logo-2/88/88',
-    goods: [
-      { id: 's2g1', price: '¥79', tag: '超值', image: 'https://picsum.photos/seed/store-2-1/180/180' },
-      { id: 's2g2', price: '¥149', tag: '同款低价', image: 'https://picsum.photos/seed/store-2-2/180/180' },
-      { id: 's2g3', price: '¥269', tag: '最低价', image: 'https://picsum.photos/seed/store-2-3/180/180' }
-    ]
+function toCurrency(value) {
+  const n = Number(value || 0);
+  return Number.isFinite(n) ? n.toFixed(2) : '0.00';
+}
+
+function formatSales(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n) || n <= 0) return '0';
+  if (n >= 10000) {
+    const w = n / 10000;
+    return `${w >= 100 ? w.toFixed(0) : w.toFixed(1)}万`;
   }
-];
+  return String(n);
+}
+
+function mapBrand(raw = {}) {
+  const goodsList = Array.isArray(raw.goodsList) ? raw.goodsList : [];
+  return {
+    id: raw.brandId ?? raw.id ?? Math.random(),
+    name: raw.brandName || '品牌专场',
+    logo: raw.brandLogo || 'https://placehold.co/88x88/FDEAF3/AD5D7F?text=BRAND',
+    features: raw.brandFeatures || '',
+    sales: raw.sales || 0,
+    discount: raw.maxDiscount ? `低至${raw.maxDiscount}折` : '品牌特卖',
+    goods: goodsList.slice(0, 3).map((g) => ({
+      id: g.id ?? g.goodsId ?? Math.random(),
+      title: g.dTitle || g.title || '品牌商品',
+      image: g.mainPic || 'https://placehold.co/180x180/FCEAF1/B1688B?text=GOODS',
+      price: `¥${toCurrency(g.actualPrice ?? g.originPrice ?? 0)}`,
+      tag: Number(g.couponPrice || 0) > 0 ? `券¥${toCurrency(g.couponPrice)}` : `月销${formatSales(g.monthSales)}`
+    }))
+  };
+}
 
 export default function BrandSaleRankPage({ standalone = false }) {
   const [keyword, setKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('精选品牌');
+  const [brands, setBrands] = useState([]);
+  const [pageId, setPageId] = useState('1');
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+
+  const inFlightRef = useRef(false);
+  const loadMoreRef = useRef(null);
+  const loadThrottleRef = useRef(0);
+
+  const hasMore = brands.length < total || (total === 0 && pageId === '1');
+
+  const fetchBrands = async ({ append, reqPageId }) => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setLoadError('');
+
+    try {
+      const currentPageId = reqPageId || pageId;
+      const resp = await fetch(BRAND_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId: currentPageId, pageSize: PAGE_SIZE })
+      });
+
+      if (!resp.ok) {
+        throw new Error(`品牌接口请求失败: ${resp.status}`);
+      }
+
+      const json = await resp.json();
+      const payload = json?.data ?? {};
+      const list = Array.isArray(payload.list) ? payload.list : [];
+      const mapped = list.map(mapBrand);
+      const totalCount = Number(payload.total ?? 0);
+      const nextPage = list.length >= PAGE_SIZE ? String(Number(currentPageId) + 1) : '';
+
+      setTotal(totalCount);
+      setBrands((prev) => (append ? [...prev, ...mapped] : mapped));
+      setPageId(nextPage);
+    } catch (e) {
+      setLoadError(e.message || '品牌数据加载失败');
+    } finally {
+      inFlightRef.current = false;
+      setLoading(false);
+      setInitLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBrands({ append: false, reqPageId: '1' });
+  }, []);
+
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (!first?.isIntersecting) return;
+        if (loading || initLoading || !hasMore || !pageId) return;
+
+        const now = Date.now();
+        if (now - loadThrottleRef.current < 800) return;
+        loadThrottleRef.current = now;
+
+        fetchBrands({ append: true, reqPageId: pageId });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, initLoading, hasMore, pageId]);
 
   const shownStores = useMemo(() => {
     const q = keyword.trim().toLowerCase();
-    if (!q) return stores;
-    return stores.filter((s) => s.name.toLowerCase().includes(q));
-  }, [keyword]);
+    if (!q) return brands;
+    return brands.filter((s) => {
+      if ((s.name || '').toLowerCase().includes(q)) return true;
+      return (s.goods || []).some((g) => (g.title || '').toLowerCase().includes(q));
+    });
+  }, [keyword, brands]);
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
       <div className={`h-full ${standalone ? 'p-0' : 'p-4 md:p-0'}`}>
         <div className="h-full flex flex-col bg-[#fff6fa] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffcadb] md:shadow-[0_12px_28px_rgba(218,83,137,0.2)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#ff6da1_0%,#ff5a93_60%,#f94f89_100%)] text-white">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {standalone ? (
-                <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/22 flex items-center justify-center">
+                <button onClick={() => navigateTo('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowLeft size={18} />
                 </button>
               ) : null}
               <div className="text-[22px] font-bold flex-1">品牌特卖</div>
-              <button className="w-9 h-9 rounded-full bg-white/22 flex items-center justify-center"><ShareNetwork size={16} /></button>
+              <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><ShareNetwork size={17} /></button>
             </div>
 
             <div className="mt-3 h-11 rounded-full bg-white pl-4 pr-1.5 flex items-center gap-2 border border-[#ffd4e2]">
@@ -147,13 +252,16 @@ export default function BrandSaleRankPage({ standalone = false }) {
             </div>
 
             <div className="space-y-3 pb-2">
+              {initLoading && <div className="text-[13px] text-[#9c6e82] text-center py-4">品牌数据加载中...</div>}
+              {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
               {shownStores.map((s) => (
                 <div key={s.id} className="bg-white rounded-2xl border border-[#f0d9e3] p-3">
                   <div className="flex items-center gap-3">
                     <img src={s.logo} alt={s.name} className="w-11 h-11 rounded-lg border border-[#f2d6e2]" />
                     <div className="flex-1 min-w-0">
                       <div className="text-[14px] font-bold text-[#4f2f3e] truncate">{s.name}</div>
-                      <div className="text-[12px] text-[#907081]">{s.count}件商品 · {s.discount}</div>
+                      <div className="text-[12px] text-[#907081]">{formatSales(s.sales)}人已购 · {s.discount}</div>
+                      {s.features ? <div className="text-[11px] text-[#aa8395] truncate mt-0.5">{s.features}</div> : null}
                     </div>
                     <button className="h-8 px-3 rounded-full bg-[#ff5b95] text-white text-[12px] font-semibold">逛专场</button>
                   </div>
@@ -169,6 +277,10 @@ export default function BrandSaleRankPage({ standalone = false }) {
                   </div>
                 </div>
               ))}
+              {!initLoading && shownStores.length === 0 && !loadError ? <div className="text-[13px] text-[#9c6e82] text-center py-4">暂无品牌数据</div> : null}
+              <div ref={loadMoreRef} className="h-8 flex items-center justify-center text-[12px] text-[#b08a9a]">
+                {loading && !initLoading ? '加载更多中...' : (!hasMore ? '没有更多了' : '')}
+              </div>
             </div>
           </div>
         </div>

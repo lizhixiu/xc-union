@@ -1,6 +1,23 @@
 import { ArrowLeft, MagnifyingGlass, ShieldCheck, Sparkle, TrendDown } from '@phosphor-icons/react';
 import { useState } from 'react';
 
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
+
 const tabs = ['精选', '母婴文教', '食品', '美妆', '健康'];
 
 const list = [
@@ -18,7 +35,7 @@ export default function BillionSubsidyPage({ standalone = false }) {
         <div className="h-full flex flex-col bg-[#fff6f4] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffc7b7] md:shadow-[0_12px_30px_rgba(234,88,12,0.16)]">
           <div className="sticky top-0 z-20 p-4 bg-[linear-gradient(160deg,#ff6f4f_0%,#ff5a3f_100%)] text-white">
             <div className="flex items-center gap-2">
-              {standalone ? <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}
+              {standalone ? <button onClick={() => navigateTo('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}
               <div className="text-[21px] font-bold flex-1">百亿补贴</div>
               <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><ShieldCheck size={16} /></button>
             </div>

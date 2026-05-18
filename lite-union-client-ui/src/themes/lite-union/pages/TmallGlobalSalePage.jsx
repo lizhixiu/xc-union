@@ -1,6 +1,23 @@
 import { AirplaneTilt, ArrowLeft, MagnifyingGlass, ShareNetwork, Sparkle } from '@phosphor-icons/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
+
 const categoryList = [
   { name: '全球美妆', emoji: '💄' },
   { name: '母婴专区', emoji: '🍼' },
@@ -144,7 +161,7 @@ export default function TmallGlobalSalePage({ standalone = false }) {
     } catch {
       // ignore
     }
-    window.location.assign('/product-detail');
+    navigateTo('/product-detail');
   };
 
   return (
@@ -154,7 +171,7 @@ export default function TmallGlobalSalePage({ standalone = false }) {
           <div className="sticky top-0 z-20 bg-gradient-to-b from-[#3D6CFF] to-[#2E56D8] p-4 text-white">
             <div className="flex items-center gap-3">
               {standalone ? (
-                <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                <button onClick={() => navigateTo('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowLeft size={18} />
                 </button>
               ) : null}

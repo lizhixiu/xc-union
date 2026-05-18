@@ -14,6 +14,22 @@ const channelIconColor = ['#FF0036', '#FF5000', '#0066FF', '#00C261', '#FF5000',
 
 const GOODS_API_URL = '/home/getGoodsList';
 const PAGE_SIZE = 20;
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
 
 function toCurrency(value) {
   const n = Number(value || 0);
@@ -46,7 +62,7 @@ function openProductDetail(payload) {
   } catch {
     // ignore
   }
-  window.location.assign('/product-detail');
+  navigateTo('/product-detail');
 }
 
 export default function HomeDealsPage() {
@@ -187,22 +203,22 @@ export default function HomeDealsPage() {
                   key={`${channelPage}_${c.name}`}
                   onClick={() => {
                     if (c.name === '品牌特卖') {
-                      window.location.assign('/brand-sale');
+                      navigateTo('/brand-sale');
                     }
                     if (c.name === '猫超特卖') {
-                      window.location.assign('/tmall-sale');
+                      navigateTo('/tmall-sale');
                     }
                     if (c.name === '天猫国际') {
-                      window.location.assign('/tmall-global-sale');
+                      navigateTo('/tmall-global-sale');
                     }
                     if (c.name === '淘宝秒杀') {
-                      window.location.assign('/flash-sale');
+                      navigateTo('/flash-sale');
                     }
                     if (c.name === '签到领钱') {
-                      window.location.assign('/checkin-reward');
+                      navigateTo('/checkin-reward');
                     }
                     if (c.name === '百亿补贴') {
-                      window.location.assign('/billion-subsidy');
+                      navigateTo('/billion-subsidy');
                     }
                   }}
                   className="h-[72px] rounded-xl bg-transparent flex flex-col items-center justify-center gap-1"

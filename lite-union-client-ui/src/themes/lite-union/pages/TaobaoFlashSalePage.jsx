@@ -1,6 +1,23 @@
 import { ArrowLeft, DotsThree, Lightning } from '@phosphor-icons/react';
 import { useEffect, useMemo, useState } from 'react';
 
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
+
 const API_URL = '/home/seckillList';
 
 function toCurrency(value) {
@@ -100,7 +117,7 @@ export default function TaobaoFlashSalePage({ standalone = false }) {
         <div className="h-full flex flex-col bg-[#fff5f5] border-0 rounded-none md:rounded-3xl md:overflow-hidden md:border md:border-[#ffb8b8] md:shadow-[0_12px_30px_rgba(236,72,72,0.18)]">
           <div className="sticky top-0 z-20 px-4 pt-4 pb-3 bg-[linear-gradient(160deg,#ff5959_0%,#ef4444_100%)] text-white">
             <div className="flex items-center gap-2">
-              {standalone ? <button onClick={() => window.location.assign('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}
+              {standalone ? <button onClick={() => navigateTo('/')} className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><ArrowLeft size={18} /></button> : null}
               <div className="text-[22px] font-bold flex-1">淘宝秒杀</div>
               <button className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><DotsThree size={18} /></button>
             </div>

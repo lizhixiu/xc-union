@@ -90,29 +90,6 @@
         </script>
     </api>
 
-    <api id="getTmallInternationalGoodsList" name="获取天猫国际接口" caption="获取天猫商品列表" method="POST" path="/getTmallInternationalGoodsList">
-        <script>
-            <![CDATA[
-            import dtk;
-            import log;
-            var paraMap = {};
-            paraMap.url = "/api/goods/get-dtk-search-goods";
-            paraMap.pageId = body.pageId ? body.pageId : "1";
-            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
-            paraMap.tmall = "1";
-            paraMap.haitao = "1";
-
-            var raw = dtk.execute(paraMap);
-            var rawData = (raw && raw.data) ? raw.data : {};
-
-            var result = {};
-            result.list = (rawData && rawData.list) ? rawData.list : [];
-            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
-            return result;
-      ]]>
-        </script>
-    </api>
-
     <api id="seckillList" name="获取秒杀商品列表" caption="获取秒杀商品列表" method="POST" path="/seckillList">
         <script>
             <![CDATA[
@@ -134,6 +111,27 @@
             result.goodsList = (rawData && rawData.goodsList) ? rawData.goodsList : [];
             result.roundsList = (rawData && rawData.roundsList) ? rawData.roundsList : [];
             result.status = (rawData && rawData.status != null) ? rawData.status : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
+    <api id="brandListAndGoodsList" name="获取品牌列表和商品列表" caption="获取品牌列表和商品列表" method="POST" path="/brandListAndGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/delanys/brand/get-column-list";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "1";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.total = (rawData && rawData.totalCount != null) ? rawData.totalCount : 0;
+            result.list = (rawData && rawData.lists) ? rawData.lists : [];
             return result;
       ]]>
         </script>
