@@ -144,3 +144,5 @@ xc-union-service/xc-union-magic-api/src/main/resources/data/magic-api/
 
 # local docs (do not commit)
 docs/
+
+lite-union/lite-union-client-service/src/main/webapp/ui

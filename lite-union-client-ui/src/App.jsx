@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Clock, Copy, Leaf, MagnifyingGlass, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
 import BottomNav from './components/BottomNav';
 import SearchBar from './components/SearchBar';
@@ -15,6 +15,49 @@ import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
 import ProductDetailPage from './themes/lite-union/pages/ProductDetailPage';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const IS_DEV = import.meta.env.DEV;
+const USE_HASH_ROUTING = !IS_DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) {
+    return path;
+  }
+  if (!APP_BASE || APP_BASE === '/') {
+    return path;
+  }
+  return `${APP_BASE}${path}`;
+}
+
+function getAppPathname() {
+  if (typeof window === 'undefined') {
+    return '/';
+  }
+  if (USE_HASH_ROUTING) {
+    const hash = window.location.hash || '';
+    const hashPath = hash.startsWith('#') ? hash.slice(1) : hash;
+    return hashPath.startsWith('/') ? hashPath : '/';
+  }
+  if (typeof window === 'undefined') {
+    return '/';
+  }
+  const pathname = window.location.pathname;
+  if (APP_BASE && APP_BASE !== '/' && pathname.startsWith(`${APP_BASE}/`)) {
+    return pathname.slice(APP_BASE.length);
+  }
+  if (APP_BASE && APP_BASE !== '/' && pathname === APP_BASE) {
+    return '/';
+  }
+  return pathname;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
 
 function toCurrency(value) {
   const n = Number(value || 0);
@@ -53,7 +96,7 @@ function openProductDetail(payload) {
   } catch {
     // ignore
   }
-  window.location.assign('/product-detail');
+  navigateTo('/product-detail');
 }
 
 async function copyTextWithFallback(text) {
@@ -87,14 +130,15 @@ async function copyTextWithFallback(text) {
 }
 
 export default function App() {
-  const isGoodPriceRoute = typeof window !== 'undefined' && window.location.pathname === '/good-price';
-  const isTmallSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/tmall-sale';
-  const isTmallGlobalSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/tmall-global-sale';
-  const isBrandSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/brand-sale';
-  const isFlashSaleRoute = typeof window !== 'undefined' && window.location.pathname === '/flash-sale';
-  const isCheckinRewardRoute = typeof window !== 'undefined' && window.location.pathname === '/checkin-reward';
-  const isBillionSubsidyRoute = typeof window !== 'undefined' && window.location.pathname === '/billion-subsidy';
-  const isProductDetailRoute = typeof window !== 'undefined' && window.location.pathname === '/product-detail';
+  const [appPathname, setAppPathname] = useState(() => getAppPathname());
+  const isGoodPriceRoute = appPathname === '/good-price';
+  const isTmallSaleRoute = appPathname === '/tmall-sale';
+  const isTmallGlobalSaleRoute = appPathname === '/tmall-global-sale';
+  const isBrandSaleRoute = appPathname === '/brand-sale';
+  const isFlashSaleRoute = appPathname === '/flash-sale';
+  const isCheckinRewardRoute = appPathname === '/checkin-reward';
+  const isBillionSubsidyRoute = appPathname === '/billion-subsidy';
+  const isProductDetailRoute = appPathname === '/product-detail';
   const [page, setPage] = useState('home');
   const [toast, setToast] = useState('');
 
@@ -104,6 +148,16 @@ export default function App() {
   const [searchText, setSearchText] = useState('');
   const [lastPastedText, setLastPastedText] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
+
+  useEffect(() => {
+    const syncRoute = () => setAppPathname(getAppPathname());
+    window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
+    return () => {
+      window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
+    };
+  }, []);
 
   const showToast = (msg) => {
     setToast(msg);
@@ -302,7 +356,7 @@ export default function App() {
             {['home', 'rank', 'profile'].map((n) => (
               <button
                 key={n}
-                onClick={() => (n === 'rank' ? window.location.assign('/good-price') : setPage(n))}
+                onClick={() => (n === 'rank' ? navigateTo('/good-price') : setPage(n))}
                 className={`text-[15px] py-6 ${activeDesktopNav === n ? 'font-medium text-primary border-b-2 border-primary' : 'text-textMuted hover:text-textMain'}`}
               >
                 {n === 'home' ? '首页' : n === 'rank' ? '好价' : '我'}
@@ -462,7 +516,7 @@ export default function App() {
           </section>
         )}
 
-        {page !== 'detail' && <BottomNav page={page} onSwitch={(next) => (next === 'rank' ? window.location.assign('/good-price') : setPage(next))} />}
+        {page !== 'detail' && <BottomNav page={page} onSwitch={(next) => (next === 'rank' ? navigateTo('/good-price') : setPage(next))} />}
         <Toast message={toast} />
         {showQrModal && (
           <div className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] flex items-center justify-center p-4" onClick={() => setShowQrModal(false)}>

@@ -3,6 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 
 const GOODS_API_URL = '/home/getGoodPriceGoodsList';
 const PAGE_SIZE = 20;
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
 
 function toCurrency(value) {
   const n = Number(value || 0);
@@ -46,7 +62,7 @@ function openProductDetail(payload) {
   } catch {
     // ignore
   }
-  window.location.assign('/product-detail');
+  navigateTo('/product-detail');
 }
 
 export default function GoodPricePage({ standalone = false }) {
@@ -161,7 +177,7 @@ export default function GoodPricePage({ standalone = false }) {
           <div className="sticky top-0 z-20 p-4 md:p-5 bg-gradient-to-b from-[#FF0036] to-[#FF3141] text-white">
             <div className="flex items-center gap-2">
               {standalone && (
-                <button onClick={() => window.location.assign('/')} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                <button onClick={() => navigateTo('/')} className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
                   <ArrowLeft size={16} />
                 </button>
               )}

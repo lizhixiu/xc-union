@@ -120,17 +120,20 @@
             import log;
             var paraMap = {};
             paraMap.url = "/api/category/ddq-goods-list";
-            paraMap.pageId = body.pageId ? body.pageId : "1";
-            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
             paraMap.tmall = "1";
             paraMap.haitao = "1";
+            if (body && body.roundTime) {
+                paraMap.roundTime = body.roundTime;
+            }
 
             var raw = dtk.execute(paraMap);
             var rawData = (raw && raw.data) ? raw.data : {};
 
             var result = {};
-            result.list = (rawData && rawData.list) ? rawData.list : [];
-            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            result.ddqTime = rawData && rawData.ddqTime ? rawData.ddqTime : "";
+            result.goodsList = (rawData && rawData.goodsList) ? rawData.goodsList : [];
+            result.roundsList = (rawData && rawData.roundsList) ? rawData.roundsList : [];
+            result.status = (rawData && rawData.status != null) ? rawData.status : 0;
             return result;
       ]]>
         </script>

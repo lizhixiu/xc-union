@@ -1,6 +1,23 @@
 import { ArrowLeft, CaretRight, House, Heart, Storefront } from '@phosphor-icons/react';
 import { useMemo, useState } from 'react';
 
+const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const USE_HASH_ROUTING = !import.meta.env.DEV;
+
+function withBase(path) {
+  if (!path.startsWith('/')) return path;
+  if (!APP_BASE || APP_BASE === '/') return path;
+  return `${APP_BASE}${path}`;
+}
+
+function navigateTo(path) {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = path;
+    return;
+  }
+  window.location.assign(withBase(path));
+}
+
 const heroImages = [
   'https://img.alicdn.com/imgextra/i3/2200726807241/O1CN01kM8pGf23xwV7kU6T9_!!2200726807241.jpg',
   'https://img.alicdn.com/imgextra/i2/2200726807241/O1CN01B5Evq523xwV7jijpt_!!2200726807241.jpg',
@@ -47,7 +64,7 @@ export default function ProductDetailPage({ standalone = false }) {
           <div className="relative bg-white flex items-center justify-center overflow-hidden">
             <img src={currentImage} alt="商品主图" className="w-full h-[375px] object-cover" />
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-              <button onClick={() => window.location.assign(returnPath)} className="w-9 h-9 rounded-full bg-black/25 text-white flex items-center justify-center backdrop-blur-sm">
+              <button onClick={() => navigateTo(returnPath)} className="w-9 h-9 rounded-full bg-black/25 text-white flex items-center justify-center backdrop-blur-sm">
                 <ArrowLeft size={18} />
               </button>
             </div>
