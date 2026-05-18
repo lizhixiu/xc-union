@@ -7,11 +7,10 @@ const channels = [
   { name: '天猫国际', icon: Ticket },
   { name: '签到领钱', icon: Gift },
   { name: '猫超特卖', icon: ShoppingCartSimple },
-  { name: '淘宝秒杀', icon: Lightning },
-  { name: '国家补贴', icon: Ticket }
+  { name: '淘宝秒杀', icon: Lightning }
 ];
-const channelIconBg = ['#FFF0F3', '#FFF4ED', '#EEF4FF', '#EBFFF3', '#FFF4ED', '#FFF0F3', '#EEF4FF'];
-const channelIconColor = ['#FF0036', '#FF5000', '#0066FF', '#00C261', '#FF5000', '#FF0036', '#0066FF'];
+const channelIconBg = ['#FFF0F3', '#FFF4ED', '#EEF4FF', '#EBFFF3', '#FFF4ED', '#FFF0F3'];
+const channelIconColor = ['#FF0036', '#FF5000', '#0066FF', '#00C261', '#FF5000', '#FF0036'];
 
 const GOODS_API_URL = '/home/getGoodsList';
 const PAGE_SIZE = 20;
@@ -65,7 +64,10 @@ export default function HomeDealsPage() {
   const inFlightRef = useRef(false);
   const loadThrottleRef = useRef(0);
 
-  const channelPages = [channels.slice(0, 6), channels.slice(6, 7)];
+  const channelPages = [];
+  for (let i = 0; i < channels.length; i += 6) {
+    channelPages.push(channels.slice(i, i + 6));
+  }
   const campaignPages = [
     [
       { title: '下单挑战赛', desc: '完成指定单量，额外返现奖励' },
@@ -90,6 +92,7 @@ export default function HomeDealsPage() {
   const onCampaignTouchStart = (e) => setCampaignTouchX(e.touches?.[0]?.clientX || 0);
 
   const onChannelTouchEnd = (e) => {
+    if (channelPages.length <= 1) return;
     const endX = e.changedTouches?.[0]?.clientX || 0;
     const delta = endX - channelTouchX;
     if (Math.abs(delta) < 30) return;
@@ -285,7 +288,7 @@ export default function HomeDealsPage() {
                     <div className="h-6 rounded-[4px] bg-[#FF0036] flex items-center overflow-hidden shrink-0 text-white">
                       <span className="px-2 text-[11px] font-semibold">¥{p.couponPrice} 券</span>
                       <span className="h-4 border-l border-dashed border-white/60" />
-                      <button className="h-full px-2.5 text-[11px] font-medium text-white">领取</button>
+                      <span className="h-full px-2.5 text-[11px] font-medium text-white inline-flex items-center">领取</span>
                     </div>
                   ) : null}
                 </div>
