@@ -26,7 +26,7 @@ export default function MailboxAuthPanel({ onToast }) {
   const [phoneVerified, setPhoneVerified] = useState(false);
   const [orderNo, setOrderNo] = useState('');
   const [orders, setOrders] = useState([]);
-  const [balance, setBalance] = useState(128.5);
+  const [balance, setBalance] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [withdrawals, setWithdrawals] = useState([]);
   const [mineTab, setMineTab] = useState('overview');
@@ -63,7 +63,7 @@ export default function MailboxAuthPanel({ onToast }) {
       }
     }
     setAuthed(true);
-    setEmailVerified(true);
+    setEmailVerified(false);
     onToast?.(authMode === 'register' ? '注册成功' : '登录成功');
   };
 
@@ -225,11 +225,11 @@ export default function MailboxAuthPanel({ onToast }) {
               </div>
               <div className="p-4 rounded-2xl bg-appBg border border-borderLine">
                 <p className="text-[12px] text-textMuted">累计奖励</p>
-                <p className="text-[24px] text-textMain font-bold mt-2">¥ 268.90</p>
+                <p className="text-[24px] text-textMain font-bold mt-2">¥ 0.00</p>
               </div>
               <div className="p-4 rounded-2xl bg-appBg border border-borderLine">
                 <p className="text-[12px] text-textMuted">本月奖励</p>
-                <p className="text-[24px] text-textMain font-bold mt-2">¥ 46.20</p>
+                <p className="text-[24px] text-textMain font-bold mt-2">¥ 0.00</p>
               </div>
             </div>
           </div>

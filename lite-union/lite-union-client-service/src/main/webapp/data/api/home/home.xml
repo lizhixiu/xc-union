@@ -206,6 +206,27 @@
     </api>
 
 
+    <api id="getRewardActivityList" name="获取奖励活动列表" caption="获取奖励活动列表" method="POST" path="/getRewardActivityList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/category/get-tb-topic-list";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "10";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData ) ? rawData : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
     <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tbService/parseContent">
         <script>
             <![CDATA[

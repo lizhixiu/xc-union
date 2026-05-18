@@ -5,7 +5,8 @@ const channels = [
   { name: '品牌特卖', icon: Medal },
   { name: '百亿补贴', icon: SealPercent },
   { name: '天猫国际', icon: Ticket },
-  { name: '签到领钱', icon: Gift },
+  // { name: '签到领钱', icon: Gift },
+  { name: '活动', icon: Gift },
   { name: '猫超特卖', icon: ShoppingCartSimple },
   { name: '淘宝秒杀', icon: Lightning }
 ];
@@ -187,7 +188,7 @@ export default function HomeDealsPage() {
               <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><Camera size={15} /></span>
               <button className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95">搜索</button>
             </div>
-            <button className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
+            <button onClick={() => navigateTo('/message-box')} className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
               <ChatCircleDots size={20} />
               <span className="absolute -right-0.5 -top-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#FF0036] text-white text-[10px] leading-4 text-center">6</span>
             </button>
@@ -214,8 +215,8 @@ export default function HomeDealsPage() {
                     if (c.name === '淘宝秒杀') {
                       navigateTo('/flash-sale');
                     }
-                    if (c.name === '签到领钱') {
-                      navigateTo('/checkin-reward');
+                    if (c.name === '活动') {
+                      navigateTo('/reward-activity');
                     }
                     if (c.name === '百亿补贴') {
                       navigateTo('/billion-subsidy');

@@ -13,6 +13,8 @@ import TaobaoFlashSalePage from './themes/lite-union/pages/TaobaoFlashSalePage';
 import CheckinRewardPage from './themes/lite-union/pages/CheckinRewardPage';
 import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
 import ProductDetailPage from './themes/lite-union/pages/ProductDetailPage';
+import RewardActivityPage from './themes/lite-union/pages/RewardActivityPage';
+import MessageBoxPage from './themes/lite-union/pages/MessageBoxPage';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -137,9 +139,13 @@ export default function App() {
   const isBrandSaleRoute = appPathname === '/brand-sale';
   const isFlashSaleRoute = appPathname === '/flash-sale';
   const isCheckinRewardRoute = appPathname === '/checkin-reward';
+  const isRewardActivityRoute = appPathname === '/reward-activity';
+  const isMessageBoxRoute = appPathname === '/message-box';
   const isBillionSubsidyRoute = appPathname === '/billion-subsidy';
   const isProductDetailRoute = appPathname === '/product-detail';
   const [page, setPage] = useState('home');
+  const [footprintTab, setFootprintTab] = useState('查券');
+  const [footprintTabGroups, setFootprintTabGroups] = useState([]);
   const [toast, setToast] = useState('');
 
   const [detail, setDetail] = useState(null);
@@ -267,6 +273,31 @@ export default function App() {
     }
   ];
 
+  const randomizeFootprintGroups = () => {
+    const shifted = footprintGroups.map((group) => {
+      const items = [...group.items];
+      items.sort(() => Math.random() - 0.5);
+      const selected = items.slice(0, Math.max(1, Math.floor(Math.random() * items.length) + 1));
+      return {
+        ...group,
+        items: selected.map((item) => {
+          const priceBase = Number(item.price || 0);
+          const delta = (Math.random() * 2 - 1) * 0.8;
+          const nextPrice = Math.max(0.5, priceBase + delta);
+          return {
+            ...item,
+            price: nextPrice.toFixed(2)
+          };
+        })
+      };
+    });
+    setFootprintTabGroups(shifted);
+  };
+
+  useEffect(() => {
+    randomizeFootprintGroups();
+  }, []);
+
   if (isGoodPriceRoute) {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
@@ -322,6 +353,26 @@ export default function App() {
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
           <CheckinRewardPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isRewardActivityRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <RewardActivityPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isMessageBoxRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <MessageBoxPage standalone />
         </div>
       </div>
     );
@@ -400,10 +451,17 @@ export default function App() {
                   <button className="shrink-0 text-[13px] text-[#333333] leading-none">攻略</button>
                 </div>
                 <div className="mt-3 grid grid-cols-3 h-10">
-                  {['查券', '足迹', '收藏夹'].map((tab, idx) => (
-                    <button key={tab} className="h-10 flex flex-col items-center justify-center relative">
-                      <span className={`text-[14px] ${idx === 0 ? 'text-[#111111] font-bold' : 'text-[#666666]'}`}>{tab}</span>
-                      {idx === 0 ? <span className="absolute bottom-0 h-[3px] w-5 rounded-full bg-[#FF3A3A]" /> : null}
+                  {['查券', '足迹', '收藏夹'].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => {
+                        setFootprintTab(tab);
+                        randomizeFootprintGroups();
+                      }}
+                      className="h-10 flex flex-col items-center justify-center relative"
+                    >
+                      <span className={`text-[14px] ${footprintTab === tab ? 'text-[#111111] font-bold' : 'text-[#666666]'}`}>{tab}</span>
+                      {footprintTab === tab ? <span className="absolute bottom-0 h-[3px] w-5 rounded-full bg-[#FF3A3A]" /> : null}
                     </button>
                   ))}
                 </div>
@@ -412,7 +470,7 @@ export default function App() {
 
             <div className="px-0 pb-3 space-y-2.5 bg-white">
               <div className="px-3 space-y-3">
-                {footprintGroups.map((group) => (
+                {(footprintTabGroups.length > 0 ? footprintTabGroups : footprintGroups).map((group) => (
                   <div key={group.date} className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="w-1 h-3.5 rounded-sm bg-[#FF0036] shrink-0" />
