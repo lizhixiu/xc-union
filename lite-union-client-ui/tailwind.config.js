@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        appBg: '#F8FAFC',
+        appBg: '#F5F6FA',
         cardWhite: '#FFFFFF',
-        primary: '#75A8A4',
-        primaryLight: '#F0F6F5',
-        textMain: '#2C3E50',
+        primary: '#FF0036',
+        primaryLight: '#FFF0F3',
+        textMain: '#1F2937',
         textMuted: '#94A3B8',
-        borderLine: '#E2E8F0',
-        danger: '#E07A5F'
+        borderLine: '#E6EAF0',
+        danger: '#FF4D4F'
       },
       fontFamily: {
         sans: ['Inter', 'PingFang SC', 'Helvetica Neue', 'sans-serif'],

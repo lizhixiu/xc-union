@@ -99,7 +99,7 @@ export default function MailboxAuthPanel({ onToast }) {
   const tabClass = (active) =>
     `h-10 flex-1 min-w-0 whitespace-nowrap rounded-lg text-[14px] transition-all ${
       active
-        ? 'bg-cardWhite text-textMain border border-borderLine shadow-sm'
+        ? 'bg-cardWhite text-[#FF0036] border border-[#FF0036]/30 shadow-sm'
         : 'text-textMuted hover:text-textMain'
     }`;
 
@@ -108,55 +108,55 @@ export default function MailboxAuthPanel({ onToast }) {
       {!authed && (
         <div className="bg-cardWhite border border-borderLine rounded-2xl p-5 md:p-6 shadow-[var(--shadow-card)]">
           <div className="w-full flex justify-center mb-5">
-            <div className="w-20 h-20 rounded-full border border-borderLine flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,#ffffff_0%,#f0f6f5_70%)]">
-              <UserCircle size={38} className="text-primary" />
+            <div className="w-20 h-20 rounded-full border border-borderLine flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,#ffffff_0%,#fff0f3_70%)]">
+              <UserCircle size={38} className="text-[#FF0036]" />
             </div>
           </div>
           <div className="flex rounded-xl bg-appBg p-1 mb-5">
-            <button onClick={() => { setChannel('email'); setAuthMode('login'); }} className={`h-10 flex-1 rounded-lg text-[14px] transition-all ${channel === 'email' ? 'bg-cardWhite text-textMain shadow-sm border border-borderLine' : 'text-textMuted hover:text-textMain'}`}>邮箱登录</button>
-            <button onClick={() => { setChannel('phone'); setAuthMode('login'); }} className={`h-10 flex-1 rounded-lg text-[14px] transition-all ${channel === 'phone' ? 'bg-cardWhite text-textMain shadow-sm border border-borderLine' : 'text-textMuted hover:text-textMain'}`}>手机登录</button>
+            <button onClick={() => { setChannel('email'); setAuthMode('login'); }} className={`h-10 flex-1 rounded-lg text-[14px] transition-all ${channel === 'email' ? 'bg-cardWhite text-[#FF0036] shadow-sm border border-[#FF0036]/30' : 'text-textMuted hover:text-textMain'}`}>邮箱登录</button>
+            <button onClick={() => { setChannel('phone'); setAuthMode('login'); }} className={`h-10 flex-1 rounded-lg text-[14px] transition-all ${channel === 'phone' ? 'bg-cardWhite text-[#FF0036] shadow-sm border border-[#FF0036]/30' : 'text-textMuted hover:text-textMain'}`}>手机登录</button>
           </div>
 
           {channel === 'email' && authMode === 'login' && (
             <div className="space-y-3">
-              <input value={email} onChange={(e) => setEmail(e.target.value.trim())} placeholder="请输入邮箱地址" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="请输入密码" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <button onClick={emailAuthSubmit} disabled={!canEmailLogin} className="w-full h-11 rounded-xl bg-primary text-white disabled:opacity-50">登录邮箱</button>
-              <button onClick={() => setAuthMode('register')} className="w-full text-[13px] text-textMuted hover:text-primary">没有账号？去注册</button>
+              <input value={email} onChange={(e) => setEmail(e.target.value.trim())} placeholder="请输入邮箱地址" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="请输入密码" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <button onClick={emailAuthSubmit} disabled={!canEmailLogin} className="w-full h-11 rounded-xl bg-[#FF0036] text-white disabled:opacity-50">登录邮箱</button>
+              <button onClick={() => setAuthMode('register')} className="w-full text-[13px] text-textMuted hover:text-[#FF0036]">没有账号？去注册</button>
             </div>
           )}
 
           {channel === 'email' && authMode === 'register' && (
             <div className="space-y-3">
-              <input value={email} onChange={(e) => setEmail(e.target.value.trim())} placeholder="请输入邮箱地址" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="请输入密码（至少6位）" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="请再次输入密码" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <button onClick={emailAuthSubmit} disabled={!canEmailRegister} className="w-full h-11 rounded-xl bg-primary text-white disabled:opacity-50">注册邮箱</button>
-              <button onClick={() => setAuthMode('login')} className="w-full text-[13px] text-textMuted hover:text-primary">已有账号？去登录</button>
+              <input value={email} onChange={(e) => setEmail(e.target.value.trim())} placeholder="请输入邮箱地址" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="请输入密码（至少6位）" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="请再次输入密码" type="password" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <button onClick={emailAuthSubmit} disabled={!canEmailRegister} className="w-full h-11 rounded-xl bg-[#FF0036] text-white disabled:opacity-50">注册邮箱</button>
+              <button onClick={() => setAuthMode('login')} className="w-full text-[13px] text-textMuted hover:text-[#FF0036]">已有账号？去登录</button>
             </div>
           )}
 
           {channel === 'phone' && authMode === 'login' && (
             <div className="space-y-3">
-              <input value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, '').slice(0, 11))} placeholder="请输入手机号" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
+              <input value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, '').slice(0, 11))} placeholder="请输入手机号" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
               <div className="flex gap-2">
-                <input value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder="请输入验证码" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
+                <input value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder="请输入验证码" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
                 <button onClick={phoneUnavailable} className="h-11 px-3 rounded-xl border border-borderLine bg-appBg text-[13px]">获取验证码</button>
               </div>
-              <button onClick={phoneUnavailable} className="w-full h-11 rounded-xl bg-primary text-white">手机登录</button>
-              <button onClick={() => setAuthMode('register')} className="w-full text-[13px] text-textMuted hover:text-primary">没有账号？去注册</button>
+              <button onClick={phoneUnavailable} className="w-full h-11 rounded-xl bg-[#FF0036] text-white">手机登录</button>
+              <button onClick={() => setAuthMode('register')} className="w-full text-[13px] text-textMuted hover:text-[#FF0036]">没有账号？去注册</button>
             </div>
           )}
 
           {channel === 'phone' && authMode === 'register' && (
             <div className="space-y-3">
-              <input value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, '').slice(0, 11))} placeholder="请输入手机号" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
+              <input value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, '').slice(0, 11))} placeholder="请输入手机号" className="w-full h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
               <div className="flex gap-2">
-                <input value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder="请输入验证码" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
+                <input value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder="请输入验证码" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
                 <button onClick={phoneUnavailable} className="h-11 px-3 rounded-xl border border-borderLine bg-appBg text-[13px]">获取验证码</button>
               </div>
-              <button onClick={phoneUnavailable} className="w-full h-11 rounded-xl bg-primary text-white">手机注册</button>
-              <button onClick={() => setAuthMode('login')} className="w-full text-[13px] text-textMuted hover:text-primary">已有账号？去登录</button>
+              <button onClick={phoneUnavailable} className="w-full h-11 rounded-xl bg-[#FF0036] text-white">手机注册</button>
+              <button onClick={() => setAuthMode('login')} className="w-full text-[13px] text-textMuted hover:text-[#FF0036]">已有账号？去登录</button>
             </div>
           )}
         </div>
@@ -166,7 +166,7 @@ export default function MailboxAuthPanel({ onToast }) {
         <div className="space-y-4">
           <div
             className="rounded-2xl p-1 border border-borderLine"
-            style={{ background: 'linear-gradient(135deg, #eaf4f3 0%, #f8fafc 100%)' }}
+            style={{ background: 'linear-gradient(135deg, #fff0f3 0%, #f5f6fa 100%)' }}
           >
             <div className="flex flex-nowrap gap-2">
               <button onClick={() => setMineTab('overview')} className={tabClass(mineTab === 'overview')}>概览</button>
@@ -180,11 +180,11 @@ export default function MailboxAuthPanel({ onToast }) {
             <div className="grid md:grid-cols-2 gap-3">
               <div className="p-3 rounded-xl border border-borderLine bg-appBg/50 flex items-center justify-between">
                 <span className="text-[14px]">邮箱认证</span>
-                <span className={`text-[12px] ${emailVerified ? 'text-primary' : 'text-textMuted'}`}>{emailVerified ? '已认证' : '未认证'}</span>
+                <span className={`text-[12px] ${emailVerified ? 'text-[#FF0036]' : 'text-textMuted'}`}>{emailVerified ? '已认证' : '未认证'}</span>
               </div>
               <div className="p-3 rounded-xl border border-borderLine bg-appBg/50 flex items-center justify-between">
                 <span className="text-[14px]">手机认证</span>
-                <button onClick={() => onToast?.('手机认证暂不可用')} className="text-[12px] text-textMuted hover:text-primary">{phoneVerified ? '已认证' : '去认证'}</button>
+                <button onClick={() => onToast?.('手机认证暂不可用')} className="text-[12px] text-textMuted hover:text-[#FF0036]">{phoneVerified ? '已认证' : '去认证'}</button>
               </div>
             </div>
           </div>
@@ -194,8 +194,8 @@ export default function MailboxAuthPanel({ onToast }) {
           <div className="bg-cardWhite border border-borderLine rounded-2xl p-5 shadow-[var(--shadow-card)]">
             <h3 className="text-[15px] font-bold text-textMain mb-3">订单列表</h3>
             <div className="flex gap-2">
-              <input value={orderNo} onChange={(e) => setOrderNo(e.target.value)} placeholder="输入订单号，提交后进行订单绑定" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <button onClick={submitOrderBind} className="h-11 px-4 rounded-xl bg-primary text-white">绑定</button>
+              <input value={orderNo} onChange={(e) => setOrderNo(e.target.value)} placeholder="输入订单号，提交后进行订单绑定" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <button onClick={submitOrderBind} className="h-11 px-4 rounded-xl bg-[#FF0036] text-white">绑定</button>
             </div>
             <div className="mt-3 space-y-2">
               {orders.length === 0 && <p className="text-[12px] text-textMuted">暂无绑定订单</p>}
@@ -205,7 +205,7 @@ export default function MailboxAuthPanel({ onToast }) {
                     <p className="text-[13px] text-textMain">订单号：{item.orderNo}</p>
                     <p className="text-[11px] text-textMuted mt-1">{item.time}</p>
                   </div>
-                  <span className="text-[12px] text-primary">{item.status}</span>
+                  <span className="text-[12px] text-[#FF0036]">{item.status}</span>
                 </div>
               ))}
             </div>
@@ -218,7 +218,7 @@ export default function MailboxAuthPanel({ onToast }) {
             <div className="grid md:grid-cols-3 gap-3">
               <div
                 className="p-4 rounded-2xl text-white border border-primary/20"
-                style={{ background: 'linear-gradient(135deg, #75a8a4 0%, #6b9c98 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #ff4d6d 0%, #ff0036 100%)' }}
               >
                 <p className="text-[12px] text-white/85">可提现余额</p>
                 <p className="text-[26px] font-bold mt-2">¥ {balance.toFixed(2)}</p>
@@ -239,8 +239,8 @@ export default function MailboxAuthPanel({ onToast }) {
           <div className="bg-cardWhite border border-borderLine rounded-2xl p-5 shadow-[var(--shadow-card)]">
             <h3 className="text-[15px] font-bold text-textMain mb-3">提现</h3>
             <div className="flex gap-2">
-              <input value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="请输入提现金额" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-primary outline-none bg-appBg/40" />
-              <button onClick={submitWithdraw} className="h-11 px-4 rounded-xl bg-primary text-white">申请提现</button>
+              <input value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="请输入提现金额" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
+              <button onClick={submitWithdraw} className="h-11 px-4 rounded-xl bg-[#FF0036] text-white">申请提现</button>
             </div>
           </div>
           )}
@@ -256,7 +256,7 @@ export default function MailboxAuthPanel({ onToast }) {
                     <p className="text-[13px] text-textMain">提现金额：¥ {item.amount}</p>
                     <p className="text-[11px] text-textMuted mt-1">{item.time}</p>
                   </div>
-                  <span className="text-[12px] text-primary">{item.status}</span>
+                  <span className="text-[12px] text-[#FF0036]">{item.status}</span>
                 </div>
               ))}
             </div>

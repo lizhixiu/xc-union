@@ -14,7 +14,7 @@ export default function BottomNav({ page, onSwitch }) {
         const Icon = tab.icon;
         const active = page === tab.key;
         return (
-          <button key={tab.key} onClick={() => onSwitch(tab.key)} className={`flex flex-col items-center justify-center w-full h-full ${active ? 'text-textMain' : 'text-textMuted'}`}>
+          <button key={tab.key} onClick={() => onSwitch(tab.key)} className={`flex flex-col items-center justify-center w-full h-full ${active ? 'text-[#FF0036]' : 'text-textMuted'}`}>
             <Icon size={22} />
             <span className="text-[10px] font-medium">{tab.label}</span>
           </button>
