@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CheckCircle, CurrencyCircleDollar, ShieldCheck, UserCircle } from '@phosphor-icons/react';
 import { isLoggedIn, setLoggedIn } from '../utils/auth';
 
@@ -31,6 +31,9 @@ export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [withdrawals, setWithdrawals] = useState([]);
   const [mineTab, setMineTab] = useState('overview');
+  const [orderStatus, setOrderStatus] = useState('paid');
+  const [bindHintVisible, setBindHintVisible] = useState(false);
+  const [withdrawHintVisible, setWithdrawHintVisible] = useState(false);
   const [inviteCode] = useState('QG8F2M');
 
   const inviteList = [
@@ -73,46 +76,124 @@ export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
   const phoneUnavailable = () => onToast?.('手机登录/注册暂不可用');
 
   const submitOrderBind = () => {
-    if (!isLoggedIn()) {
-      onToast?.('请先登录后再绑定订单');
-      return;
-    }
-    const no = orderNo.trim();
-    if (!no) {
-      onToast?.('请输入订单号');
-      return;
-    }
-    setOrders((prev) => [{ id: `ord_${Date.now()}`, orderNo: no, time: nowString(), status: '已绑定' }, ...prev]);
-    setOrderNo('');
-    onToast?.('订单绑定成功');
+    setBindHintVisible(true);
   };
 
   const submitWithdraw = () => {
-    if (!isLoggedIn()) {
-      onToast?.('请先登录后再提现');
-      return;
-    }
-    const amt = Number(withdrawAmount);
-    if (!Number.isFinite(amt) || amt <= 0) {
-      onToast?.('请输入正确提现金额');
-      return;
-    }
-    if (amt > balance) {
-      onToast?.('余额不足');
-      return;
-    }
-    setBalance((b) => Number((b - amt).toFixed(2)));
-    setWithdrawals((prev) => [{ id: `wd_${Date.now()}`, amount: amt.toFixed(2), time: nowString(), status: '处理中' }, ...prev]);
-    setWithdrawAmount('');
-    onToast?.('提现申请已提交');
+    setWithdrawHintVisible(true);
   };
 
   const tabClass = (active) =>
-    `h-10 flex-1 min-w-0 whitespace-nowrap rounded-lg text-[14px] transition-all ${
-      active
-        ? 'bg-cardWhite text-[#FF0036] border border-[#FF0036]/30 shadow-sm'
-        : 'text-textMuted hover:text-textMain'
+    `h-10 flex-1 min-w-0 whitespace-nowrap text-[15px] transition-all flex items-center justify-center relative ${
+      active ? 'text-[#111111] font-bold' : 'text-[#666666]'
     }`;
+
+  const orderStatusTabs = [
+    { key: 'paid', label: '已付款' },
+    { key: 'received', label: '已收货' },
+    { key: 'settled', label: '已结算' },
+    { key: 'invalid', label: '已失效' }
+  ];
+
+  const orderCards = [
+    {
+      id: 'o1',
+      status: 'paid',
+      statusText: '已付款',
+      product: {
+        image: 'https://img.alicdn.com/bao/uploaded/i2/2217402909158/O1CN01dMZ5Wx2HWQIOb1fM0_!!2217402909158.jpg',
+        title: '维生素B族复合片 60粒装 日常营养补充',
+        shopName: '阿里健康大药房',
+        productType: '淘宝联盟'
+      },
+      metrics: [
+        ['付款金额(元)', '23.50'],
+        ['付款预估收入(元)', '1.41'],
+        ['总提成率', '6.00%'],
+        ['平台技术服务费(元)', '0.00']
+      ],
+      paidAt: '2026-05-20 01:22:46',
+      settledAt: ''
+    },
+    {
+      id: 'o2',
+      status: 'received',
+      statusText: '已收货',
+      product: {
+        image: 'https://img.alicdn.com/bao/uploaded/i3/2219113300539/O1CN01AoiRFw1FquZDcbMh6_!!4611686018427380283-0-item_pic.jpg',
+        title: '儿童防蚊裤夏季薄款两条装 透气速干',
+        shopName: 'bobdoghouse童鞋旗舰店',
+        productType: '淘宝联盟'
+      },
+      metrics: [
+        ['付款金额(元)', '39.90'],
+        ['付款预估收入(元)', '2.39'],
+        ['总提成率', '6.00%'],
+        ['平台技术服务费(元)', '0.00']
+      ],
+      paidAt: '2026-05-19 12:08:23',
+      settledAt: ''
+    },
+    {
+      id: 'o3',
+      status: 'settled',
+      statusText: '已结算',
+      product: {
+        image: 'https://img.alicdn.com/bao/uploaded/i4/2216944218317/O1CN01YIG2ax2BJFD1mzttl_!!4611686018427384013-0-item_pic.jpg',
+        title: '黑咖啡浓缩液 32杯装 无糖提神',
+        shopName: '瑞幸即享咖啡旗舰店',
+        productType: '淘宝联盟'
+      },
+      metrics: [
+        ['结算金额(元)', '44.70'],
+        ['结算预估收入(元)', '2.68'],
+        ['总提成率', '6.00%'],
+        ['平台技术服务费(元)', '0.00']
+      ],
+      paidAt: '2026-05-15 11:28:54',
+      settledAt: '2026-05-17 21:15:16'
+    },
+    {
+      id: 'o4',
+      status: 'invalid',
+      statusText: '已失效',
+      product: {
+        image: 'https://img.alicdn.com/bao/uploaded/i2/2217402909158/O1CN01dMZ5Wx2HWQIOb1fM0_!!2217402909158.jpg',
+        title: '家清套装 多规格组合',
+        shopName: '国货严选企业工厂店',
+        productType: '淘宝联盟'
+      },
+      metrics: [
+        ['付款金额(元)', '19.90'],
+        ['付款预估收入(元)', '0.00'],
+        ['总提成率', '0.00%'],
+        ['平台技术服务费(元)', '0.00']
+      ],
+      paidAt: '2026-05-13 08:01:22',
+      settledAt: ''
+    }
+  ];
+
+  const shownOrders = useMemo(() => orderCards.filter((x) => x.status === orderStatus), [orderCards, orderStatus]);
+
+  useEffect(() => {
+    if (!bindHintVisible) return undefined;
+    const timer = setTimeout(() => setBindHintVisible(false), 1800);
+    return () => clearTimeout(timer);
+  }, [bindHintVisible]);
+
+  useEffect(() => {
+    if (!withdrawHintVisible) return undefined;
+    const timer = setTimeout(() => setWithdrawHintVisible(false), 1800);
+    return () => clearTimeout(timer);
+  }, [withdrawHintVisible]);
+
+  const orderStatusClass = (status) => {
+    if (status === 'paid') return 'bg-[#EEF4FF] text-[#2F7BFF]';
+    if (status === 'received') return 'bg-[#F2F8FF] text-[#3B6FCB]';
+    if (status === 'settled') return 'bg-[#EDFBF2] text-[#18A05D]';
+    return 'bg-[#F3F4F6] text-[#7A8597]';
+  };
 
   return (
     <div className="space-y-5">
@@ -175,14 +256,20 @@ export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
 
       {authed && (
         <div className="space-y-4">
-          <div
-            className="rounded-2xl p-1 border border-borderLine"
-            style={{ background: 'linear-gradient(135deg, #fff0f3 0%, #f5f6fa 100%)' }}
-          >
-            <div className="flex flex-nowrap gap-2">
-              <button onClick={() => setMineTab('overview')} className={tabClass(mineTab === 'overview')}>概览</button>
-              <button onClick={() => setMineTab('orders')} className={tabClass(mineTab === 'orders')}>订单</button>
-              <button onClick={() => setMineTab('withdraw')} className={tabClass(mineTab === 'withdraw')}>提现</button>
+          <div className="bg-white px-1">
+            <div className="flex flex-nowrap gap-1 border-b border-[#F1F2F4]">
+              <button onClick={() => setMineTab('overview')} className={tabClass(mineTab === 'overview')}>
+                概览
+                {mineTab === 'overview' ? <span className="absolute -bottom-[1px] w-5 h-[3px] bg-[#FF0036] rounded-full" /> : null}
+              </button>
+              <button onClick={() => setMineTab('orders')} className={tabClass(mineTab === 'orders')}>
+                订单
+                {mineTab === 'orders' ? <span className="absolute -bottom-[1px] w-5 h-[3px] bg-[#FF0036] rounded-full" /> : null}
+              </button>
+              <button onClick={() => setMineTab('withdraw')} className={tabClass(mineTab === 'withdraw')}>
+                提现
+                {mineTab === 'withdraw' ? <span className="absolute -bottom-[1px] w-5 h-[3px] bg-[#FF0036] rounded-full" /> : null}
+              </button>
             </div>
           </div>
           {mineTab === 'overview' && (
@@ -202,24 +289,85 @@ export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
           )}
 
           {mineTab === 'orders' && (
-          <div className="bg-cardWhite border border-borderLine rounded-2xl p-5 shadow-[var(--shadow-card)]">
-            <h3 className="text-[15px] font-bold text-textMain mb-3">订单列表</h3>
-            <div className="flex gap-2">
-              <input value={orderNo} onChange={(e) => setOrderNo(e.target.value)} placeholder="输入订单号，提交后进行订单绑定" className="flex-1 h-11 px-3 rounded-xl border border-borderLine focus:border-[#FF0036] outline-none bg-appBg/40" />
-              <button onClick={submitOrderBind} className="h-11 px-4 rounded-xl bg-[#FF0036] text-white">绑定</button>
-            </div>
-            <div className="mt-3 space-y-2">
-              {orders.length === 0 && <p className="text-[12px] text-textMuted">暂无绑定订单</p>}
-              {orders.map((item) => (
-                <div key={item.id} className="p-3 rounded-xl border border-borderLine bg-appBg/40 flex items-center justify-between">
-                  <div>
-                    <p className="text-[13px] text-textMain">订单号：{item.orderNo}</p>
-                    <p className="text-[11px] text-textMuted mt-1">{item.time}</p>
-                  </div>
-                  <span className="text-[12px] text-[#FF0036]">{item.status}</span>
-                </div>
+          <div className="space-y-3">
+            <div className="grid grid-cols-4 gap-2">
+              {orderStatusTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setOrderStatus(tab.key)}
+                  className={`h-8 rounded-full text-[12px] font-medium ${
+                    orderStatus === tab.key ? 'bg-gradient-to-r from-[#FF7A00] to-[#FF5000] text-white' : 'bg-[#F1F3F5] text-[#333333]'
+                  }`}
+                >
+                  {tab.label}
+                </button>
               ))}
             </div>
+            {shownOrders.map((item) => (
+              <article key={item.id} className="bg-white border border-[#ECEFF4] rounded-2xl p-3.5">
+                <div className="flex items-center justify-between">
+                  <div className="text-[12px] text-[#707B8C]">{item.product.shopName} · {item.product.productType}</div>
+                  <span className={`h-5 px-2 rounded-[4px] text-[10px] inline-flex items-center ${item.status === 'paid' ? 'bg-[#F0F5FF] text-[#0066FF]' : item.status === 'received' ? 'bg-[#F2F7FF] text-[#3A6FD8]' : item.status === 'settled' ? 'bg-[#EDF9F1] text-[#0D9B57]' : 'bg-[#F3F4F6] text-[#778395]'}`}>{item.statusText}</span>
+                </div>
+
+                <div className="mt-2.5 flex gap-2.5 items-start">
+                  <img src={item.product.image} alt={item.product.title} className="w-14 h-14 rounded-md object-cover shrink-0" />
+                  <h4 className="text-[14px] leading-[1.4] text-[#111111] font-bold line-clamp-2">{item.product.title}</h4>
+                </div>
+
+                <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5">
+                  {item.metrics.map(([name, value]) => (
+                    <div key={name}>
+                      <div className="text-[11px] text-[#999999]">{name}</div>
+                      <div className="mt-0.5 text-[16px] text-[#111111] font-mono font-bold flex items-center gap-1">
+                        <span>{value}</span>
+                        {name === '付款预估收入(元)' || name === '结算预估收入(元)' ? (
+                          <span className="text-[9px] px-1 py-[1px] bg-[#FFF0F2] text-[#FF0036] rounded-[2px] leading-none">佣金</span>
+                        ) : null}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-3 pt-2 border-t border-dashed border-gray-100 flex items-center justify-between text-[11px] text-[#9AA3B2]">
+                  <span>{item.paidAt} 付款</span>
+                  <span>{item.settledAt ? `${item.settledAt} 结算` : ''}</span>
+                </div>
+              </article>
+            ))}
+
+            <div className="bg-cardWhite border border-borderLine rounded-2xl p-4 shadow-[var(--shadow-card)]">
+              <div className="text-[14px] font-semibold text-[#1F2937] mb-2">订单绑定</div>
+              <div className="flex gap-2">
+                <input value={orderNo} onChange={(e) => setOrderNo(e.target.value)} placeholder="输入订单号，提交后进行订单绑定" className="flex-1 h-10 bg-[#F5F6F8] rounded-full px-4 outline-none text-[13px] text-[#333333]" />
+                <button onClick={submitOrderBind} className="h-10 px-5 rounded-full bg-gradient-to-r from-[#FF0036] to-[#FF4724] text-white text-[13px] shadow-[0_4px_10px_rgba(255,45,66,0.28)]">绑定</button>
+              </div>
+              {orders.length > 0 ? (
+                <div className="mt-2 space-y-1.5">
+                  {orders.slice(0, 2).map((x) => (
+                    <div key={x.id} className="text-[12px] text-[#6B7280]">{x.orderNo} · {x.time}</div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+
+            {bindHintVisible ? (
+              <div className="fixed left-1/2 -translate-x-1/2 bottom-[88px] z-50 pointer-events-none">
+                <div
+                  className="h-9 px-4 rounded-full text-[13px] inline-flex items-center whitespace-nowrap"
+                  style={{
+                    color: '#fff',
+                    background: 'rgba(35, 41, 51, 0.9)',
+                    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.18)',
+                    backdropFilter: 'blur(6px)',
+                    WebkitBackdropFilter: 'blur(6px)',
+                    animation: 'fadeInInviteToast 160ms ease-out'
+                  }}
+                >
+                  功能暂未开放，敬请期待
+                </div>
+              </div>
+            ) : null}
           </div>
           )}
 
@@ -273,6 +421,24 @@ export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
             </div>
           </div>
           )}
+
+          {withdrawHintVisible ? (
+            <div className="fixed left-1/2 -translate-x-1/2 bottom-[88px] z-50 pointer-events-none">
+              <div
+                className="h-9 px-4 rounded-full text-[13px] inline-flex items-center whitespace-nowrap"
+                style={{
+                  color: '#fff',
+                  background: 'rgba(35, 41, 51, 0.9)',
+                  boxShadow: '0 6px 16px rgba(0, 0, 0, 0.18)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  animation: 'fadeInInviteToast 160ms ease-out'
+                }}
+              >
+                功能暂未开放，敬请期待
+              </div>
+            </div>
+          ) : null}
 
         </div>
       )}

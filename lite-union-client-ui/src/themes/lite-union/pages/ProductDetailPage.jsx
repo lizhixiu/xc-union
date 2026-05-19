@@ -47,11 +47,13 @@ export default function ProductDetailPage({ standalone = false }) {
     selectedProduct?.itemName ||
     '敬修堂膏贴...';
   const shopName = selectedProduct?.shopName || '敬修堂官方旗舰店';
-  const price = String(selectedProduct?.price || '10.00');
-  const originalPrice = String(selectedProduct?.originalPrice || selectedProduct?.original || '19.90').replace('¥', '');
-  const rebate = String(selectedProduct?.rebate || '1.58');
+  const price = String(selectedProduct?.price || '0.00');
+  const originalPriceRaw = selectedProduct?.originalPrice ?? selectedProduct?.original ?? '';
+  const originalPrice = String(originalPriceRaw || '').replace('¥', '');
+  const rebateRaw = selectedProduct?.rebate ?? '';
+  const rebate = rebateRaw !== '' ? String(rebateRaw) : '';
   const couponText = selectedProduct?.coupon || (Number(selectedProduct?.couponPrice || 0) > 0 ? `平台券 ¥${selectedProduct.couponPrice}` : '平台优惠券');
-  const couponAmount = Number(selectedProduct?.couponPrice || 20);
+  const couponAmount = Number(selectedProduct?.couponPrice || 0);
   const mainImage = selectedProduct?.image || heroImages[0];
   const carouselImages = [mainImage, ...heroImages.filter((img) => img !== mainImage)].slice(0, 3);
 
@@ -171,15 +173,17 @@ export default function ProductDetailPage({ standalone = false }) {
                     <span className="text-[16px] mr-0.5">¥</span>
                     <span className="text-[28px]">{price}</span>
                   </div>
-                  <span className="h-4 px-1 py-[1px] rounded-[3px] bg-[#FFF0F3] text-[#FF0036] text-[10px] inline-flex items-center shrink-0 leading-none">券后价</span>
-                  <span className="text-[12px] text-[#999999] line-through mb-0.5 shrink-0">原价 ¥{originalPrice}</span>
+                  {couponAmount > 0 ? <span className="h-4 px-1 py-[1px] rounded-[3px] bg-[#FFF0F3] text-[#FF0036] text-[10px] inline-flex items-center shrink-0 leading-none">券后价</span> : null}
+                  {originalPrice ? <span className="text-[12px] text-[#999999] line-through mb-0.5 shrink-0">原价 ¥{originalPrice}</span> : null}
                 </div>
                 <span className="text-[#999999] text-[11px] leading-none shrink-0">月销 1.00万+</span>
               </div>
               <h1 className="mt-1.5 text-[16px] text-[#111111] font-semibold leading-[1.35]">{title}</h1>
-              <div className="mt-2 inline-flex items-center px-2 py-[2px] rounded-[3px] bg-[#FFF4ED] border border-[#FFD8B2] text-[#FF5000] text-[12px] leading-none">
-                预估佣金 ¥{rebate}
-              </div>
+              {rebate ? (
+                <div className="mt-2 inline-flex items-center px-2 py-[2px] rounded-[3px] bg-[#FFF4ED] border border-[#FFD8B2] text-[#FF5000] text-[12px] leading-none">
+                  预估佣金 ¥{rebate}
+                </div>
+              ) : null}
               {authed ? (
                 <div className="mt-2.5">
                   <div className="h-8 rounded-[6px] bg-[#FFF4ED] border border-[#FFE7D8] px-2.5 flex items-center justify-between">
@@ -195,23 +199,25 @@ export default function ProductDetailPage({ standalone = false }) {
               ) : null}
             </div>
 
-            <div className="bg-white p-3 border-b border-[#F0F1F4]">
-              <div className="rounded-xl bg-gradient-to-r from-[#FFF0F2] to-[#FFE4E8] border border-[#FFD5DC] px-3 py-2.5 text-[#FF0036] flex items-center justify-between relative overflow-hidden">
-                <div className="absolute left-[72%] top-[-8px] w-4 h-4 rounded-full bg-white" />
-                <div className="absolute left-[72%] bottom-[-8px] w-4 h-4 rounded-full bg-white" />
-                <div>
-                  <div className="mt-0.5 text-[26px] leading-none font-bold">¥{couponAmount}</div>
-                  <div className="mt-1 text-[10px] text-[#C24A61]">有效期至 2026-05-31</div>
+            {couponAmount > 0 ? (
+              <div className="bg-white p-3 border-b border-[#F0F1F4]">
+                <div className="rounded-xl bg-gradient-to-r from-[#FFF0F2] to-[#FFE4E8] border border-[#FFD5DC] px-3 py-2.5 text-[#FF0036] flex items-center justify-between relative overflow-hidden">
+                  <div className="absolute left-[72%] top-[-8px] w-4 h-4 rounded-full bg-white" />
+                  <div className="absolute left-[72%] bottom-[-8px] w-4 h-4 rounded-full bg-white" />
+                  <div>
+                    <div className="mt-0.5 text-[26px] leading-none font-bold">¥{couponAmount}</div>
+                    <div className="mt-1 text-[10px] text-[#C24A61]">有效期至 2026-05-31</div>
+                  </div>
+                  <div className="h-10 border-l border-dashed border-[#FF8DA2] mx-3" />
+                  <button
+                    onClick={() => setNoticeVisible(true)}
+                    className="h-9 px-4 rounded-full bg-[#FF0036] text-white text-[13px] font-semibold shrink-0"
+                  >
+                    立即领取
+                  </button>
                 </div>
-                <div className="h-10 border-l border-dashed border-[#FF8DA2] mx-3" />
-                <button
-                  onClick={() => setNoticeVisible(true)}
-                  className="h-9 px-4 rounded-full bg-[#FF0036] text-white text-[13px] font-semibold shrink-0"
-                >
-                  立即领取
-                </button>
               </div>
-            </div>
+            ) : null}
 
             <div className="bg-white border-b border-[#F0F1F4] p-3">
               <div className="flex items-center justify-between">

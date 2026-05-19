@@ -71,6 +71,7 @@ function openProductDetail(payload) {
 export default function HomeDealsPage() {
   const [authed, setAuthed] = useState(() => isLoggedIn());
   const [receiveHintVisible, setReceiveHintVisible] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('520');
   const [channelPage, setChannelPage] = useState(0);
   const [campaignPage, setCampaignPage] = useState(0);
   const [channelTouchX, setChannelTouchX] = useState(0);
@@ -199,9 +200,25 @@ export default function HomeDealsPage() {
           <div className="h-10 flex items-center gap-1.5">
             <div className="flex-1 h-full rounded-[12px] bg-white border border-[#FFD0DA] px-2 flex items-center gap-1.5">
               <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><QrCode size={15} /></span>
-              <span className="text-[13px] text-[#111111] flex-1 font-medium">复合维生素 b</span>
+              <input
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                className="text-[13px] text-[#111111] flex-1 font-medium bg-transparent outline-none"
+              />
               <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><Camera size={15} /></span>
-              <button className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95">搜索</button>
+              <button
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem('lite_union_search_keyword', (searchKeyword || '').trim() || '520');
+                  } catch {
+                    // ignore
+                  }
+                  navigateTo('/query-goods');
+                }}
+                className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95"
+              >
+                搜索
+              </button>
             </div>
             <button onClick={() => navigateTo('/message-box')} className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
               <ChatCircleDots size={20} />

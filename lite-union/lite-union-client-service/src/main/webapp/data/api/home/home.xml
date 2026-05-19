@@ -264,4 +264,27 @@
         </script>
     </api>
 
+
+    <api id="getQueryGoodsList" name="查询商品列表" caption="查询商品列表" method="POST" path="/getQueryGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId ? body.pageId : "1";
+            paraMap.pageSize = body.pageSize ? body.pageSize : "20";
+            paraMap.keyWords = body.keyWords || "";
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = {};
+            result.list = (rawData && rawData.list) ? rawData.list : [];
+            result.total = (rawData && rawData.totalNum != null) ? rawData.totalNum : 0;
+            return result;
+      ]]>
+        </script>
+    </api>
+
 </api-group>

@@ -15,6 +15,7 @@ import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
 import ProductDetailPage from './themes/lite-union/pages/ProductDetailPage';
 import RewardActivityPage from './themes/lite-union/pages/RewardActivityPage';
 import MessageBoxPage from './themes/lite-union/pages/MessageBoxPage';
+import QueryGoodsPage from './themes/lite-union/pages/QueryGoodsPage';
 import { isLoggedIn, onAuthChanged } from './utils/auth';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
@@ -144,6 +145,7 @@ export default function App() {
   const isMessageBoxRoute = appPathname === '/message-box';
   const isBillionSubsidyRoute = appPathname === '/billion-subsidy';
   const isProductDetailRoute = appPathname === '/product-detail';
+  const isQueryGoodsRoute = appPathname === '/query-goods';
   const [page, setPage] = useState('home');
   const [footprintTab, setFootprintTab] = useState('查券');
   const [footprintTabGroups, setFootprintTabGroups] = useState([]);
@@ -488,6 +490,16 @@ export default function App() {
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
           <ProductDetailPage standalone />
+        </div>
+      </div>
+    );
+  }
+
+  if (isQueryGoodsRoute) {
+    return (
+      <div className="h-screen bg-appBg overflow-hidden">
+        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+          <QueryGoodsPage standalone />
         </div>
       </div>
     );
