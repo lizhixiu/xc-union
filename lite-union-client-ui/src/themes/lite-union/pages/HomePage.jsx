@@ -1,5 +1,6 @@
 import { Camera, ChatCircleDots, Gift, Lightning, MagnifyingGlass, Medal, QrCode, SealPercent, ShoppingCartSimple, Ticket } from '@phosphor-icons/react';
 import { useEffect, useRef, useState } from 'react';
+import { isLoggedIn, onAuthChanged } from '../../../utils/auth';
 
 const channels = [
   { name: '品牌特卖', icon: Medal },
@@ -44,6 +45,7 @@ function mapGoodsItem(raw = {}) {
   const rebateAmount = finalPrice * (commissionRate / 100);
   return {
     id: raw.id ?? raw.goodsId ?? Math.random(),
+    goodsId: raw.goodsId ?? raw.goodsSign ?? '',
     title: raw.dtitle || raw.title || '未命名商品',
     image: raw.mainPic || 'https://placehold.co/220x220/FCE7E7/8B5E5E?text=GOODS',
     price: toCurrency(finalPrice),
@@ -67,6 +69,8 @@ function openProductDetail(payload) {
 }
 
 export default function HomeDealsPage() {
+  const [authed, setAuthed] = useState(() => isLoggedIn());
+  const [receiveHintVisible, setReceiveHintVisible] = useState(false);
   const [channelPage, setChannelPage] = useState(0);
   const [campaignPage, setCampaignPage] = useState(0);
   const [channelTouchX, setChannelTouchX] = useState(0);
@@ -162,6 +166,17 @@ export default function HomeDealsPage() {
   }, []);
 
   useEffect(() => {
+    const unsubscribe = onAuthChanged(() => setAuthed(isLoggedIn()));
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (!receiveHintVisible) return undefined;
+    const timer = setTimeout(() => setReceiveHintVisible(false), 1800);
+    return () => clearTimeout(timer);
+  }, [receiveHintVisible]);
+
+  useEffect(() => {
     const el = loadMoreRef.current;
     if (!el) return;
     const observer = new IntersectionObserver((entries) => {
@@ -190,7 +205,7 @@ export default function HomeDealsPage() {
             </div>
             <button onClick={() => navigateTo('/message-box')} className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">
               <ChatCircleDots size={20} />
-              <span className="absolute -right-0.5 -top-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#FF0036] text-white text-[10px] leading-4 text-center">6</span>
+              {authed ? <span className="absolute -right-0.5 -top-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#FF0036] text-white text-[10px] leading-4 text-center">6</span> : null}
             </button>
           </div>
         </div>
@@ -244,7 +259,7 @@ export default function HomeDealsPage() {
         <div className="h-12 bg-[#FFF7F7] border border-[#FCE1E1] rounded-xl px-3 flex items-center gap-2">
           <span className="w-6 h-6 rounded-md bg-[#FF4142] text-white text-[14px] flex items-center justify-center">￥</span>
           <div className="flex-1 text-[13px] text-[#111111]">购物车商品找到 <span className="text-[#FF0036] font-semibold">50元隐藏红包</span></div>
-          <button className="h-8 px-4 rounded-lg bg-[#FF0036] text-white text-[13px] font-medium">去领取</button>
+          <button onClick={() => setReceiveHintVisible(true)} className="h-8 px-4 rounded-lg bg-[#FF0036] text-white text-[13px] font-medium">去领取</button>
         </div>
 
         <div className="grid grid-cols-2 gap-2" onTouchStart={onCampaignTouchStart} onTouchEnd={onCampaignTouchEnd}>
@@ -316,6 +331,24 @@ export default function HomeDealsPage() {
             {loading && !initLoading ? '加载更多中...' : hasMore ? '下滑加载更多' : '没有更多了'}
           </div>
         </div>
+
+        {receiveHintVisible ? (
+          <div className="fixed left-1/2 -translate-x-1/2 bottom-[88px] z-50 pointer-events-none">
+            <div
+              className="h-9 px-4 rounded-full text-[13px] inline-flex items-center"
+              style={{
+                color: '#fff',
+                background: 'rgba(35, 41, 51, 0.9)',
+                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.18)',
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
+                animation: 'fadeInInviteToast 160ms ease-out'
+              }}
+            >
+              功能暂未开放，敬请期待
+            </div>
+          </div>
+        ) : null}
 
       </div>
     </section>

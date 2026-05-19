@@ -1,8 +1,10 @@
 import { ArrowLeft, CaretRight, House, Heart, Storefront } from '@phosphor-icons/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { isLoggedIn, onAuthChanged } from '../../../utils/auth';
 
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
 const USE_HASH_ROUTING = !import.meta.env.DEV;
+const PRIVILEGE_LINK_API_URL = '/home/getPrivilegeLink';
 
 function withBase(path) {
   if (!path.startsWith('/')) return path;
@@ -26,6 +28,11 @@ const heroImages = [
 
 export default function ProductDetailPage({ standalone = false }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [authed, setAuthed] = useState(() => isLoggedIn());
+  const [inviteHintVisible, setInviteHintVisible] = useState(false);
+  const [noticeVisible, setNoticeVisible] = useState(false);
+  const [actionToast, setActionToast] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const selectedProduct = useMemo(() => {
     try {
       const raw = sessionStorage.getItem('lite_union_selected_product');
@@ -56,6 +63,83 @@ export default function ProductDetailPage({ standalone = false }) {
       return '/';
     }
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthChanged(() => setAuthed(isLoggedIn()));
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (!inviteHintVisible) return undefined;
+    const timer = setTimeout(() => setInviteHintVisible(false), 1800);
+    return () => clearTimeout(timer);
+  }, [inviteHintVisible]);
+
+  useEffect(() => {
+    if (!actionToast) return undefined;
+    const timer = setTimeout(() => setActionToast(''), 1800);
+    return () => clearTimeout(timer);
+  }, [actionToast]);
+
+  const showActionToast = (msg) => setActionToast(msg);
+
+  const copyTextWithFallback = async (text) => {
+    if (!text) return false;
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        // fallback
+      }
+    }
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return ok;
+    } catch {
+      return false;
+    }
+  };
+
+  const requestPrivilegeLinkAndCopy = async () => {
+    const goodsId = selectedProduct?.goodsId || '';
+    if (!goodsId) {
+      showActionToast('缺少商品ID，暂无法复制');
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const resp = await fetch(PRIVILEGE_LINK_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ goodsId: String(goodsId) })
+      });
+      if (!resp.ok) {
+        throw new Error(`请求失败: ${resp.status}`);
+      }
+      const json = await resp.json();
+      const longTpwd = json?.data?.longTpwd || '';
+      if (!longTpwd) {
+        showActionToast('未获取到口令');
+        return;
+      }
+      const copied = await copyTextWithFallback(longTpwd);
+      showActionToast(copied ? '口令已复制，去淘宝打开' : '复制失败，请手动复制');
+      setNoticeVisible(false);
+    } catch {
+      showActionToast('获取口令失败，请稍后重试');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section className={`page overflow-hidden ${standalone ? 'h-full pb-0' : 'pb-[80px]'}`}>
@@ -96,10 +180,19 @@ export default function ProductDetailPage({ standalone = false }) {
               <div className="mt-2 inline-flex items-center px-2 py-[2px] rounded-[3px] bg-[#FFF4ED] border border-[#FFD8B2] text-[#FF5000] text-[12px] leading-none">
                 预估佣金 ¥{rebate}
               </div>
-              <div className="mt-2.5 h-8 rounded-[6px] bg-[#FFF4ED] border border-[#FFE7D8] px-2.5 flex items-center justify-between">
-                <span className="text-[11px] text-[#B26A3E]">邀请好友下单，最高奖励 ¥5.88</span>
-                <button className="h-6 px-2.5 rounded-full bg-[#FF6A2A] text-white text-[11px] font-medium">立即邀请</button>
-              </div>
+              {authed ? (
+                <div className="mt-2.5">
+                  <div className="h-8 rounded-[6px] bg-[#FFF4ED] border border-[#FFE7D8] px-2.5 flex items-center justify-between">
+                    <span className="text-[11px] text-[#B26A3E]">邀请好友下单，最高奖励 ¥5.88</span>
+                    <button
+                      onClick={() => setInviteHintVisible(true)}
+                      className="h-6 px-2.5 rounded-full bg-[#FF6A2A] text-white text-[11px] font-medium"
+                    >
+                      立即邀请
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
 
             <div className="bg-white p-3 border-b border-[#F0F1F4]">
@@ -111,7 +204,12 @@ export default function ProductDetailPage({ standalone = false }) {
                   <div className="mt-1 text-[10px] text-[#C24A61]">有效期至 2026-05-31</div>
                 </div>
                 <div className="h-10 border-l border-dashed border-[#FF8DA2] mx-3" />
-                <button className="h-9 px-4 rounded-full bg-[#FF0036] text-white text-[13px] font-semibold shrink-0">立即领取</button>
+                <button
+                  onClick={() => setNoticeVisible(true)}
+                  className="h-9 px-4 rounded-full bg-[#FF0036] text-white text-[13px] font-semibold shrink-0"
+                >
+                  立即领取
+                </button>
               </div>
             </div>
 
@@ -139,10 +237,76 @@ export default function ProductDetailPage({ standalone = false }) {
                 <Heart size={16} />
                 <span className="text-[10px] mt-0.5">收藏</span>
               </button>
-              <button className="flex-1 h-11 rounded-full bg-gradient-to-r from-[#FFC900] to-[#FF9402] text-[#7A3D00] text-[14px] font-semibold shadow-[0_4px_10px_rgba(255,157,19,0.3)]">立即分享</button>
-              <button className="flex-1 h-11 rounded-full bg-gradient-to-r from-[#FF4724] to-[#FF0036] text-white text-[14px] font-semibold shadow-[0_4px_10px_rgba(255,45,66,0.32)]">马上购买</button>
+              <button
+                onClick={() => setNoticeVisible(true)}
+                className="flex-1 h-11 rounded-full bg-gradient-to-r from-[#FFC900] to-[#FF9402] text-[#7A3D00] text-[14px] font-semibold shadow-[0_4px_10px_rgba(255,157,19,0.3)]"
+              >
+                立即分享
+              </button>
+              <button
+                onClick={() => setNoticeVisible(true)}
+                className="flex-1 h-11 rounded-full bg-gradient-to-r from-[#FF4724] to-[#FF0036] text-white text-[14px] font-semibold shadow-[0_4px_10px_rgba(255,45,66,0.32)]"
+              >
+                马上购买
+              </button>
             </div>
           </div>
+
+          {inviteHintVisible ? (
+            <div className="fixed left-1/2 -translate-x-1/2 bottom-[88px] md:bottom-6 z-50 pointer-events-none">
+              <div
+                className="h-9 px-4 rounded-full text-[13px] inline-flex items-center whitespace-nowrap"
+                style={{
+                  color: '#fff',
+                  background: 'rgba(35, 41, 51, 0.9)',
+                  boxShadow: '0 6px 16px rgba(0, 0, 0, 0.18)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  animation: 'fadeInInviteToast 160ms ease-out'
+                }}
+              >
+                功能暂未开放，敬请期待
+              </div>
+            </div>
+          ) : null}
+
+          {noticeVisible ? (
+            <div className="fixed inset-0 z-[80] bg-black/35 flex items-center justify-center p-4" onClick={() => setNoticeVisible(false)}>
+              <div className="w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.2)]" onClick={(e) => e.stopPropagation()}>
+                <div className="text-[15px] font-semibold text-[#111111]">温馨提示</div>
+                <p className="mt-2 text-[13px] leading-[1.6] text-[#333333]">
+                  测试环境产生的返利默认作为平台维护赞助。系统已预留完整的底层 API，欢迎开发者开箱即用、二次开发，快速孵化独立的私域返利助手。技术答疑请加群沟通。
+                </p>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={requestPrivilegeLinkAndCopy}
+                    disabled={submitting}
+                    className="h-9 px-4 rounded-full bg-gradient-to-r from-[#FF7A00] to-[#FF5000] text-white text-[13px] font-semibold disabled:opacity-60"
+                  >
+                    {submitting ? '处理中...' : '我知道了'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {actionToast ? (
+            <div className="fixed left-1/2 -translate-x-1/2 bottom-[88px] md:bottom-6 z-50 pointer-events-none">
+              <div
+                className="h-9 px-4 rounded-full text-[13px] inline-flex items-center"
+                style={{
+                  color: '#fff',
+                  background: 'rgba(35, 41, 51, 0.9)',
+                  boxShadow: '0 6px 16px rgba(0, 0, 0, 0.18)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  animation: 'fadeInInviteToast 160ms ease-out'
+                }}
+              >
+                {actionToast}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

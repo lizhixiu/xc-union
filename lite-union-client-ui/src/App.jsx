@@ -15,6 +15,7 @@ import BillionSubsidyPage from './themes/lite-union/pages/BillionSubsidyPage';
 import ProductDetailPage from './themes/lite-union/pages/ProductDetailPage';
 import RewardActivityPage from './themes/lite-union/pages/RewardActivityPage';
 import MessageBoxPage from './themes/lite-union/pages/MessageBoxPage';
+import { isLoggedIn, onAuthChanged } from './utils/auth';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -154,6 +155,8 @@ export default function App() {
   const [searchText, setSearchText] = useState('');
   const [lastPastedText, setLastPastedText] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
+  const [pendingAuthAction, setPendingAuthAction] = useState(null);
+  const [postLoginRoute, setPostLoginRoute] = useState('');
 
   useEffect(() => {
     const syncRoute = () => setAppPathname(getAppPathname());
@@ -165,10 +168,86 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthChanged(() => {
+      setPendingAuthAction((prev) => {
+        if (!prev || !isLoggedIn()) return prev;
+        try {
+          prev();
+        } finally {
+          return null;
+        }
+      });
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const cached = sessionStorage.getItem('lite_union_post_login_route') || '';
+      setPostLoginRoute(cached);
+    } catch {
+      setPostLoginRoute('');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (appPathname !== '/') return;
+    try {
+      const forceProfile = sessionStorage.getItem('lite_union_force_profile_tab') === '1';
+      if (!forceProfile) return;
+      sessionStorage.removeItem('lite_union_force_profile_tab');
+      setPage('profile');
+    } catch {
+      // ignore
+    }
+  }, [appPathname]);
+
   const showToast = (msg) => {
     setToast(msg);
     setTimeout(() => setToast(''), 2000);
   };
+
+  const ensureLogin = (action, message = '请先登录后再操作') => {
+    if (isLoggedIn()) {
+      action?.();
+      return true;
+    }
+    setPendingAuthAction(() => action);
+    const route = appPathname || '/';
+    try {
+      sessionStorage.setItem('lite_union_post_login_route', route);
+      setPostLoginRoute(route);
+      sessionStorage.setItem('lite_union_force_profile_tab', '1');
+    } catch {
+      // ignore
+    }
+    if (appPathname !== '/') {
+      navigateTo('/');
+    }
+    setPage('profile');
+    showToast(message);
+    return false;
+  };
+
+  useEffect(() => {
+    const protectedRoutes = new Set(['/message-box', '/reward-activity', '/checkin-reward']);
+    if (!protectedRoutes.has(appPathname)) return;
+    if (isLoggedIn()) return;
+    try {
+      sessionStorage.setItem('lite_union_post_login_route', appPathname);
+      setPostLoginRoute(appPathname);
+      sessionStorage.setItem('lite_union_force_profile_tab', '1');
+    } catch {
+      // ignore
+    }
+    if (appPathname !== '/') {
+      navigateTo('/');
+    }
+    setPage('profile');
+    showToast('请先登录后访问该页面');
+  }, [appPathname]);
 
   const requestParse = async (content) => {
     const parsedContent = (content || '').trim();
@@ -234,12 +313,28 @@ export default function App() {
   };
 
   const openQrModal = () => {
-    const qrText = (detail?.shortUrl || '').trim();
-    if (!qrText) {
-      showToast('暂无可生成二维码的口令');
+    ensureLogin(() => {
+      const qrText = (detail?.shortUrl || '').trim();
+      if (!qrText) {
+        showToast('暂无可生成二维码的口令');
+        return;
+      }
+      setShowQrModal(true);
+    }, '请先登录后再扫码购买');
+  };
+
+  const handleCopyToken = async () => {
+    const content = detail?.cpsFullTpwd || detail?.itemLink;
+    if (!content) {
+      showToast('暂无可复制内容');
       return;
     }
-    setShowQrModal(true);
+    const copied = await copyTextWithFallback(content);
+    if (copied) {
+      showToast('已复制，请前往淘宝打开');
+    } else {
+      showToast('复制失败，请手动长按复制');
+    }
   };
 
   const activeDesktopNav = useMemo(() => (page === 'detail' ? 'home' : page), [page]);
@@ -545,17 +640,8 @@ export default function App() {
                   <button className="md:hidden w-12 h-12 rounded border border-borderLine flex items-center justify-center text-textMain" aria-label="分享"><ShareNetwork size={20} /></button>
                   <button
                     onClick={async () => {
-                      const content = detail.cpsFullTpwd || detail.itemLink;
-                      if (!content) {
-                        showToast('暂无可复制内容');
-                        return;
-                      }
-                      const copied = await copyTextWithFallback(content);
-                      if (copied) {
-                        showToast('已复制，请前往淘宝打开');
-                      } else {
-                        showToast('复制失败，请手动长按复制');
-                      }
+                      if (!ensureLogin(() => { handleCopyToken(); }, '请先登录后再复制淘口令')) return;
+                      await handleCopyToken();
                     }}
                     className="flex-1 md:w-[240px] md:flex-none bg-primary hover:bg-primary/90 text-white h-12 rounded text-[15px] font-medium flex items-center justify-center gap-2"
                   >
@@ -570,11 +656,50 @@ export default function App() {
 
         {page === 'profile' && (
           <section className="page p-4 md:px-0 md:py-8 pb-[80px]">
-            <MailboxAuthPanel onToast={showToast} />
+            <MailboxAuthPanel onToast={showToast} onLoginSuccess={() => {
+              const target = postLoginRoute;
+              if (target && isLoggedIn()) {
+                try {
+                  sessionStorage.removeItem('lite_union_post_login_route');
+                } catch {
+                  // ignore
+                }
+                setPostLoginRoute('');
+                navigateTo(target);
+                return;
+              }
+              if (pendingAuthAction && isLoggedIn()) {
+                const action = pendingAuthAction;
+                setPendingAuthAction(null);
+                action?.();
+              }
+              setPage('home');
+            }} />
           </section>
         )}
 
-        {page !== 'detail' && <BottomNav page={page} onSwitch={(next) => (next === 'rank' ? navigateTo('/good-price') : setPage(next))} />}
+        {page !== 'detail' && (
+          <BottomNav
+            page={page}
+            onSwitch={(next) => {
+              if (next === 'rank') {
+                navigateTo('/good-price');
+                return;
+              }
+              if (next === 'footprint' && !isLoggedIn()) {
+                try {
+                  sessionStorage.setItem('lite_union_force_profile_tab', '1');
+                } catch {
+                  // ignore
+                }
+                setPage('profile');
+                showToast('请先登录后访问足迹返利');
+                return;
+              }
+              setPage(next);
+            }}
+          />
+        )}
         <Toast message={toast} />
         {showQrModal && (
           <div className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] flex items-center justify-center p-4" onClick={() => setShowQrModal(false)}>

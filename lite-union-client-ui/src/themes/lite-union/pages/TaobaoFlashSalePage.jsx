@@ -52,6 +52,7 @@ function mapGoods(raw = {}) {
 
   return {
     id: raw.id ?? raw.goodsId ?? Math.random(),
+    goodsId: raw.goodsId ?? raw.goodsSign ?? '',
     title: raw.dtitle || raw.title || '秒杀好物',
     desc: raw.ddqDesc || raw.specialText?.[0] || `${raw.shopName || '好店'}限时秒杀`,
     price: toCurrency(finalPrice),

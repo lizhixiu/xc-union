@@ -50,6 +50,7 @@ function mapBrand(raw = {}) {
     discount: raw.maxDiscount ? `低至${raw.maxDiscount}折` : '品牌特卖',
     goods: goodsList.slice(0, 3).map((g) => ({
       id: g.id ?? g.goodsId ?? Math.random(),
+      goodsId: g.goodsId ?? g.goodsSign ?? '',
       title: g.dTitle || g.title || '品牌商品',
       image: g.mainPic || 'https://placehold.co/180x180/FCEAF1/B1688B?text=GOODS',
       price: toCurrency(g.actualPrice ?? g.originPrice ?? 0),
@@ -91,6 +92,7 @@ function mapFeaturedGoods(raw = {}) {
   const activityName = Array.isArray(raw.activityInfo) && raw.activityInfo.length > 0 ? raw.activityInfo[0]?.activityName : '';
   return {
     id: raw.sign ?? raw.goodsLink ?? Math.random(),
+    goodsId: raw.sign ?? '',
     title: raw.title || raw.desc || '品牌商品',
     image: raw.pic || 'https://placehold.co/240x240/F3E8FF/7C3AED?text=GOODS',
     price: toCurrency(raw.postRollPrice ?? raw.originalPrice ?? 0),

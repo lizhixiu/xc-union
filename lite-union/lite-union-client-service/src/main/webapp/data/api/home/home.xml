@@ -244,4 +244,24 @@
 
 
 
+
+    <api id="getPrivilegeLink"  name="高效转链" caption="高效转链" method="POST" path="/getPrivilegeLink">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/api/tb-service/get-privilege-link";
+            paraMap.goodsId = body.goodsId;
+
+            var raw = dtk.execute(paraMap);
+            var rawData = (raw && raw.data) ? raw.data : {};
+
+            var result = rawData;
+
+            return result;
+      ]]>
+        </script>
+    </api>
+
 </api-group>

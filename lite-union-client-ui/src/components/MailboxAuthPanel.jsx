@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { CheckCircle, CurrencyCircleDollar, ShieldCheck, UserCircle } from '@phosphor-icons/react';
+import { isLoggedIn, setLoggedIn } from '../utils/auth';
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -11,10 +12,10 @@ function nowString() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export default function MailboxAuthPanel({ onToast }) {
+export default function MailboxAuthPanel({ onToast, onLoginSuccess }) {
   const [channel, setChannel] = useState('email');
   const [authMode, setAuthMode] = useState('login');
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(() => isLoggedIn());
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,13 +64,19 @@ export default function MailboxAuthPanel({ onToast }) {
       }
     }
     setAuthed(true);
+    setLoggedIn(true);
     setEmailVerified(false);
     onToast?.(authMode === 'register' ? '注册成功' : '登录成功');
+    onLoginSuccess?.();
   };
 
   const phoneUnavailable = () => onToast?.('手机登录/注册暂不可用');
 
   const submitOrderBind = () => {
+    if (!isLoggedIn()) {
+      onToast?.('请先登录后再绑定订单');
+      return;
+    }
     const no = orderNo.trim();
     if (!no) {
       onToast?.('请输入订单号');
@@ -81,6 +88,10 @@ export default function MailboxAuthPanel({ onToast }) {
   };
 
   const submitWithdraw = () => {
+    if (!isLoggedIn()) {
+      onToast?.('请先登录后再提现');
+      return;
+    }
     const amt = Number(withdrawAmount);
     if (!Number.isFinite(amt) || amt <= 0) {
       onToast?.('请输入正确提现金额');

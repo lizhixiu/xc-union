@@ -44,6 +44,7 @@ function mapGoods(raw = {}) {
   const couponPrice = Number(raw.ticketPrice ?? 0);
   return {
     id: raw.sign ?? raw.goodsLink ?? Math.random(),
+    goodsId: raw.sign ?? '',
     title: raw.title || raw.desc || '补贴好物',
     brand: raw.brandName || raw.storeName || '品牌',
     subsidy: couponPrice > 0 ? `券后价 满${toCurrency(raw.ticketWorkingCondition)}减${toCurrency(couponPrice)}` : '补后价',
