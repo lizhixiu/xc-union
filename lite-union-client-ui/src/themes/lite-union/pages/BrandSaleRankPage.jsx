@@ -52,7 +52,11 @@ function mapBrand(raw = {}) {
       id: g.id ?? g.goodsId ?? Math.random(),
       title: g.dTitle || g.title || '品牌商品',
       image: g.mainPic || 'https://placehold.co/180x180/FCEAF1/B1688B?text=GOODS',
-      price: `¥${toCurrency(g.actualPrice ?? g.originPrice ?? 0)}`,
+      price: toCurrency(g.actualPrice ?? g.originPrice ?? 0),
+      originalPrice: toCurrency(g.originPrice ?? g.actualPrice ?? 0),
+      rebate: toCurrency((Number(g.actualPrice ?? 0) * Number(g.commissionRate ?? 0)) / 100),
+      couponPrice: Number(g.couponPrice ?? 0),
+      shopName: g.shopName || raw.brandName || '品牌店铺',
       tag: Number(g.couponPrice || 0) > 0 ? `券¥${toCurrency(g.couponPrice)}` : `月销${formatSales(g.monthSales)}`
     }))
   };
@@ -90,8 +94,22 @@ function mapFeaturedGoods(raw = {}) {
     title: raw.title || raw.desc || '品牌商品',
     image: raw.pic || 'https://placehold.co/240x240/F3E8FF/7C3AED?text=GOODS',
     price: toCurrency(raw.postRollPrice ?? raw.originalPrice ?? 0),
+    originalPrice: toCurrency(raw.originalPrice ?? raw.postRollPrice ?? 0),
+    rebate: toCurrency(raw.commission ?? 0),
+    couponPrice: Number(raw.ticketPrice ?? 0),
+    shopName: raw.storeName || raw.brandName || '品牌店铺',
     tag: Number(raw.ticketPrice || 0) > 0 ? `券¥${toCurrency(raw.ticketPrice)}` : (activityName || '品牌好货')
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+    sessionStorage.setItem('lite_union_return_path', '/brand-sale');
+  } catch {
+    // ignore
+  }
+  navigateTo('/product-detail');
 }
 
 export default function BrandSaleRankPage({ standalone = false }) {
@@ -285,12 +303,16 @@ export default function BrandSaleRankPage({ standalone = false }) {
               <div className="mt-3 overflow-x-auto">
                 <div className="inline-flex gap-2 min-w-max pr-2">
                   {featuredGoods.map((g) => (
-                    <div key={g.id} className="w-[118px] bg-white rounded-xl border border-[#e7dbf8] p-2">
+                    <button
+                      key={g.id}
+                      onClick={() => openProductDetail(g)}
+                      className="w-[118px] bg-white rounded-xl border border-[#e7dbf8] p-2 text-left"
+                    >
                       <img src={g.image} alt={g.title} className="w-full h-[78px] rounded-lg object-cover" />
                       <div className="mt-1 text-[11px] text-[#4f3f67] line-clamp-2 min-h-[30px]">{g.title}</div>
                       <div className="mt-1 text-[#e84b7f] font-bold text-[15px]">¥{g.price}</div>
                       <div className="text-[10px] text-[#896ab5]">{g.tag}</div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -330,11 +352,15 @@ export default function BrandSaleRankPage({ standalone = false }) {
 
                   <div className="mt-3 grid grid-cols-3 gap-2">
                     {s.goods.map((g) => (
-                      <div key={g.id} className="rounded-xl border border-[#f2dbe6] p-2">
+                      <button
+                        key={g.id}
+                        onClick={() => openProductDetail(g)}
+                        className="rounded-xl border border-[#f2dbe6] p-2 text-left"
+                      >
                         <img src={g.image} alt={g.id} className="w-full h-[72px] rounded-lg object-cover" />
-                        <div className="mt-1 text-[13px] text-[#e84b7f] font-bold">{g.price}</div>
+                        <div className="mt-1 text-[13px] text-[#e84b7f] font-bold">¥{g.price}</div>
                         <div className="text-[10px] text-[#8f6c7c]">{g.tag}</div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>

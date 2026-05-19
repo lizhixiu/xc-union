@@ -253,14 +253,14 @@ export default function App() {
       date: '05月17日',
       items: [
         { id: 1, shop: '丹娜丝芊紫专卖店', title: '悬挂抽纸可湿水整箱实惠装', price: '3.66', originalPrice: '9.90', rebate: '1.35', coupon: '' },
-        { id: 2, shop: '天猫超市', title: 'Pigeon贝亲桃叶洗发沐浴植物洗净', price: '34.69', originalPrice: '59.00', rebate: '1.82', coupon: '一淘券 20元' },
+        { id: 2, shop: '天猫超市', title: 'Pigeon贝亲桃叶洗发沐浴植物洗净', price: '34.69', originalPrice: '59.00', rebate: '1.82', coupon: '券 20元' },
         { id: 3, shop: '阿里健康大药房', title: '【自营】多维元素补充片', price: '84.85', originalPrice: '129.00', rebate: '2.17', coupon: '' }
       ]
     },
     {
       date: '05月16日',
       items: [
-        { id: 4, shop: '薄爱旗舰店', title: '超薄避孕套4盒组合装', price: '9.90', originalPrice: '29.90', rebate: '0.98', coupon: '一淘券 10元' },
+        { id: 4, shop: '薄爱旗舰店', title: '超薄避孕套4盒组合装', price: '9.90', originalPrice: '29.90', rebate: '0.98', coupon: '券 10元' },
         { id: 5, shop: '国货严选企业工厂店', title: '蓝帽认证肉碱茶多酚胶囊', price: '29.90', originalPrice: '69.90', rebate: '2.54', coupon: '' }
       ]
     },
@@ -268,7 +268,7 @@ export default function App() {
       date: '05月15日',
       items: [
         { id: 6, shop: '瑞幸即享咖啡旗舰店', title: '浓缩咖啡液32杯无糖黑咖啡', price: '44.70', originalPrice: '69.00', rebate: '4.47', coupon: '' },
-        { id: 7, shop: 'bobdoghouse童鞋旗舰店', title: '儿童防蚊裤夏季透气两条装', price: '19.90', originalPrice: '39.90', rebate: '0.72', coupon: '一淘券 5元' }
+        { id: 7, shop: 'bobdoghouse童鞋旗舰店', title: '儿童防蚊裤夏季透气两条装', price: '19.90', originalPrice: '39.90', rebate: '0.72', coupon: '券 5元' }
       ]
     }
   ];

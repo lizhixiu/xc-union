@@ -61,8 +61,22 @@ function mapGoods(raw = {}) {
     sold: `已售${formatSales(raw.monthSales)}`,
     image: raw.mainPic || 'https://placehold.co/320x320/FEE2E2/B91C1C?text=FLASH',
     couponPrice: Number(raw.couponPrice ?? 0),
-    rebate: toCurrency(rebate)
+    rebate: toCurrency(rebate),
+    originalPrice: toCurrency(originPrice || finalPrice),
+    original: toCurrency(originPrice || finalPrice),
+    shopName: raw.shopName || raw.brandName || '品牌店铺',
+    coupon: Number(raw.couponPrice ?? 0) > 0 ? `平台券 ¥${toCurrency(raw.couponPrice)}` : ''
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+    sessionStorage.setItem('lite_union_return_path', '/flash-sale');
+  } catch {
+    // ignore
+  }
+  navigateTo('/product-detail');
 }
 
 export default function TaobaoFlashSalePage({ standalone = false }) {
@@ -151,7 +165,11 @@ export default function TaobaoFlashSalePage({ standalone = false }) {
 
             {!loading && !error
               ? goods.map((it) => (
-                  <div key={it.id} className="bg-white rounded-2xl border border-[#ffe2e2] p-3 flex gap-3">
+                  <button
+                    key={it.id}
+                    onClick={() => openProductDetail(it)}
+                    className="w-full bg-white rounded-2xl border border-[#ffe2e2] p-3 flex gap-3 text-left"
+                  >
                     <img src={it.image} alt={it.title} className="w-[112px] h-[112px] rounded-xl border border-[#f6dede] object-cover shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1">
@@ -170,10 +188,10 @@ export default function TaobaoFlashSalePage({ standalone = false }) {
                           {it.oldPrice ? <div className="text-[11px] text-[#8b95a5] mt-0.5">原价¥{it.oldPrice}</div> : null}
                           <div className="text-[11px] text-[#8b95a5] mt-0.5">{it.sold}</div>
                         </div>
-                        <button className="rounded-full h-[28px] px-4 bg-gradient-to-r from-[#FF4724] to-[#FF0036] text-white text-[13px] font-bold">抢购</button>
+                        <span className="inline-flex items-center rounded-full h-[28px] px-4 bg-gradient-to-r from-[#FF4724] to-[#FF0036] text-white text-[13px] font-bold">抢购</span>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 ))
               : null}
 

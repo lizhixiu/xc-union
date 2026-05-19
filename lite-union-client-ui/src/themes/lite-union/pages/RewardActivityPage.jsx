@@ -28,6 +28,15 @@ function parseDate(input) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+function formatCompactDate(input) {
+  const d = parseDate(input);
+  if (!d) return '--.--.--';
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}.${m}.${day}`;
+}
+
 function getProgressStatus(startTime, endTime) {
   const now = new Date();
   const start = parseDate(startTime);
@@ -52,7 +61,7 @@ function mapActivity(raw = {}) {
     joined: '未参加',
     progress,
     title: raw.activityName || '奖励活动',
-    time: `${raw.activityStartTime || '-'} 至 ${raw.activityEndTime || '-'}`,
+    time: `${formatCompactDate(raw.activityStartTime)} - ${formatCompactDate(raw.activityEndTime)}`,
     action: progress === '进行中' ? '查看详情' : '立即报名',
     banner: raw.materialLink || 'https://placehold.co/1200x420/FFE9D8/8D5B3E?text=ACTIVITY',
     link: raw.activityLink || ''
@@ -119,12 +128,12 @@ export default function RewardActivityPage({ standalone = false }) {
                 <button
                   key={f}
                   onClick={() => setActiveFilter(f)}
-                  className={`h-9 rounded-full border text-[12px] font-semibold flex items-center justify-center gap-0.5 ${
-                    activeFilter === f ? 'bg-[#FF6A2A] text-white border-[#FF6A2A]' : 'bg-[#FFF7F2] text-[#8B6A57] border-[#FFDCC7]'
+                  className={`h-[28px] rounded-full text-[12px] font-semibold flex items-center justify-center gap-0.5 border-none ${
+                    activeFilter === f ? 'bg-[#FF5000] text-white' : 'bg-[#F5F6F8] text-[#333333]'
                   }`}
                 >
                   {f}
-                  {f !== '全部' ? <CaretDown size={12} /> : null}
+                  {f !== '全部' ? <CaretDown size={12} className={activeFilter === f ? 'text-white' : 'text-[#999999]'} /> : null}
                 </button>
               ))}
             </div>
@@ -138,17 +147,19 @@ export default function RewardActivityPage({ standalone = false }) {
               <article key={a.id} className="bg-white rounded-2xl border border-[#FFE1CD] overflow-hidden">
                 <div className="relative">
                   <img src={a.banner} alt={a.title} className="w-full h-[124px] object-cover" />
-                  <span className="absolute left-2 top-2 h-6 px-2 rounded-lg bg-black/45 text-white text-[11px] inline-flex items-center">{a.category}</span>
-                  <span className={`absolute right-2 top-2 h-6 px-2 rounded-lg text-[11px] inline-flex items-center ${a.joined === '已参加' ? 'bg-[#E9FFF0] text-[#169A53]' : 'bg-[#FFF3F3] text-[#E24949]'}`}>{a.joined}</span>
+                  <span className="absolute left-2 top-2 h-6 px-2 rounded-md bg-black/40 backdrop-blur-sm text-white text-[11px] inline-flex items-center">{a.category}</span>
+                  <span className="absolute right-2 top-2 h-6 px-2.5 rounded-full bg-white/95 text-[#333333] text-[11px] inline-flex items-center">{a.joined}</span>
                 </div>
                 <div className="p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="inline-flex h-6 px-2 rounded-md bg-[#FFF4EB] text-[#FF6A2A] text-[11px] items-center">{a.progress}</div>
-                      <h3 className="mt-1 text-[15px] text-[#2B3442] font-semibold leading-[1.35]">{a.title}</h3>
-                      <p className="mt-1 text-[12px] text-[#98A1B2]">{a.time}</p>
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <span className="inline-flex items-center whitespace-nowrap bg-[#FFF4ED] text-[#FF5000] px-1.5 py-[1px] rounded-[3px] text-[10px] leading-none">{a.progress}</span>
+                        <h3 className="text-[15px] text-[#111111] font-bold leading-[1.35] truncate">{a.title}</h3>
+                      </div>
+                      <p className="mt-1 text-[12px] text-[#999999]">{a.time}</p>
                     </div>
-                    <button onClick={() => a.link && window.open(a.link, '_blank')} className="shrink-0 h-9 px-4 rounded-full bg-[#FF6A2A] text-white text-[13px] font-semibold">{a.action}</button>
+                    <button onClick={() => a.link && window.open(a.link, '_blank')} className="shrink-0 h-[28px] px-3.5 rounded-full bg-gradient-to-r from-[#FF7A00] to-[#FF5000] text-white text-[12px] font-bold">{a.action}</button>
                   </div>
                 </div>
               </article>

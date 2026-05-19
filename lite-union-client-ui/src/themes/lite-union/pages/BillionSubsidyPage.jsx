@@ -38,17 +38,36 @@ function formatSales(value) {
 }
 
 function mapGoods(raw = {}) {
+  const finalPrice = Number(raw.postRollPrice ?? raw.originalPrice ?? 0);
+  const originPrice = Number(raw.originalPrice ?? finalPrice ?? 0);
+  const commission = Number(raw.commission ?? 0);
+  const couponPrice = Number(raw.ticketPrice ?? 0);
   return {
     id: raw.sign ?? raw.goodsLink ?? Math.random(),
     title: raw.title || raw.desc || '补贴好物',
     brand: raw.brandName || raw.storeName || '品牌',
-    subsidy: Number(raw.ticketPrice || 0) > 0 ? `券后价 满${toCurrency(raw.ticketWorkingCondition)}减${toCurrency(raw.ticketPrice)}` : '补后价',
-    rebate: `约返¥${toCurrency(raw.commission)}`,
-    price: toCurrency(raw.postRollPrice ?? raw.originalPrice ?? 0),
-    market: `¥${toCurrency(raw.originalPrice ?? raw.postRollPrice ?? 0)}`,
+    subsidy: couponPrice > 0 ? `券后价 满${toCurrency(raw.ticketWorkingCondition)}减${toCurrency(couponPrice)}` : '补后价',
+    rebate: `约返¥${toCurrency(commission)}`,
+    price: toCurrency(finalPrice),
+    originalPrice: toCurrency(originPrice),
+    original: toCurrency(originPrice),
+    market: `¥${toCurrency(originPrice)}`,
     sales: `已售${formatSales(raw.salesTip || 0)}`,
-    image: raw.pic || 'https://placehold.co/320x320/FDEEE8/B65E4A?text=SUBSIDY'
+    image: raw.pic || 'https://placehold.co/320x320/FDEEE8/B65E4A?text=SUBSIDY',
+    couponPrice,
+    shopName: raw.storeName || raw.brandName || '品牌店铺',
+    coupon: couponPrice > 0 ? `平台券 ¥${toCurrency(couponPrice)}` : ''
   };
+}
+
+function openProductDetail(payload) {
+  try {
+    sessionStorage.setItem('lite_union_selected_product', JSON.stringify(payload || {}));
+    sessionStorage.setItem('lite_union_return_path', '/billion-subsidy');
+  } catch {
+    // ignore
+  }
+  navigateTo('/product-detail');
 }
 
 export default function BillionSubsidyPage({ standalone = false }) {
@@ -140,7 +159,7 @@ export default function BillionSubsidyPage({ standalone = false }) {
             <div className="mt-3 grid grid-cols-3 gap-2 text-[12px]">
               <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><ShieldCheck size={13} />品牌正品</div>
               <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><TrendDown size={13} />买贵必赔</div>
-              <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><Sparkle size={13} />一淘补贴</div>
+              <div className="h-8 rounded-full bg-white/18 flex items-center justify-center gap-1"><Sparkle size={13} />补贴</div>
             </div>
           </div>
 
@@ -157,7 +176,11 @@ export default function BillionSubsidyPage({ standalone = false }) {
               {initLoading && <div className="text-[13px] text-[#a66a5c] text-center py-4">补贴商品加载中...</div>}
               {!initLoading && loadError && <div className="text-[13px] text-[#d94b3d] text-center py-4">{loadError}</div>}
               {list.map((it) => (
-                <div key={it.id} className="bg-white rounded-2xl border border-[#fde1d7] p-3 flex gap-3">
+                <button
+                  key={it.id}
+                  onClick={() => openProductDetail(it)}
+                  className="w-full bg-white rounded-2xl border border-[#fde1d7] p-3 flex gap-3 text-left"
+                >
                   <img src={it.image} alt={it.title} className="w-[108px] h-[108px] rounded-xl border border-[#f6ded5] object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="text-[11px] text-[#ff6b4d] font-semibold">{it.brand}</div>
@@ -171,7 +194,7 @@ export default function BillionSubsidyPage({ standalone = false }) {
                       <div className="text-[11px] text-[#8b95a5]">{it.sales}</div>
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
               {!initLoading && !loadError && list.length === 0 ? <div className="text-[13px] text-[#a66a5c] text-center py-4">暂无补贴商品</div> : null}
               <div ref={loadMoreRef} className="h-8 flex items-center justify-center text-[12px] text-[#b48474]">
