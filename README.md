@@ -1,6 +1,6 @@
 # xc-union
 
-`xc-union` 是一个前后端分离的返利/导购示例仓库，后端基于 `lite-api-core + JFinal + Undertow`，前端基于 `React + Vite + TailwindCSS`。
+`xc-union` 是一个前后端分离的返利/导购仓库，后端基于 `lite-api-core + JFinal + Undertow`，前端基于 `React + Vite + TailwindCSS`。
 
 ## 仓库结构
 
@@ -35,9 +35,3 @@ npm run dev
 - `/xc-union-backend/xc-union-job-service/README.md`
 - `/xc-union-ui/xc-union-client-ui/README.md`
 - `/xc-union-ui/xc-union-admin-ui/README.md`
-
-## 开源发布建议
-
-- 发布前请替换本地配置中的密钥、路径、账号等敏感信息（建议使用环境变量或私有配置文件）。
-- 增加 `CONTRIBUTING.md`、`SECURITY.md`、变更日志，便于社区协作。
-- 当前管理端与定时任务模块代码量较少，建议在 README 中标注状态（规划中/建设中）。
