@@ -19,14 +19,14 @@ function navigateTo(path) {
 }
 
 const categoryList = [
-  { name: '全球美妆', emoji: '💄' },
-  { name: '母婴专区', emoji: '🍼' },
-  { name: '营养保健', emoji: '💊' },
-  { name: '个护清洁', emoji: '🧴' },
-  { name: '宠物优选', emoji: '🐶' },
-  { name: '潮流数码', emoji: '📱' },
-  { name: '服饰箱包', emoji: '👜' },
-  { name: '进口零食', emoji: '🍫' }
+  { name: '全球美妆', imageUrl: 'https://img.alicdn.com/imgextra/i1/2053469401/O1CN01BaHyod2JJhyy8p51G_!!2053469401.png' },
+  { name: '母婴专区', imageUrl: 'https://img.alicdn.com/imgextra/i3/2053469401/O1CN01iYhKXk2JJhvraof9Z-2053469401.png' },
+  { name: '营养保健', imageUrl: 'https://img.alicdn.com/imgextra/i1/2053469401/O1CN01DUJtlx2JJhyc4RIpS_!!2053469401.png' },
+  { name: '个护清洁', imageUrl: 'https://img.alicdn.com/imgextra/i3/2053469401/O1CN01UgAfwJ2JJhz0UKchq_!!2053469401.png' },
+  { name: '宠物优选', imageUrl: 'https://img.alicdn.com/i2/2/TB1gz6WRFzqK1RjSZFoXXbfcXXa' },
+  { name: '潮流数码', imageUrl: 'https://img.alicdn.com/imgextra/i1/2053469401/O1CN01ejbIF22JJhyGrH6Q0_!!2053469401.png' },
+  { name: '服饰箱包', imageUrl: 'https://img.alicdn.com/imgextra/i4/2053469401/O1CN01iljwLE2JJhvu7uoSS-2053469401.png' },
+  { name: '进口零食', imageUrl: 'https://img.alicdn.com/imgextra/i2/2053469401/O1CN01aOer0W2JJhzuGlt4R_!!2053469401.png' },
 ];
 
 const filterTabs = ['精选推荐', '进口爆款', '品牌直降'];
@@ -208,7 +208,9 @@ export default function TmallGlobalSalePage({ standalone = false }) {
               <div className="mt-3 grid grid-cols-4 gap-y-3">
                 {categoryList.map((c) => (
                   <button key={c.name} className="flex flex-col items-center gap-1">
-                    <span className="w-11 h-11 rounded-full bg-[#eef3ff] border border-[#dce6ff] flex items-center justify-center text-[20px]">{c.emoji}</span>
+                    <span className="w-11 h-11 rounded-full bg-[#eef3ff] border border-[#dce6ff] flex items-center justify-center overflow-hidden">
+                      <img src={c.imageUrl} alt={c.name} className="w-8 h-8 object-contain" />
+                    </span>
                     <span className="text-[11px] text-[#4b5f94] whitespace-nowrap">{c.name}</span>
                   </button>
                 ))}

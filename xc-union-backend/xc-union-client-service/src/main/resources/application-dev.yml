@@ -2,7 +2,7 @@ lite-api:
   show-sql: true #配置打印SQL
   sql-column-case: camel
   resource:
-    location: src/main/webapp/data
+    location: xc-union-backend/xc-union-client-service/src/main/webapp/data
     showUrl: false #是否打印URL
     readonly: false
   page:
@@ -21,9 +21,9 @@ lite-api:
     logic-delete-value: '1' #逻辑删除值
 
 
-lite:
+xc:
   union:
     dtk:
-      appKey: #DTK应用ID
-      secret: #DTK应用密钥
+      appKey:  #DTK应用ID
+      secret:  #DTK应用密钥
       debug: false
