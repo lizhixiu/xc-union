@@ -139,4 +139,10 @@ target/
 *.class
 *-backup-*.chnr.json
 
-xc-union-service/xc-union-magic-api/src/main/resources/data/magic-api/
+
+
+# local docs (do not commit)
+docs/
+
+xc-union/xc-union-client-service/src/main/webapp/ui
+xc-union-backend/xc-union-client-service/src/test/

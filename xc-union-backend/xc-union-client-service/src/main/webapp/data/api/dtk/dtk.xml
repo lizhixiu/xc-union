@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="dtk" name="dtk" path="/dtk">
+    <api id="getTmallGoodsList" name="获取天猫商品列表" caption="获取天猫商品列表" method="POST" path="/getTmallGoodsList">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId;
+            paraMap.pageSize = body.pageSize;
+            paraMap. tchaoshi = "1";
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+    <api id="getRealTimeRankings" name="获取实时榜单" caption="获取实时榜单" method="POST" path="/getRealTimeRankings">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/goods/get-dtk-search-goods";
+            paraMap.pageId = body.pageId;
+            paraMap.pageSize = body.pageSize;
+            paraMap.sort = "2";
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+
+    <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tbService/parseContent">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/tb-service/parse-content";
+            paraMap.content = body.content;
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+
+
+</api-group>

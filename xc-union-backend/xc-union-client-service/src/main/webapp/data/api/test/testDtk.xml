@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="testDtk" name="dtk测试" path="/test/dtk">
+    <api id="getGoodsList" name="获取商品列表" caption="获取商品列表" method="POST" path="/get-goods-list">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/goods/get-dtk-search-goods";
+            paraMap.pageId = "1";
+            paraMap.pageSize = "20";
+            paraMap.keyWords = "男装";
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+    <api id="parseContent"  name="解析内容" caption="解析内容" method="POST" path="/tb-service/parse-content">
+        <script>
+            <![CDATA[
+            import dtk;
+            import log;
+            var paraMap = {};
+            paraMap.url = "/tb-service/parse-content";
+            paraMap.content = body.content;
+
+            var data =  dtk.execute(paraMap);
+            return data;
+      ]]>
+        </script>
+    </api>
+
+</api-group>
