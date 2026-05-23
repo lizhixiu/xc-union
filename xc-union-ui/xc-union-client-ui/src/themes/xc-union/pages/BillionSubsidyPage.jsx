@@ -37,11 +37,22 @@ function formatSales(value) {
   return String(n);
 }
 
+function formatTimeRange(start, end) {
+  if (!start || !end) return '';
+  const startStr = String(start).slice(5, 16).replace(' ', ' ');
+  const endStr = String(end).slice(5, 16).replace(' ', ' ');
+  return `${startStr} - ${endStr}`;
+}
+
 function mapGoods(raw = {}) {
   const finalPrice = Number(raw.postRollPrice ?? raw.originalPrice ?? 0);
   const originPrice = Number(raw.originalPrice ?? finalPrice ?? 0);
-  const commission = Number(raw.commission ?? 0);
+  const commissionRate = Number(raw.commission ?? 0);
+  const commission = finalPrice * (commissionRate / 100);
   const couponPrice = Number(raw.ticketPrice ?? 0);
+  const tags = Array.isArray(raw.showTags) ? raw.showTags.slice(0, 4) : [];
+  const activities = Array.isArray(raw.activityInfo) ? raw.activityInfo.map((a) => a?.activityName).filter(Boolean).slice(0, 3) : [];
+  const couponRange = formatTimeRange(raw.ticketStart, raw.ticketEnd);
   return {
     id: raw.sign ?? raw.goodsLink ?? Math.random(),
     goodsId: raw.sign ?? '',
@@ -49,15 +60,17 @@ function mapGoods(raw = {}) {
     brand: raw.brandName || raw.storeName || '品牌',
     subsidy: couponPrice > 0 ? `券后价 满${toCurrency(raw.ticketWorkingCondition)}减${toCurrency(couponPrice)}` : '补后价',
     rebate: `约返¥${toCurrency(commission)}`,
+    rebateRate: `${toCurrency(commissionRate)}%`,
     price: toCurrency(finalPrice),
     originalPrice: toCurrency(originPrice),
     original: toCurrency(originPrice),
-    market: `¥${toCurrency(originPrice)}`,
-    sales: `已售${formatSales(raw.salesTip || 0)}`,
     image: raw.pic || 'https://placehold.co/320x320/FDEEE8/B65E4A?text=SUBSIDY',
     couponPrice,
     shopName: raw.storeName || raw.brandName || '品牌店铺',
-    coupon: couponPrice > 0 ? `平台券 ¥${toCurrency(couponPrice)}` : ''
+    coupon: couponPrice > 0 ? `平台券 ¥${toCurrency(couponPrice)}` : '',
+    tags,
+    activities,
+    couponRange
   };
 }
 
@@ -180,19 +193,32 @@ export default function BillionSubsidyPage({ standalone = false }) {
                 <button
                   key={it.id}
                   onClick={() => openProductDetail(it)}
-                  className="w-full bg-white rounded-2xl border border-[#fde1d7] p-3 flex gap-3 text-left"
+                  className="w-full bg-white rounded-[22px] border border-[#fde1d7] p-3 flex gap-3 text-left shadow-[0_4px_14px_rgba(234,88,12,0.05)]"
                 >
-                  <img src={it.image} alt={it.title} className="w-[108px] h-[108px] rounded-xl border border-[#f6ded5] object-cover shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[11px] text-[#ff6b4d] font-semibold">{it.brand}</div>
-                    <p className="text-[14px] font-semibold text-[#2f3a4d] line-clamp-2">{it.title}</p>
-                    <div className="mt-1 h-7 rounded-lg bg-[#fff5f0] border border-[#ffe2d8] px-2 text-[12px] text-[#c06553] flex items-center justify-between"><span>{it.subsidy}</span><span>{it.rebate}</span></div>
-                    <div className="mt-1.5 flex items-end justify-between">
-                      <div>
-                        <div className="text-[#ef4444]"><span className="text-[12px]">¥</span><span className="text-[24px] font-bold">{it.price}</span></div>
-                        <div className="text-[11px] text-[#a8b1bf]">全网参考 {it.market}</div>
+                  <img src={it.image} alt={it.title} className="w-[104px] h-[104px] rounded-[18px] border border-[#f6ded5] object-cover shrink-0" />
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <div className="text-[11px] text-[#ff6b4d] font-semibold leading-none">{it.brand}</div>
+                    <p className="mt-1 text-[15px] font-semibold text-[#253041] leading-[1.35] line-clamp-2">{it.title}</p>
+                    {it.tags.length > 0 ? (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {it.tags.map((tag) => (
+                          <span key={`${it.id}-${tag}`} className="h-5 px-2 rounded-full bg-[#fff2ec] text-[#d66c53] text-[10px] leading-5 border border-[#ffe2d8]">
+                            {tag}
+                          </span>
+                        ))}
                       </div>
-                      <div className="text-[11px] text-[#8b95a5]">{it.sales}</div>
+                    ) : null}
+                    <div className="mt-2 rounded-xl bg-[#fff7f4] border border-[#ffe4da] px-2.5 py-2 flex items-center justify-between gap-2">
+                      <span className="text-[12px] text-[#d36e58]">{it.subsidy}</span>
+                      <span className="text-[12px] text-[#cf6e58] font-medium whitespace-nowrap">{it.rebate} · {it.rebateRate}</span>
+                    </div>
+                    {it.couponRange ? <div className="mt-1.5 text-[11px] text-[#b7887b]">券有效期 {it.couponRange}</div> : null}
+                    {it.activities.length > 0 ? <div className="mt-1 text-[11px] text-[#a87263] line-clamp-1">活动：{it.activities.join(' / ')}</div> : null}
+                    <div className="mt-auto pt-2 flex items-end">
+                      <div className="text-[#ef4444] leading-none">
+                        <span className="text-[12px] align-baseline">¥</span>
+                        <span className="text-[26px] font-bold tracking-tight align-baseline">{it.price}</span>
+                      </div>
                     </div>
                   </div>
                 </button>
