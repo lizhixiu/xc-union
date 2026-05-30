@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <!-- 屏蔽 logback 内部状态信息 -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
     <!-- 控制台输出（彩色） -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

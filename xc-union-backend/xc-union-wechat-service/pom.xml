@@ -62,20 +62,12 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.25</version>
         </dependency>
 
         <!-- 微信公众号SDK -->
         <dependency>
             <groupId>com.xc.union</groupId>
             <artifactId>xc-union-sdk-wechat-mp</artifactId>
-        </dependency>
-
-        <!-- 微信公众号 SDK -->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>wx-java-mp-spring-boot-starter</artifactId>
-            <version>4.7.6-20250609.143003</version>
         </dependency>
     </dependencies>
 
@@ -94,7 +86,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -106,7 +97,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
                 <configuration>
                     <excludes>
                         <exclude>*.*</exclude>
@@ -119,7 +109,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
