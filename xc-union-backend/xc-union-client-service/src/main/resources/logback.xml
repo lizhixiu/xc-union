@@ -128,16 +128,9 @@
     </logger>
 
     <!-- 应用程序包日志级别 -->
-    <logger name="con.xclite" level="DEBUG" additivity="false">
+    <logger name="com.xclite" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
         <appender-ref ref="ERROR_FILE" />
-        <appender-ref ref="DEBUG_FILE" />
-    </logger>
-
-    <!-- 性能相关日志 -->
-    <logger name="con.xclite.performance" level="INFO" additivity="false">
-        <appender-ref ref="PERFORMANCE_FILE" />
-        <appender-ref ref="FILE" />
     </logger>
 </configuration>

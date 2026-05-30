@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class WebUtils {
 
     public static HttpServletRequest getHttpServletRequest() {
+        // TODO: 需要通过 RequestContextHolder 获取当前请求
         return null;
     }
 

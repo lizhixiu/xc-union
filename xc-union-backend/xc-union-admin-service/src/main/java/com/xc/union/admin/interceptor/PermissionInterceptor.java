@@ -19,9 +19,12 @@ public class PermissionInterceptor implements RequestInterceptor {
 
     @Override
     public Object preHandle(RequestEntity requestEntity) {
-        if (requestEntity.getRequest().getHeader("Token") != null && Redis.use().get(requestEntity.getRequest().getHeader("Token").replace("Bearer ", "")) != null) {
-            Object user = Redis.use().get(requestEntity.getRequest().getHeader("Token").replace("Bearer ", ""));
-            requestEntity.getMagicScriptContext().set("SESSION_USER", user);
+        String token = requestEntity.getRequest().getHeader("Token");
+        if (token != null) {
+            Object user = Redis.use().get(token.replace("Bearer ", ""));
+            if (user != null) {
+                requestEntity.getMagicScriptContext().set("SESSION_USER", user);
+            }
         }
         return preHandle(requestEntity.getApiInfo(), requestEntity.getMagicScriptContext(), requestEntity.getRequest(), requestEntity.getResponse());
     }
@@ -34,11 +37,11 @@ public class PermissionInterceptor implements RequestInterceptor {
     @Override
     @SuppressWarnings("unchecked")
     public Object postHandle(RequestEntity requestEntity, Object returnValue) {
-        Object user = null;
         String token = requestEntity.getRequest().getHeader("Token");
-        if (requestEntity.getRequest().getHeader("Token") != null && Redis.use().get(requestEntity.getRequest().getHeader("Token").replace("Bearer ", "")) != null) {
-            user = Redis.use().get(requestEntity.getRequest().getHeader("Token").replace("Bearer ", ""));
+        if (token == null) {
+            return null;
         }
+        Object user = Redis.use().get(token.replace("Bearer ", ""));
         if (user == null) {
             return null;
         }

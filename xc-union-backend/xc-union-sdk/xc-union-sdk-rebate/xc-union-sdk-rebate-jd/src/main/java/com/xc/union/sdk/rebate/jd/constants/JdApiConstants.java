@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class JdApiConstants {
 
-    public final static Map<String, Class> REQUEST_MAP = new HashMap<>();
+    public static final Map<String, Class<?>> REQUEST_MAP = new HashMap<>();
 
     static {
         REQUEST_MAP.put("jd.union.open.promotion.tools.intelligence.query", UnionOpenPromotionToolsIntelligenceQueryRequest.class);

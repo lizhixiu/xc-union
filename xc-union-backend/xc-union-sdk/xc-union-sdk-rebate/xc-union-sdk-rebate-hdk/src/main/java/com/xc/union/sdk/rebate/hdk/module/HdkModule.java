@@ -49,10 +49,7 @@ public class HdkModule {
 
         String httpMethod = params.get("httpMethod") != null ? params.get("httpMethod").toUpperCase() : "GET";
 
-        Map<String, Object> tempParams = new HashMap<>();
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            tempParams.put(entry.getKey(), entry.getValue());
-        }
+        Map<String, Object> tempParams = new HashMap<>(params);
         tempParams.put("apikey", config.getApiKey());
 
         JSON resultJson;

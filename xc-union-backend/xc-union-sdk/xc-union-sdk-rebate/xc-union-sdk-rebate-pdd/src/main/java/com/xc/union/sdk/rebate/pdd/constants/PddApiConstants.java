@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class PddApiConstants {
 
-    public final static Map<String, Class> REQUEST_MAP = new HashMap<>();
+    public static final Map<String, Class<?>> REQUEST_MAP = new HashMap<>();
 
     static {
         REQUEST_MAP.put("pdd.ddk.goods.search", PddDdkGoodsSearchRequest.class);

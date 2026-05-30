@@ -65,7 +65,7 @@ public class FileUtils {
             return false;
         }
         String filePath = Global.getUserFilesBaseDir() + fileData.get("filePath");
-        if (!FileUtil.exist(filePath) && !FileUtil.isFile(filePath)) return true;
+        if (!FileUtil.exist(filePath) || !FileUtil.isFile(filePath)) return true;
         return FileUtil.del(filePath);
     }
 }

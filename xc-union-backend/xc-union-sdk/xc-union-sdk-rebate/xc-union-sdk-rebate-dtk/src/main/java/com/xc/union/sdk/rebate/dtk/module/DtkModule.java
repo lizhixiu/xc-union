@@ -41,16 +41,14 @@ public class DtkModule {
         }
 
         TreeMap<String, Object> tempParams = new TreeMap<>();
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            String key = entry.getKey();
-            if ("url".equals(key)) {
-                continue;
+        params.forEach((key, value) -> {
+            if (!"url".equals(key)) {
+                tempParams.put(key, value);
             }
-            tempParams.put(entry.getKey(), entry.getValue());
-        }
+        });
 
         if (config.isDebug()) {
-            log.info("请求请求地址：{}", config.getApiUrl() + params.get("url"));
+            log.info("请求地址：{}", config.getApiUrl() + params.get("url"));
             log.info("请求参数：{}", JSONUtil.formatJsonStr(JSONUtil.toJsonStr(tempParams)));
         }
 

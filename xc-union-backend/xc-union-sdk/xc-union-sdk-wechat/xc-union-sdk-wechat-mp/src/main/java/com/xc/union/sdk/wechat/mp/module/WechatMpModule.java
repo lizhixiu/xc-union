@@ -1,5 +1,6 @@
 package com.xc.union.sdk.wechat.mp.module;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.xc.union.sdk.wechat.mp.config.WechatMpConfig;
@@ -39,7 +40,7 @@ public class WechatMpModule {
         }
 
         String apiMethodName = params.get("apiMethodName");
-        if (apiMethodName == null || apiMethodName.isEmpty()) {
+        if (StrUtil.isBlank(apiMethodName)) {
             throw new IllegalArgumentException("参数【apiMethodName】方法名称为空！");
         }
 
