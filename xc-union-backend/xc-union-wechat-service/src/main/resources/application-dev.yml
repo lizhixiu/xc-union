@@ -2,6 +2,13 @@
 server:
   port: 28091
 
+lite-api:
+  show-sql: true
+  resource:
+    location: xc-union-backend/xc-union-wechat-service/src/main/webapp/data
+    showUrl: false
+    readonly: false
+
 # 微信配置
 xc:
   union:

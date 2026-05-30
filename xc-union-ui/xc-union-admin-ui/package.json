@@ -1,0 +1,51 @@
+{
+  "name": "xc-union-admin-ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
+    "dev": "turbo-run dev",
+    "preview": "turbo-run preview",
+    "clean": "node ./scripts/clean.mjs",
+    "lint": "vsh lint",
+    "format": "vsh lint --format"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vben/eslint-config": "workspace:*",
+    "@vben/prettier-config": "workspace:*",
+    "@vben/stylelint-config": "workspace:*",
+    "@vben/tailwind-config": "workspace:*",
+    "@vben/tsconfig": "workspace:*",
+    "@vben/turbo-run": "workspace:*",
+    "@vben/vite-config": "workspace:*",
+    "@vben/vsh": "workspace:*",
+    "autoprefixer": "catalog:",
+    "cross-env": "catalog:",
+    "lefthook": "catalog:",
+    "rimraf": "catalog:",
+    "tailwindcss": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "vite": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:"
+  },
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9.12.0"
+  },
+  "packageManager": "pnpm@10.14.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "*"
+      }
+    },
+    "overrides": {
+      "esbuild": "0.25.3"
+    }
+  }
+}

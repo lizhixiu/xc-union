@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="user" name="9001.用户管理" path="/user">
+    <api id="cur" name="未定义名称" caption="未定义名称" method="GET" path="/cur">
+        <script><![CDATA[
+            return 'Hello lite-api'
+        ]]></script>
+    </api>
+    <api id="current" name="1000.当前用户导航" caption="1000.当前用户导航" method="GET" path="/current">
+        <script><![CDATA[
+            import request;
+            import com.xclite.cache.UserCacheMap;
+            import log;
+            
+            // 查出所有隐藏或者打开方式为“页签”和“iframe”的菜单（排除http地址和静态页面）
+            var notLayoutMenus = []
+            // 通过令牌获取当前用户设置的app数据
+            var token = request.get().getHeader("token");
+            var app = UserCacheMap.get(token+"_APP")
+            var menus = [];
+            
+            var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+            
+            var sql = 
+            """
+                select * from 
+                (
+                    select a.id,a.id app_id,a.app_short_name name,a.app_code code,'APP' type,"-1" pid,a.rec_sort,app_code path,a.app_logo icon,app_code component  from sys_app a
+                    union all
+                    select a.id,a.app_id app_id,a.nav_name name,a.nav_code code,'APP_NAV' type,pid pid,a.rec_sort,ifnull(nav_url,'home') path,a.nav_icon icon,a.nav_component component from sys_nav a
+                ) a 
+                order by a.rec_sort
+            """
+            
+            var menus = db.select(sql);
+            
+            // {
+            //                     "name": "dashboard",
+            //                     "path": "/dashboard",
+            //                     "meta": {
+            //                         "title": "控制台",
+            //                         "icon": "el-icon-menu",
+            //                         "affix": true
+            //                     },
+            //                     "component": "home"
+            //                 }
+            //  "meta": {
+            //                         "title": "数据结构管理",
+            //                         "icon": "el-icon-grid",
+            //                         "type": "menu"
+            //                     },
+            for(menu in menus){
+                // log.info(menu.name)
+                var meta = {};
+                meta.title = menu.name;
+                menu.name = menu.id;
+                if(menu.icon!=null){
+                      meta.icon = menu.icon; 
+                }
+                meta.type = "menu";
+                menu.meta = meta;
+            }
+            
+            var list = toTree(menus,'-1');
+            
+            var newList = [];
+            var first = 
+            {
+                        "name": "home",
+                        "path": "/home",
+                        "meta": {
+                            "title": "首页",
+                            "icon": "el-icon-home-filled",
+                            "type": "menu"
+                        },
+                        "children": [{
+                                "name": "dashboard",
+                                "path": "/dashboard",
+                                "meta": {
+                                    "title": "控制台",
+                                    "icon": "el-icon-menu",
+                                    "affix": true
+                                },
+                                "component": "home"
+                            },
+                            {
+                                "name": "userCenter",
+                                "path": "/usercenter",
+                                "meta": {
+                                    "title": "帐号信息",
+                                    "icon": "el-icon-user",
+                                    "tag": "NEW"
+                                },
+                                "component": "userCenter"
+                            }
+                        ]
+                    };
+            newList.add(first);
+            newList.addAll(list);
+            
+            var permissions = [
+                    "list.add",
+                    "list.edit",
+                    "list.delete",
+                    "user.add",
+                    "user.edit",
+                    "user.delete"
+                ];
+            
+                var dashboardGrid = [
+                    "welcome",
+                    "ver",
+                    "time",
+                    "progress",
+                    "echarts",
+                    "about"
+                ]
+            
+            
+            return {menu:newList  ,permissions ,dashboardGrid };
+            
+            // for(menu in menus){
+            //     menu.component = (menu.url || "Layout");
+            //     menu.path = (menu.component == 'Layout' ? "/" : menu.component);
+            //     menu.meta = {}
+            //     menu.meta.componentName = menu.componentName
+            //     menu.meta.title = menu.title
+            //     menu.meta.icon = menu.icon
+            //     menu.meta.keepAlive = (menu.keepAlive == '1' ? true : false)
+            //     menu.meta.openMode = menu.openMode
+            //     menu.meta.path = menu.path
+            // }
+            
+            
+            // var nodes = menus.toMap(it => it.id)
+            // nodes.each((key, node) => {
+            //     if (nodes.containsKey(node.pid)) {
+            //         nodes[node.pid].redirect = "noRedirect";
+            //         nodes[node.pid].component = "Layout";
+            //         nodes[node.pid].alwaysShow = true;
+            //         if(!nodes[node.pid].children){
+            //             nodes[node.pid].children = []
+            //         }
+            //         nodes[node.pid].children.push(node)
+            //     }
+            // })
+            // var layoutMenus = []
+            // nodes.each((key, node) => {
+            //     if(node.pid == app.id){
+            //         if(node.component != 'Layout'){
+            //             node = {
+            //                 icon: node.icon,
+            //                 isShow: 1,
+            //                 component: 'Layout',
+            //                 redirect: node.path,
+            //                 children: [node]
+            //             }
+            //         }
+            //         layoutMenus.push(node)
+            //     }
+            // })
+            
+            
+            
+            
+            // return {
+            //     "menu": [{
+            //             "name": "home",
+            //             "path": "/home",
+            //             "meta": {
+            //                 "title": "首页",
+            //                 "icon": "el-icon-eleme-filled",
+            //                 "type": "menu"
+            //             },
+            //             "children": [{
+            //                     "name": "dashboard",
+            //                     "path": "/dashboard",
+            //                     "meta": {
+            //                         "title": "控制台",
+            //                         "icon": "el-icon-menu",
+            //                         "affix": true
+            //                     },
+            //                     "component": "home"
+            //                 },
+            //                 {
+            //                     "name": "userCenter",
+            //                     "path": "/usercenter",
+            //                     "meta": {
+            //                         "title": "帐号信息",
+            //                         "icon": "el-icon-user",
+            //                         "tag": "NEW"
+            //                     },
+            //                     "component": "userCenter"
+            //                 }
+            //             ]
+            //         },
+            //         {
+            //             "name": "devp",
+            //             "path": "/devp",
+            //             "meta": {
+            //                 "title": "模型中心",
+            //                 "icon": "el-icon-files",
+            //                 "type": "menu"
+            //             },
+            //             "children": [{
+            //                     "path": "/template/layout",
+            //                     "name": "layoutTemplate",
+            //                     "meta": {
+            //                         "title": "数据结构管理",
+            //                         "icon": "el-icon-grid",
+            //                         "type": "menu"
+            //                     },
+            //                     "children": [
+            //                         {
+            //                             "path": "/devp/table/devpTable/devTableTv",
+            //                             "name": "devTableTv",
+            //                             "meta": {
+            //                                 "title": "数据结构",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/table/devpTable/devTableTv"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "path": "/template/list",
+            //                     "name": "list",
+            //                     "meta": {
+            //                         "title": "配置管理",
+            //                         "icon": "el-icon-document",
+            //                         "type": "menu"
+            //                     },
+            //                     "children": [{
+            //                             "path": "/devp/para/devpPara/devpParaTv",
+            //                             "name": "devpParaTv",
+            //                             "meta": {
+            //                                 "title": "参数管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/para/devpPara/devpParaTv",
+            //                         },
+            //                         {
+            //                             "path": "/devp/coding/devpCodingTemplate/devpCodingTemplateTv",
+            //                             "name": "devpCodingTemplateTv",
+            //                             "meta": {
+            //                                 "title": "模板管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/coding/devpCodingTemplate/devpCodingTemplateTv"
+            //                         },
+            //                         {
+            //                             "path": "/devp/coding/devpCodingTemplate/devpCodingTemplateTvList",
+            //                             "name": "devpCodingTemplateTvList",
+            //                             "meta": {
+            //                                 "title": "模板管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/coding/devpCodingTemplate/devpCodingTemplateTvList"
+            //                         }
+            //                     ]
+            //                 }
+            //             ]
+            //         }
+            //     ],
+            //     "permissions": [
+            //         "list.add",
+            //         "list.edit",
+            //         "list.delete",
+            //         "user.add",
+            //         "user.edit",
+            //         "user.delete"
+            //     ],
+            //     "dashboardGrid": [
+            //         "welcome",
+            //         "ver",
+            //         "time",
+            //         "progress",
+            //         "echarts",
+            //         "about"
+            //     ]
+            // }
+        ]]></script>
+    </api>
+    <api id="current_copy" name="1000.当前用户导航(复制)" caption="1000.当前用户导航(复制)" method="GET" path="/current_copy">
+        <script><![CDATA[
+            import request;
+            import com.xclite.cache.UserCacheMap;
+            import log;
+            
+            // 查出所有隐藏或者打开方式为“页签”和“iframe”的菜单（排除http地址和静态页面）
+            var notLayoutMenus = []
+            // 通过令牌获取当前用户设置的app数据
+            var token = request.get().getHeader("token");
+            var app = UserCacheMap.get(token+"_APP")
+            var menus = [];
+            
+            var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+            
+            var sql = 
+            """
+                select * from 
+                (
+                    select a.id,a.id app_id,a.app_name name,a.app_code code,'APP' type,"-1" pid,a.rec_sort,app_code path from sys_app a
+                    union all
+                    select a.id,a.app_id app_id,a.nav_name name,a.nav_code code,'APP_NAV' type,pid pid,a.rec_sort,ifnull(nav_url,'home') path from sys_nav a
+                ) a 
+                order by a.rec_sort
+            """
+            
+            var menus = db.select(sql);
+            
+            // {
+            //                     "name": "dashboard",
+            //                     "path": "/dashboard",
+            //                     "meta": {
+            //                         "title": "控制台",
+            //                         "icon": "el-icon-menu",
+            //                         "affix": true
+            //                     },
+            //                     "component": "home"
+            //                 }
+            //  "meta": {
+            //                         "title": "数据结构管理",
+            //                         "icon": "el-icon-grid",
+            //                         "type": "menu"
+            //                     },
+            for(menu in menus){
+                // log.info(menu.name)
+                var meta = {};
+                meta.title = menu.name;
+                // meta.icon = "el-icon-grid";
+                meta.type = "menu";
+                menu.meta = meta;
+            }
+            
+            var list = toTree(menus,'-1');
+            
+            var newList = [];
+            var first = 
+            {
+                        "name": "home",
+                        "path": "/home",
+                        "meta": {
+                            "title": "首页",
+                            "icon": "el-icon-eleme-filled",
+                            "type": "menu"
+                        },
+                        "children": [{
+                                "name": "dashboard",
+                                "path": "/dashboard",
+                                "meta": {
+                                    "title": "控制台",
+                                    "icon": "el-icon-menu",
+                                    "affix": true
+                                },
+                                "component": "home"
+                            },
+                            {
+                                "name": "userCenter",
+                                "path": "/usercenter",
+                                "meta": {
+                                    "title": "帐号信息",
+                                    "icon": "el-icon-user",
+                                    "tag": "NEW"
+                                },
+                                "component": "userCenter"
+                            }
+                        ]
+                    };
+            newList.add(first);
+            newList.addAll(list);
+            
+            var permissions = [
+                    "list.add",
+                    "list.edit",
+                    "list.delete",
+                    "user.add",
+                    "user.edit",
+                    "user.delete"
+                ];
+            
+                var dashboardGrid = [
+                    "welcome",
+                    "ver",
+                    "time",
+                    "progress",
+                    "echarts",
+                    "about"
+                ]
+            
+            
+            return {menu:newList  ,permissions ,dashboardGrid };
+            
+            // for(menu in menus){
+            //     menu.component = (menu.url || "Layout");
+            //     menu.path = (menu.component == 'Layout' ? "/" : menu.component);
+            //     menu.meta = {}
+            //     menu.meta.componentName = menu.componentName
+            //     menu.meta.title = menu.title
+            //     menu.meta.icon = menu.icon
+            //     menu.meta.keepAlive = (menu.keepAlive == '1' ? true : false)
+            //     menu.meta.openMode = menu.openMode
+            //     menu.meta.path = menu.path
+            // }
+            
+            
+            // var nodes = menus.toMap(it => it.id)
+            // nodes.each((key, node) => {
+            //     if (nodes.containsKey(node.pid)) {
+            //         nodes[node.pid].redirect = "noRedirect";
+            //         nodes[node.pid].component = "Layout";
+            //         nodes[node.pid].alwaysShow = true;
+            //         if(!nodes[node.pid].children){
+            //             nodes[node.pid].children = []
+            //         }
+            //         nodes[node.pid].children.push(node)
+            //     }
+            // })
+            // var layoutMenus = []
+            // nodes.each((key, node) => {
+            //     if(node.pid == app.id){
+            //         if(node.component != 'Layout'){
+            //             node = {
+            //                 icon: node.icon,
+            //                 isShow: 1,
+            //                 component: 'Layout',
+            //                 redirect: node.path,
+            //                 children: [node]
+            //             }
+            //         }
+            //         layoutMenus.push(node)
+            //     }
+            // })
+            
+            
+            
+            
+            // return {
+            //     "menu": [{
+            //             "name": "home",
+            //             "path": "/home",
+            //             "meta": {
+            //                 "title": "首页",
+            //                 "icon": "el-icon-eleme-filled",
+            //                 "type": "menu"
+            //             },
+            //             "children": [{
+            //                     "name": "dashboard",
+            //                     "path": "/dashboard",
+            //                     "meta": {
+            //                         "title": "控制台",
+            //                         "icon": "el-icon-menu",
+            //                         "affix": true
+            //                     },
+            //                     "component": "home"
+            //                 },
+            //                 {
+            //                     "name": "userCenter",
+            //                     "path": "/usercenter",
+            //                     "meta": {
+            //                         "title": "帐号信息",
+            //                         "icon": "el-icon-user",
+            //                         "tag": "NEW"
+            //                     },
+            //                     "component": "userCenter"
+            //                 }
+            //             ]
+            //         },
+            //         {
+            //             "name": "devp",
+            //             "path": "/devp",
+            //             "meta": {
+            //                 "title": "模型中心",
+            //                 "icon": "el-icon-files",
+            //                 "type": "menu"
+            //             },
+            //             "children": [{
+            //                     "path": "/template/layout",
+            //                     "name": "layoutTemplate",
+            //                     "meta": {
+            //                         "title": "数据结构管理",
+            //                         "icon": "el-icon-grid",
+            //                         "type": "menu"
+            //                     },
+            //                     "children": [
+            //                         {
+            //                             "path": "/devp/table/devpTable/devTableTv",
+            //                             "name": "devTableTv",
+            //                             "meta": {
+            //                                 "title": "数据结构",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/table/devpTable/devTableTv"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "path": "/template/list",
+            //                     "name": "list",
+            //                     "meta": {
+            //                         "title": "配置管理",
+            //                         "icon": "el-icon-document",
+            //                         "type": "menu"
+            //                     },
+            //                     "children": [{
+            //                             "path": "/devp/para/devpPara/devpParaTv",
+            //                             "name": "devpParaTv",
+            //                             "meta": {
+            //                                 "title": "参数管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/para/devpPara/devpParaTv",
+            //                         },
+            //                         {
+            //                             "path": "/devp/coding/devpCodingTemplate/devpCodingTemplateTv",
+            //                             "name": "devpCodingTemplateTv",
+            //                             "meta": {
+            //                                 "title": "模板管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/coding/devpCodingTemplate/devpCodingTemplateTv"
+            //                         },
+            //                         {
+            //                             "path": "/devp/coding/devpCodingTemplate/devpCodingTemplateTvList",
+            //                             "name": "devpCodingTemplateTvList",
+            //                             "meta": {
+            //                                 "title": "模板管理",
+            //                                 "type": "menu"
+            //                             },
+            //                             "component": "devp/coding/devpCodingTemplate/devpCodingTemplateTvList"
+            //                         }
+            //                     ]
+            //                 }
+            //             ]
+            //         }
+            //     ],
+            //     "permissions": [
+            //         "list.add",
+            //         "list.edit",
+            //         "list.delete",
+            //         "user.add",
+            //         "user.edit",
+            //         "user.delete"
+            //     ],
+            //     "dashboardGrid": [
+            //         "welcome",
+            //         "ver",
+            //         "time",
+            //         "progress",
+            //         "echarts",
+            //         "about"
+            //     ]
+            // }
+        ]]></script>
+    </api>
+</api-group>

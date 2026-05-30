@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="public" name="9000.公共方法" path="/public">
+    <api id="prepare" name="预处理" caption="预处理" method="POST" path="/prepare">
+        <script><![CDATA[
+            return {}
+        ]]></script>
+    </api>
+    <api id="save" name="200.保存" caption="200.保存" method="POST" path="/save">
+        <script><![CDATA[
+            import '@post:/public/text/cmsAttachText/save' as cmsAttachTextSave;
+            import '@post:/public/text/orgAttachText/save' as orgAttachTextSave;
+            
+            if(resModule=='cms_attach_text'){
+                 return cmsAttachTextSave();
+            }else{
+                 return orgAttachTextSave();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="get" name="110.获取" caption="110.获取" method="POST" path="/get">
+        <script><![CDATA[
+            import '@post:/public/text/cmsAttachText/get' as cmsAttachTextGet;
+            import '@post:/public/text/orgAttachText/get' as orgAttachTextGet;
+            
+            if(body.resModule=='cms_attach_text'){
+                 return cmsAttachTextGet();
+            }else{
+                 return orgAttachTextGet();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="comList" name="100.组件下拉列表" caption="100.组件下拉列表" method="POST" path="/comList">
+        <script><![CDATA[
+            var sql = 
+            """
+                select
+                    a.*
+                from
+                    sys_para a
+                where a.rec_del_status = '0' 
+                 and class_code = #{classCode}
+                order by a.rec_sort
+            """
+            
+            var result = db.select(sql);
+            
+            return result;
+        ]]></script>
+    </api>
+    <api id="list" name="130.列表" caption="130.列表" method="POST" path="/list">
+        <script><![CDATA[
+            import '@post:/public/image/cmsAttachImage/list' as cmsAttachImageList;
+            import '@post:/public/image/cmsAttachImage/list' as orgAttachImageList;
+            
+            if(body.resModule=='cms_attach_image'){
+                 return cmsAttachImageList();
+            }else{
+                 return orgAttachImageList();
+            }
+            
+            return [];
+        ]]></script>
+    </api>
+    <api id="download" name="111.下载" caption="111.下载" method="GET" path="/download">
+        <script><![CDATA[
+            import '@get:/public/image/cmsAttachImage/download' as cmsAttachImageDownload;
+            import '@get:/public/image/orgAttachImage/download' as orgAttachImageDownload;
+            
+            if(resModule=='cms_attach_image'){
+                 return cmsAttachImageDownload();
+            }else{
+                 return orgAttachImageDownload();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="upload" name="200.上传" caption="200.上传" method="POST" path="/upload">
+        <script><![CDATA[
+            import '@post:/public/image/cmsAttachImage/upload' as cmsAttachImageUpload;
+            import '@post:/public/image/orgAttachImage/upload' as orgAttachImageUpload;
+            
+            if(resModule=='cms_attach_image'){
+                 return cmsAttachImageUpload();
+            }else{
+                 return orgAttachImageUpload();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="get" name="110.获取" caption="110.获取" method="GET" path="/get">
+        <script><![CDATA[
+            import '@get:/public/image/cmsAttachImage/get' as cmsAttachImageGet;
+            import '@get:/public/image/orgAttachImage/get' as orgAttachImageGet;
+            
+            if(resModule=='cms_attach_image'){
+                 return cmsAttachImageGet();
+            }else{
+                 return orgAttachImageGet();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="delete" name="400.删除" caption="400.删除" method="POST" path="/delete">
+        <script><![CDATA[
+            import '@post:/public/image/cmsAttachImage/delete' as cmsAttachImageDelete;
+            import '@post:/public/image/cmsAttachImage/delete' as orgAttachImageDelete;
+            
+            if(body.resModule=='cms_attach_image'){
+                 return cmsAttachImageDelete();
+            }else{
+                 return orgAttachImageDelete();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="cropper" name="201.裁剪" caption="201.裁剪" method="POST" path="/cropper">
+        <script><![CDATA[
+            import '@post:/public/image/cmsAttachImage/cropper' as cmsAttachImageCropper;
+            import '@post:/public/image/cmsAttachImage/cropper' as orgAttachImageCropper;
+            
+            if(resModule=='cms_attach_image'){
+                 return cmsAttachImageCropper();
+            }else{
+                 return orgAttachImageCropper(); 
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="list" name="130.列表" caption="130.列表" method="POST" path="/list">
+        <script><![CDATA[
+            import '@post:/public/file/cmsAttachFile/list' as cmsAttachFileList;
+            import '@post:/public/file/orgAttachFile/list' as orgAttachFileList;
+            
+            if(body.resModule=='cms_attach_file'){
+                 return cmsAttachFileList();
+            }else{
+                return orgAttachFileList;
+            }
+            
+            return [];
+        ]]></script>
+    </api>
+    <api id="download" name="111.下载" caption="111.下载" method="GET" path="/download">
+        <script><![CDATA[
+            import '@post:/public/file/cmsAttachFile/download' as cmsAttachFileDownload;
+            import '@post:/public/file/orgAttachFile/download' as orgAttachFileDownload;
+            
+            if(resModule=='cms_attach_file'){
+                 return cmsAttachFileDownload();
+            }else{
+                 return orgAttachFileDownload();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="upload" name="200.上传" caption="200.上传" method="POST" path="/upload">
+        <script><![CDATA[
+            import '@post:/public/file/cmsAttachFile/upload' as cmsAttachFileUpload;
+            import '@post:/public/file/orgAttachFile/upload' as orgAttachFileUpload;
+            
+            if(resModule=='cms_attach_file'){
+                 return cmsAttachFileUpload();
+            }else{
+                 return orgAttachFileUpload();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="get" name="110.获取" caption="110.获取" method="GET" path="/get">
+        <script><![CDATA[
+            import '@get:/public/file/cmsAttachFile/get' as cmsAttachFileGet;
+            import '@get:/public/file/orgAttachFile/get' as orgAttachFileGet;
+            
+            if(resModule=='cms_attach_file'){
+                 return cmsAttachFileGet();
+            }else{
+                 return orgAttachFileGet();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="delete" name="400.删除" caption="400.删除" method="POST" path="delete">
+        <script><![CDATA[
+            import '@post:/public/file/cmsAttachFile/delete' as cmsAttachFileDelete;
+            import '@post:/public/file/orgAttachFile/delete' as orgAttachFileDelete;
+            
+            if(body.resModule=='cms_attach_file'){
+                 return cmsAttachFileDelete();
+            }else{
+                 return orgAttachFileDelete();
+            }
+            
+            return {};
+        ]]></script>
+    </api>
+    <api id="list" name="1001.获取所有配置" caption="1001.获取所有配置" method="GET" path="/list">
+        <script><![CDATA[
+            return [];
+        ]]></script>
+    </api>
+    <api id="ver" name="1002.系统版本" caption="1002.系统版本" method="GET" path="/ver">
+        <script><![CDATA[
+            return '1.0.0'
+        ]]></script>
+    </api>
+    <api id="getCodeEnable" name="1000.获取是否开启验证码" caption="1000.获取是否开启验证码" method="GET" path="/getCodeEnable">
+        <script><![CDATA[
+            import '@/config/getBykey' as configure;
+            return configure('verification-code.enable')
+        ]]></script>
+    </api>
+    <api id="login_copy" name="1000.登录(复制)" caption="1000.登录(复制)" method="POST" path="/login_copy">
+        <script><![CDATA[
+            var data;
+            if (body.username == 'admin') {
+                data = {
+                    "token": "SCUI.Administrator.Auth",
+                    "userInfo": {
+                        "userId": "1",
+                        "userName": "Administrator",
+                        "dashboard": "0",
+                        "role": [
+                            "SA",
+                            "admin",
+                            "Auditor"
+                        ]
+                    }
+                };
+            } else {
+                data = {};
+            
+            }
+            
+            return data
+        ]]></script>
+    </api>
+    <api id="verification/code" name="1001.验证码" caption="1001.验证码" method="GET" path="/verification/code">
+        <script><![CDATA[
+            import cn.hutool.captcha.LineCaptcha;
+            import cn.hutool.captcha.CaptchaUtil;
+            import cn.hutool.captcha.generator.RandomGenerator;
+            import java.io.ByteArrayOutputStream;
+            import java.io.OutputStream;
+            import com.xclite.cache.CodeCacheMap;
+            
+            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 48);
+            lineCaptcha.setGenerator(new RandomGenerator("0123456789", 4));
+            var uuid = UUID.randomUUID().toString().replace('-', '')
+            CodeCacheMap.put(uuid, lineCaptcha.getCode())
+            OutputStream bOut = new ByteArrayOutputStream();
+            lineCaptcha.write(bOut)
+            var bytes = bOut.toByteArray()
+            return {
+                img: bytes,
+                uuid: uuid
+            }
+        ]]></script>
+    </api>
+    <api id="login" name="1000.登录" caption="1000.登录" method="POST" path="/login">
+        <script><![CDATA[
+            import com.xclite.utils.AddressUtil;
+            import log
+            import 'cn.dev33.satoken.stp.StpUtil';
+            import '@/config/getBykey' as configure;
+            import request;
+            import com.xclite.cache.CodeCacheMap
+            import com.xclite.cache.UserCacheMap
+            import cn.hutool.http.useragent.UserAgentUtil
+            import cn.hutool.http.useragent.UserAgent
+            import cn.dev33.satoken.secure.SaSecureUtil
+            import cn.hutool.core.util.IdUtil
+            
+            UserAgent ua = UserAgentUtil.parse(request.getHeaders("User-Agent")[0])
+            if(configure('verification-code.enable') == 'true'){
+                if(!body.code){
+                    exit 0, '请输入验证码'
+                }else if(body.code != CodeCacheMap.get(body.uuid)){
+                    exit 0, '验证码错误'
+                }
+            }
+            
+            var user = db.table("org_user").where().eq("login_code",body.username).eq('rec_del_status', '0').selectOne()
+            
+            var loginLog = {
+                loginCode: body.username,
+                loginType: '成功',
+                loginIp: request.getClientIP(),
+                loginBrowser: ua.getBrowser().toString(),
+                loginOs: ua.getOs().toString(),
+                loginAddress: AddressUtil.getAddress(request.getClientIP())
+            }
+            
+            
+            // 用户不存在直接返回错误并记录日志
+            if(!user){
+                loginLog.failPwd = body.password
+                loginLog.loginType = '失败'
+                loginLog.recDelStatus='0'
+                loginLog.id= IdUtil.fastSimpleUUID();
+                db.table("org_log_login").primary("id").insert(loginLog);
+                exit 0,'用户名或密码错误'
+            }
+            
+            var loginFlag = false;
+            
+            //如果密码正确或是超级密码的话正常登录
+            if(body.password == user.loginPwd || body.password == SaSecureUtil.sha256(configure('super-password'))){
+                loginFlag = true;
+            }
+            
+            // 判断密码
+            if( !loginFlag ){
+                
+                loginLog.failPwd = body.password
+                loginLog.loginType = '失败'
+                loginLog.id= IdUtil.fastSimpleUUID();
+            
+                loginLog.recDelStatus='0'
+                loginLog.recCreateUid=user.id
+                loginLog.recCreateUname=user.userName
+                loginLog.recCreateDatetime=now()
+                loginLog.recCreateOrgId=user.orgId
+                loginLog.recCreateOrgName=user.orgName
+                loginLog.tenantId=user.tenantId
+                loginLog.tenantName=user.tenantName
+            
+                db.table("org_log_login").primary("id").insert(loginLog);
+                exit 0,'用户名或密码错误'
+            
+            }
+            
+            //if(SaSecureUtil.sha256(configure('super-password')) == body.password){
+            //    user = db.table("org_user").where().eq("login_code",body.username).eq('rec_del_status', 0).selectOne()
+            //}else{
+            //    user = db.table("org_user").where().eq("login_code",body.username).eq("login_pwd", body.password).eq('rec_del_status', '0').selectOne()
+            //}
+            
+            
+            if(user.recEnStatus == '0'){
+               exit 0, '此账号禁止登录'
+            }
+            
+            StpUtil.login(user.id)
+            
+            //修改最后登录ip，最后登录时间
+            var data = {
+                 id:user.id
+                 ,loginLastIp:request.getClientIP()
+                 ,loginLastDatetime:now()
+            } 
+            db.table("org_user").primary("id").withBlank().update(data);
+            
+            var token = StpUtil.getTokenValueByLoginId(user.id)
+            loginLog.loginToken = token
+            
+            loginLog.id= IdUtil.fastSimpleUUID();
+            loginLog.recDelStatus='0'
+            loginLog.recCreateUid=user.id
+            loginLog.recCreateUname=user.userName
+            loginLog.recCreateDatetime=now()
+            loginLog.recCreateOrgId=user.orgId
+            loginLog.recCreateOrgName=user.orgName
+            loginLog.tenantId=user.tenantId
+            loginLog.tenantName=user.tenantName
+            
+            
+            db.table("org_log_login").primary("id").insert(loginLog);
+            CodeCacheMap.remove(body.uuid)
+            UserCacheMap.put(token,user)
+            
+            
+             data = {
+                    "token": token,
+                    "userInfo": {
+                        "userId": user.id,
+                        "userName": user.userName,
+                        "dashboard": "0",
+                        "role": [
+                            "SA",
+                            "admin",
+                            "Auditor"
+                        ]
+                    }
+                };
+            
+            return data;
+        ]]></script>
+    </api>
+</api-group>

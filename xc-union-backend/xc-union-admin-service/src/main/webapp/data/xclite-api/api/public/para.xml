@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="para" name="103.参数" path="/public/para">
+    <api id="comList" name="100.组件下拉列表" caption="100.组件下拉列表" method="POST" path="/comList">
+        <script><![CDATA[
+            var sql = 
+            """
+                select
+                    a.*
+                from
+                    lite_para a
+                where a.rec_del_flag = '0'
+                 and class_code = #{classCode}
+                order by a.rec_sort_num asc
+            """
+            
+            var result = db.select(sql);
+            
+            return result;
+        ]]></script>
+    </api>
+</api-group>
