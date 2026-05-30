@@ -1,4 +1,4 @@
-package com.xc.union.client.module.dtk;
+package com.xc.union.dtk;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSON;

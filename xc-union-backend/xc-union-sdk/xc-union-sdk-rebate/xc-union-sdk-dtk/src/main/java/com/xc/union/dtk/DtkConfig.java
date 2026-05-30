@@ -1,4 +1,4 @@
-package com.xc.union.client.module.dtk;
+package com.xc.union.dtk;
 
 import lombok.Data;
 

@@ -58,12 +58,41 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <!-- SDK 模块 -->
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-dtk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-hdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-jd</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-pdd</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-tbk</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
             </resource>
         </resources>
 
