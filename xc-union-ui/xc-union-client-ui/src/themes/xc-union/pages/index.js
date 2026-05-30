@@ -1,0 +1,12 @@
+export { default as HomePage } from './HomePage';
+export { default as GoodPricePage } from './GoodPricePage';
+export { default as TmallSalePage } from './TmallSalePage';
+export { default as TmallGlobalSalePage } from './TmallGlobalSalePage';
+export { default as BrandSaleRankPage } from './BrandSaleRankPage';
+export { default as TaobaoFlashSalePage } from './TaobaoFlashSalePage';
+export { default as CheckinRewardPage } from './CheckinRewardPage';
+export { default as BillionSubsidyPage } from './BillionSubsidyPage';
+export { default as ProductDetailPage } from './ProductDetailPage';
+export { default as RewardActivityPage } from './RewardActivityPage';
+export { default as MessageBoxPage } from './MessageBoxPage';
+export { default as QueryGoodsPage } from './QueryGoodsPage';

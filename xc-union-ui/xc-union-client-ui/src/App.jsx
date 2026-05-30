@@ -1,22 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Clock, Copy, Leaf, MagnifyingGlass, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
 import BottomNav from './components/BottomNav';
 import SearchBar from './components/SearchBar';
 import Toast from './components/Toast';
 import MailboxAuthPanel from './components/MailboxAuthPanel';
-import HomeDealsPage from './themes/xc-union/pages/HomePage';
-import HotDealsRankPage from './themes/xc-union/pages/GoodPricePage';
-import TmallSalePage from './themes/xc-union/pages/TmallSalePage';
-import TmallGlobalSalePage from './themes/xc-union/pages/TmallGlobalSalePage';
-import BrandSaleRankPage from './themes/xc-union/pages/BrandSaleRankPage';
-import TaobaoFlashSalePage from './themes/xc-union/pages/TaobaoFlashSalePage';
-import CheckinRewardPage from './themes/xc-union/pages/CheckinRewardPage';
-import BillionSubsidyPage from './themes/xc-union/pages/BillionSubsidyPage';
-import ProductDetailPage from './themes/xc-union/pages/ProductDetailPage';
-import RewardActivityPage from './themes/xc-union/pages/RewardActivityPage';
-import MessageBoxPage from './themes/xc-union/pages/MessageBoxPage';
-import QueryGoodsPage from './themes/xc-union/pages/QueryGoodsPage';
 import { isLoggedIn, onAuthChanged } from './utils/auth';
+import { useTheme } from './contexts/ThemeContext';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -134,6 +123,7 @@ async function copyTextWithFallback(text) {
 }
 
 export default function App() {
+  const { themePages, loading: themeLoading } = useTheme();
   const [appPathname, setAppPathname] = useState(() => getAppPathname());
   const isGoodPriceRoute = appPathname === '/good-price';
   const isTmallSaleRoute = appPathname === '/tmall-sale';
@@ -395,11 +385,34 @@ export default function App() {
     randomizeFootprintGroups();
   }, []);
 
+  if (themeLoading) {
+    return <div className="h-screen flex items-center justify-center">加载主题中...</div>;
+  }
+
+  if (!themePages) {
+    return <div className="h-screen flex items-center justify-center">主题加载失败</div>;
+  }
+
+  const {
+    HomePage: ThemeHomePage,
+    GoodPricePage: ThemeGoodPricePage,
+    TmallSalePage: ThemeTmallSalePage,
+    TmallGlobalSalePage: ThemeTmallGlobalSalePage,
+    BrandSaleRankPage: ThemeBrandSaleRankPage,
+    TaobaoFlashSalePage: ThemeTaobaoFlashSalePage,
+    CheckinRewardPage: ThemeCheckinRewardPage,
+    BillionSubsidyPage: ThemeBillionSubsidyPage,
+    ProductDetailPage: ThemeProductDetailPage,
+    RewardActivityPage: ThemeRewardActivityPage,
+    MessageBoxPage: ThemeMessageBoxPage,
+    QueryGoodsPage: ThemeQueryGoodsPage,
+  } = themePages;
+
   if (isGoodPriceRoute) {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <HotDealsRankPage standalone />
+          <ThemeGoodPricePage standalone />
         </div>
       </div>
     );
@@ -409,7 +422,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TmallSalePage standalone />
+          <ThemeTmallSalePage standalone />
         </div>
       </div>
     );
@@ -419,7 +432,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TmallGlobalSalePage standalone />
+          <ThemeTmallGlobalSalePage standalone />
         </div>
       </div>
     );
@@ -429,7 +442,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <BrandSaleRankPage standalone />
+          <ThemeBrandSaleRankPage standalone />
         </div>
       </div>
     );
@@ -439,7 +452,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TaobaoFlashSalePage standalone />
+          <ThemeTaobaoFlashSalePage standalone />
         </div>
       </div>
     );
@@ -449,7 +462,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <CheckinRewardPage standalone />
+          <ThemeCheckinRewardPage standalone />
         </div>
       </div>
     );
@@ -459,7 +472,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <RewardActivityPage standalone />
+          <ThemeRewardActivityPage standalone />
         </div>
       </div>
     );
@@ -469,7 +482,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <MessageBoxPage standalone />
+          <ThemeMessageBoxPage standalone />
         </div>
       </div>
     );
@@ -479,7 +492,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <BillionSubsidyPage standalone />
+          <ThemeBillionSubsidyPage standalone />
         </div>
       </div>
     );
@@ -489,7 +502,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <ProductDetailPage standalone />
+          <ThemeProductDetailPage standalone />
         </div>
       </div>
     );
@@ -499,7 +512,7 @@ export default function App() {
     return (
       <div className="h-screen bg-appBg overflow-hidden">
         <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <QueryGoodsPage standalone />
+          <ThemeQueryGoodsPage standalone />
         </div>
       </div>
     );
@@ -540,9 +553,7 @@ export default function App() {
       </header>
 
       <div className="app-wrapper md:px-8">
-        {page === 'home' && (
-          <HomeDealsPage />
-        )}
+        {page === 'home' && <ThemeHomePage />}
 
         {page === 'footprint' && (
           <section className="page px-0 md:px-0 md:py-8 pb-[80px] bg-white">
