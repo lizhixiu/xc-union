@@ -62,23 +62,23 @@
         <!-- SDK 模块 -->
         <dependency>
             <groupId>com.xc.union</groupId>
-            <artifactId>xc-union-sdk-dtk</artifactId>
+            <artifactId>xc-union-sdk-rebate-dtk</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xc.union</groupId>
-            <artifactId>xc-union-sdk-hdk</artifactId>
+            <artifactId>xc-union-sdk-rebate-hdk</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xc.union</groupId>
-            <artifactId>xc-union-sdk-jd</artifactId>
+            <artifactId>xc-union-sdk-rebate-jd</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xc.union</groupId>
-            <artifactId>xc-union-sdk-pdd</artifactId>
+            <artifactId>xc-union-sdk-rebate-pdd</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xc.union</groupId>
-            <artifactId>xc-union-sdk-tbk</artifactId>
+            <artifactId>xc-union-sdk-rebate-tbk</artifactId>
         </dependency>
     </dependencies>
 
