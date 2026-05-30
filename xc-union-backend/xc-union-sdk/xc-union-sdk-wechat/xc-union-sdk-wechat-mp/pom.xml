@@ -26,5 +26,10 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.25</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>4.7.6-20250609.143003</version>
+        </dependency>
     </dependencies>
 </project>
