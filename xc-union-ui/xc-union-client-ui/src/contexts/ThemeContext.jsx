@@ -1,9 +1,20 @@
-import { createContext, useContext, useState, useEffect, Suspense, lazy } from 'react';
+import { createContext, useContext, useState, lazy } from 'react';
 import themes, { getDefaultTheme } from '../themes';
 
 const ThemeContext = createContext(null);
 
 const STORAGE_KEY = 'xc_union_theme';
+
+function createLazyComponents(themeKey) {
+  const themeConfig = themes[themeKey];
+  if (!themeConfig?.pages) return null;
+
+  const components = {};
+  for (const [name, loadFn] of Object.entries(themeConfig.pages)) {
+    components[name] = lazy(loadFn);
+  }
+  return components;
+}
 
 export function ThemeProvider({ children }) {
   const [themeKey, setThemeKey] = useState(() => {
@@ -14,34 +25,7 @@ export function ThemeProvider({ children }) {
     }
   });
 
-  const [themePages, setThemePages] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-
-    const themeConfig = themes[themeKey];
-    if (!themeConfig) {
-      setThemePages(null);
-      setLoading(false);
-      return;
-    }
-
-    themeConfig.load().then((mod) => {
-      if (!cancelled) {
-        setThemePages(() => mod);
-        setLoading(false);
-      }
-    }).catch(() => {
-      if (!cancelled) {
-        setThemePages(null);
-        setLoading(false);
-      }
-    });
-
-    return () => { cancelled = true; };
-  }, [themeKey]);
+  const [themePages] = useState(() => createLazyComponents(themeKey));
 
   const switchTheme = (key) => {
     if (!themes[key]) return;
@@ -51,10 +35,11 @@ export function ThemeProvider({ children }) {
     } catch {
       // ignore
     }
+    window.location.reload();
   };
 
   return (
-    <ThemeContext.Provider value={{ themeKey, themePages, loading, switchTheme }}>
+    <ThemeContext.Provider value={{ themeKey, themePages, switchTheme }}>
       {children}
     </ThemeContext.Provider>
   );
