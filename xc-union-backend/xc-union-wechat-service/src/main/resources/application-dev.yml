@@ -1,0 +1,13 @@
+# 微信服务配置
+server:
+  port: 28091
+
+# 微信配置
+xc:
+  union:
+    wechat:
+      appId: your-app-id
+      appSecret: your-app-secret
+      token: your-token
+      encodingAESKey: your-encoding-aes-key
+      debug: true

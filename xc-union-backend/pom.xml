@@ -20,6 +20,7 @@
         <module>xc-union-client-service</module>
         <module>xc-union-admin-service</module>
         <module>xc-union-job-service</module>
+        <module>xc-union-wechat-service</module>
     </modules>
 
     <dependencyManagement>
@@ -52,6 +53,16 @@
             <dependency>
                 <groupId>com.xc.union</groupId>
                 <artifactId>xc-union-sdk-rebate-tbk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-wechat</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-wechat-mp</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
