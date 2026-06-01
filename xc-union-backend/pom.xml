@@ -16,13 +16,55 @@
     <name>xc-union</name>
 
     <modules>
+        <module>xc-union-sdk</module>
         <module>xc-union-client-service</module>
         <module>xc-union-admin-service</module>
         <module>xc-union-job-service</module>
+        <module>xc-union-wechat-service</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-rebate-dtk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-rebate-hdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-rebate-jd</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-rebate-pdd</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-rebate-tbk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-wechat</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc.union</groupId>
+                <artifactId>xc-union-sdk-wechat-mp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.xc.union</groupId>
                 <artifactId>xc-union-client-service</artifactId>

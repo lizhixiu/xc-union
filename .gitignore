@@ -144,5 +144,9 @@ target/
 # local docs (do not commit)
 docs/
 
-xc-union/xc-union-client-service/src/main/webapp/ui
-xc-union-backend/xc-union-client-service/src/test/
+# 后端 webapp/ui (前端打包产物)
+xc-union-backend/*/src/main/webapp/ui/
+xc-union-backend/*/src/test/
+
+# Vite
+.vite/

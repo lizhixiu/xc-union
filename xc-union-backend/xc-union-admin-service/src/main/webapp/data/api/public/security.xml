@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="security" name="1001.安全" path="/public/security">
+    <api id="verification/code" name="1001.验证码" caption="1001.验证码" method="GET" path="/verification/code">
+        <script><![CDATA[
+            import cn.hutool.captcha.LineCaptcha;
+            import cn.hutool.captcha.CaptchaUtil;
+            import cn.hutool.captcha.generator.RandomGenerator;
+            import java.io.ByteArrayOutputStream;
+            import java.io.OutputStream;
+            import com.jfinal.plugin.redis.Redis;
+            
+            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 48);
+            lineCaptcha.setGenerator(new RandomGenerator("0123456789", 4));
+            var uuid = UUID.randomUUID().toString().replace('-', '')
+            CodeCacheMap.put(uuid, lineCaptcha.getCode())
+            OutputStream bOut = new ByteArrayOutputStream();
+            lineCaptcha.write(bOut)
+            var bytes = bOut.toByteArray()
+            return {
+                img: bytes,
+                uuid: uuid
+            }
+        ]]></script>
+    </api>
+
+    <api id="login" name="1000.登录" caption="1000.登录" method="POST" path="/login">
+        <script><![CDATA[
+            import com.xclite.boot.admin.utils.AddressUtil;
+            import log
+            import request;
+            import com.xclite.boot.admin.cache.CodeCacheMap
+            import com.jfinal.plugin.redis.Redis
+            import cn.hutool.http.useragent.UserAgentUtil
+            import cn.hutool.http.useragent.UserAgent
+            import cn.hutool.core.util.IdUtil
+            import com.xclite.api.plugin.LiteApiPlugin;
+
+            UserAgent ua = UserAgentUtil.parse(request.getHeaders("User-Agent")[0])
+            
+            var user = db.table("lite_user").where().eq("login_code_txt",body.username).eq('rec_del_flag', '0').selectOne()
+            
+            var loginLog = {
+                loginCodeTxt: body.username,
+                loginTypeCode: '1',
+                loginIpTxt: request.getClientIP(),
+                loginBrowserTxt: ua.getBrowser().toString(),
+                loginOsTxt: ua.getOs().toString(),
+                loginAddressTxt: AddressUtil.getAddress(request.getClientIP())
+            }
+            
+            
+            // 用户不存在直接返回错误并记录日志
+            if(!user){
+                loginLog.failPwdTxt = body.password
+                loginLog.loginTypeCode = '0'
+                loginLog.failTxt = '账号不存在!'
+                loginLog.recDelFlag='0'
+                loginLog.id= IdUtil.fastSimpleUUID();
+                db.table("lite_log_login").primary("id").insert(loginLog);
+                exit 0,'用户名或密码错误'
+            }
+            
+            var loginFlag = false;
+            
+            //如果密码正确或是超级密码的话正常登录
+            if(body.password == user.loginPwdTxt ){
+                loginFlag = true;
+            }
+            
+            // 判断密码
+            if( !loginFlag ){
+                
+                loginLog.failPwdTxt = body.password
+                loginLog.loginTypeCode = '0'
+                loginLog.failTxt = '密码错误!'
+                loginLog.id= IdUtil.fastSimpleUUID();
+            
+                loginLog.recDelFlag='0'
+                loginLog.recCreateId=user.id
+                loginLog.recCreateRef=user.userName
+                loginLog.recCreateDt=now()
+                loginLog.recOrgId=user.orgId
+            
+                db.table("lite_log_login").primary("id").insert(loginLog);
+                exit 0,'用户名或密码错误'
+            
+            }
+
+            
+            
+            if(user.recEnStatus == '0'){
+               exit 0, '此账号禁止登录'
+            }
+            
+           // StpUtil.login(user.id)
+            
+            //修改最后登录ip，最后登录时间
+            var data = {
+                 id:user.id
+                 ,loginLastIpTxt:request.getClientIP()
+                 ,loginLastDt:now()
+            } 
+            db.table("lite_user").primary("id").withBlank().update(data);
+            
+            var token = uuid();
+             //StpUtil.getTokenValueByLoginId(user.id)
+            loginLog.loginTokenTxt = token
+            
+            loginLog.id= IdUtil.fastSimpleUUID();
+            loginLog.recDelFlag='0'
+            loginLog.recCreateId=user.id
+            loginLog.recCreateRef=user.userName
+            loginLog.recCreateDt=now()
+            loginLog.recOrgId=user.orgId
+
+            db.table("lite_log_login").primary("id").insert(loginLog);
+            CodeCacheMap.remove(body.uuid)
+            LiteApiPlugin.getInstance();
+            Redis.use().set(token,user)
+
+            
+            
+             data = {
+                    "token": token,
+                    "userInfo": {
+                        "userId": user.id,
+                        "userName": user.nameTxt,
+                        "dashboard": "0",
+                        "role": [
+                            "SA",
+                            "admin",
+                            "Auditor"
+                        ]
+                    }
+                };
+            
+            return data;
+        ]]></script>
+    </api>
+
+
+    <api id="codes" name="1002.授权码" caption="1002.授权码" method="GET" path="/codes">
+        <script><![CDATA[
+            return [];
+        ]]></script>
+    </api>
+
+    <api id="user/info" name="1002.授权码" caption="1002.授权码" method="GET" path="/user/info">
+        <script><![CDATA[
+            return [];
+        ]]></script>
+    </api>
+
+    <api caption="1003.获取用户信息" id="userInfo" name="1003.获取用户信息" method="GET" path="/user/info">
+        <script><![CDATA[
+         return  {
+            "id": SESSION_USER.id,
+            "realName": SESSION_USER.nameTxt,
+            "roles": [
+              "super"
+            ],
+            "username": SESSION_USER.loginCodeTxt
+          };
+        ]]></script>
+    </api>
+
+
+    <api id="logout" name="1004.退出登录" caption="1004.退出登录" method="POST" path="/logout">
+        <script><![CDATA[
+            return {};
+        ]]></script>
+    </api>
+</api-group>

@@ -58,6 +58,28 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <!-- SDK 模块 -->
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-rebate-dtk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-rebate-hdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-rebate-jd</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-rebate-pdd</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xc.union</groupId>
+            <artifactId>xc-union-sdk-rebate-tbk</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -65,13 +87,19 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
+            <resource>
+                <directory>lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>
         </resources>
 
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -83,7 +111,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
                 <configuration>
                     <excludes>
                         <exclude>*.*</exclude>
@@ -96,7 +123,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>

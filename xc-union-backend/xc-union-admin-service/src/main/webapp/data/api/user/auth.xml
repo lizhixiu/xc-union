@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="auth" name="1000.权限" path="/user/auth">
+    <api id="current" name="1000.当前用户导航" caption="1000.当前用户导航" method="GET" path="/current">
+        <script><![CDATA[
+            import request;
+            import log;
+            
+            // 查出所有隐藏或者打开方式为“页签”和“iframe”的菜单（排除http地址和静态页面）
+            var notLayoutMenus = []
+
+            var menus = [];
+            
+            var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+            
+            var sql = 
+            """
+                select a.id,a.name_txt name,a.code_txt code,pid pid,a.rec_sort_num,ifnull(url_txt,'home') path,a.icon_txt icon,a.component_txt component from lite_nav a
+				order by rec_sort_num asc
+            """
+            
+            var menus = db.select(sql);
+
+            for(menu in menus){
+                // log.info(menu.name)
+                var meta = {};
+                meta.title = menu.name;
+                menu.name = menu.id;
+                if(menu.icon!=null){
+                      meta.icon = menu.icon; 
+                }
+                meta.type = "menu";
+                menu.meta = meta;
+            }
+            
+            var list = toTree(menus,'-1');
+            
+            var newList = [];
+            var first = 
+            {
+                        "name": "home",
+                        "path": "/home",
+                        "meta": {
+                            "title": "首页",
+                            "icon": "el-icon-home-filled",
+                            "type": "menu"
+                        },
+                        "children": [{
+                                "name": "dashboard",
+                                "path": "/dashboard",
+                                "meta": {
+                                    "title": "控制台",
+                                    "icon": "el-icon-menu",
+                                    "affix": true
+                                },
+                                "component": "home"
+                            }
+                        ]
+                    };
+            newList.add(first);
+            newList.addAll(list);
+            
+            var permissions = [
+                    "list.add",
+                    "list.edit",
+                    "list.delete",
+                    "user.add",
+                    "user.edit",
+                    "user.delete"
+                ];
+            
+                var dashboardGrid = [
+                    "welcome",
+                    "ver",
+                    "time",
+                    "progress",
+                    "echarts",
+                    "about"
+                ]
+            
+            
+            return {menu:newList  ,permissions ,dashboardGrid };
+
+        ]]></script>
+    </api>
+
+</api-group>

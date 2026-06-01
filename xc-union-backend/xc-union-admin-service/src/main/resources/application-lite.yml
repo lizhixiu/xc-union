@@ -1,3 +1,38 @@
-app:
-  name: xc-union-admin-service
-  version: 2.0.0-SNAPSHOT
+lite-api:
+  show-sql: true #配置打印SQL
+  sql-column-case: camel
+  resource:
+    location: xc-union-backend/xc-union-admin-service/src/main/webapp/data
+    showUrl: false #是否打印URL
+    readonly: false
+  page:
+    page: page
+    size: pageSize
+  cache:
+    enable: true  #开启缓存，默认是不开启的
+    ttl: 3600000 #有效期1小时，默认-1 即永不过期
+  response-code:
+    success: 200 #执行成功的code值
+    invalid: 400 #参数验证未通过的code值
+    exception: 500 #执行出现异常的code值
+  crud: # CRUD相关配置
+    logic-delete: false #是否开启逻辑删除
+    logic-delete-column: rec_del_status #逻辑删除列
+    logic-delete-value: '1' #逻辑删除值
+  datasource:
+    keys:
+      - main
+    main:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      dbType: mysql
+      url: jdbc:mysql://localhost/lite_boot?useSSL=false&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+      username: root
+      password:
+  redis:
+    cache-name: main
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    password:
+

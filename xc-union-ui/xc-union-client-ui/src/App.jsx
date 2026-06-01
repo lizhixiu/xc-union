@@ -1,22 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Clock, Copy, Leaf, MagnifyingGlass, Receipt, ShareNetwork, ShieldCheck, User } from '@phosphor-icons/react';
 import BottomNav from './components/BottomNav';
 import SearchBar from './components/SearchBar';
 import Toast from './components/Toast';
 import MailboxAuthPanel from './components/MailboxAuthPanel';
-import HomeDealsPage from './themes/xc-union/pages/HomePage';
-import HotDealsRankPage from './themes/xc-union/pages/GoodPricePage';
-import TmallSalePage from './themes/xc-union/pages/TmallSalePage';
-import TmallGlobalSalePage from './themes/xc-union/pages/TmallGlobalSalePage';
-import BrandSaleRankPage from './themes/xc-union/pages/BrandSaleRankPage';
-import TaobaoFlashSalePage from './themes/xc-union/pages/TaobaoFlashSalePage';
-import CheckinRewardPage from './themes/xc-union/pages/CheckinRewardPage';
-import BillionSubsidyPage from './themes/xc-union/pages/BillionSubsidyPage';
-import ProductDetailPage from './themes/xc-union/pages/ProductDetailPage';
-import RewardActivityPage from './themes/xc-union/pages/RewardActivityPage';
-import MessageBoxPage from './themes/xc-union/pages/MessageBoxPage';
-import QueryGoodsPage from './themes/xc-union/pages/QueryGoodsPage';
 import { isLoggedIn, onAuthChanged } from './utils/auth';
+import { useTheme } from './contexts/ThemeContext';
 
 const PARSE_API_URL = '/dtk/tbService/parseContent';
 const APP_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -134,6 +123,7 @@ async function copyTextWithFallback(text) {
 }
 
 export default function App() {
+  const { themePages } = useTheme();
   const [appPathname, setAppPathname] = useState(() => getAppPathname());
   const isGoodPriceRoute = appPathname === '/good-price';
   const isTmallSaleRoute = appPathname === '/tmall-sale';
@@ -395,113 +385,154 @@ export default function App() {
     randomizeFootprintGroups();
   }, []);
 
+  if (!themePages) {
+    return <div className="h-screen flex items-center justify-center">主题加载失败</div>;
+  }
+
+  const {
+    HomePage: ThemeHomePage,
+    GoodPricePage: ThemeGoodPricePage,
+    TmallSalePage: ThemeTmallSalePage,
+    TmallGlobalSalePage: ThemeTmallGlobalSalePage,
+    BrandSaleRankPage: ThemeBrandSaleRankPage,
+    TaobaoFlashSalePage: ThemeTaobaoFlashSalePage,
+    CheckinRewardPage: ThemeCheckinRewardPage,
+    BillionSubsidyPage: ThemeBillionSubsidyPage,
+    ProductDetailPage: ThemeProductDetailPage,
+    RewardActivityPage: ThemeRewardActivityPage,
+    MessageBoxPage: ThemeMessageBoxPage,
+    QueryGoodsPage: ThemeQueryGoodsPage,
+  } = themePages;
+
   if (isGoodPriceRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <HotDealsRankPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeGoodPricePage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isTmallSaleRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TmallSalePage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeTmallSalePage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isTmallGlobalSaleRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TmallGlobalSalePage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeTmallGlobalSalePage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isBrandSaleRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <BrandSaleRankPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeBrandSaleRankPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isFlashSaleRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <TaobaoFlashSalePage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeTaobaoFlashSalePage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isCheckinRewardRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <CheckinRewardPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeCheckinRewardPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isRewardActivityRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <RewardActivityPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeRewardActivityPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isMessageBoxRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <MessageBoxPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeMessageBoxPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isBillionSubsidyRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <BillionSubsidyPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeBillionSubsidyPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isProductDetailRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <ProductDetailPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeProductDetailPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
   if (isQueryGoodsRoute) {
     return (
-      <div className="h-screen bg-appBg overflow-hidden">
-        <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
-          <QueryGoodsPage standalone />
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="h-screen bg-appBg overflow-hidden">
+          <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
+            <ThemeQueryGoodsPage standalone />
+          </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
@@ -541,7 +572,9 @@ export default function App() {
 
       <div className="app-wrapper md:px-8">
         {page === 'home' && (
-          <HomeDealsPage />
+          <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+            <ThemeHomePage />
+          </Suspense>
         )}
 
         {page === 'footprint' && (

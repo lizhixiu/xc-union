@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="wechat-mp" name="微信公众号" path="/mp">
+    <api id="getAccessToken" name="获取AccessToken" caption="获取AccessToken" method="POST" path="/token">
+        <script>
+            <![CDATA[
+            import wxmp;
+
+            return wxmp.me().getAccessToken();
+      ]]>
+        </script>
+    </api>
+
+    <api id="getUserList" name="获取用户列表" caption="获取用户列表" method="POST" path="/user/list">
+        <script>
+            <![CDATA[
+            import wxmp;
+
+            return wxmp.me().getUserService().userList();
+      ]]>
+        </script>
+    </api>
+
+    <api id="getMenu" name="获取菜单" caption="获取菜单" method="POST" path="/menu/get">
+        <script>
+            <![CDATA[
+            import wxmp;
+
+            return wxmp.me().getMenuService().menuGet();
+      ]]>
+        </script>
+    </api>
+
+    <api id="createMenu" name="创建菜单" caption="创建菜单" method="POST" path="/menu/create">
+        <script>
+            <![CDATA[
+            import wxmp;
+            import cn.hutool.json.JSONUtil;
+
+            var data = {
+                // "button": [
+                //     {
+                //         "name": "xc-union",
+                //         "sub_button": [
+                //             {
+                //                "type":"view",
+                //                 "name":"gitee",
+                //                 "url":"https://gitee.com/xc_java/xc-union"
+                //             },
+                //             {
+                //             "type":"view",
+                //             "name":"github",
+                //             "url":"https://github.com/lizhixiu/xc-union"
+                //             }
+                //         ]
+                //     }
+                // ]
+            };
+
+
+            // return wxmp.me().getMenuService().menuCreate(JSONUtil.toJsonStr(data));
+            return null;
+      ]]>
+        </script>
+    </api>
+
+    <api id="wechatConfig" name="微信配置" caption="微信配置" method="GET" path="/config">
+        <script>
+            <![CDATA[
+            import wxmp;
+            import log;
+            import enjoy;
+
+            log.info(timestamp);
+
+            log.info(nonce);
+
+            log.info(signature);
+             // 校验签名
+            if (!wxmp.me().checkSignature(timestamp, nonce, signature)) {
+                var err_msg = "签名校验 ===》 非法请求";
+                log.error(err_msg);
+                exit 500, err_msg;
+            }
+
+            log.info("签名校验 ===》 验证成功");
+
+            return enjoy.htmlByContent(echostr,{});
+      ]]>
+        </script>
+    </api>
+
+    <api id="wechatSend" name="微信发送" caption="微信发送" method="POST" path="/send">
+        <script>
+            <![CDATA[
+            import wxmp;
+            import log;
+            import enjoy;
+            import dtk;
+            import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+            import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+            import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
+            import cn.hutool.json.JSONUtil;
+            import request;
+            import cn.hutool.core.io.IoUtil;
+
+
+            // 校验签名
+            if (!wxmp.me().checkSignature(timestamp, nonce, signature)) {
+                var err_msg = "签名校验 ===》 非法请求";
+                log.error(err_msg);
+                exit 500, err_msg;
+            }
+
+            var requestBody = IoUtil.readUtf8(request.get().getInputStream());
+
+            // 解析消息体，封装为对象
+            WxMpXmlMessage xmlMessage = WxMpXmlMessage.fromXml(requestBody);
+
+            if (xmlMessage.getMsgType() != 'text') {
+                return enjoy.htmlByTemplate("", {});
+            }
+
+            var inContent = xmlMessage.getContent();
+
+            var outContent = "";
+            // 根据不同的关键字回复消息
+            if ((inContent.contains(".tb.") || inContent.contains(".Taobao."))) {
+                var params = {
+                    apiMethodName: "tb-service/parse-content",
+                    content: inContent
+                };
+                var response = dtk.execute(params);
+                if (response.code != 0) {
+                    outContent = enjoy.renderToString("该商品未参与fan~莉活动", {});
+                } else {
+                    var data = {};
+                    data.pictUrl = response.data.originInfo.image;
+                    data.title = response.data.originInfo.title;
+                    data.shopTitle = response.data.originInfo.shopName;
+                    //优惠卷
+                    data.amount = response.data.originInfo.amount;
+                    //最终价
+                    data.finalPromotionPrice = response.data.originInfo.price;
+                    //佣金比例
+                    data.commissionRate = response.data.commissionRate;
+                    //佣金
+                    data.commissionAmount = response.data.commissionRate * response.data.originInfo.price / 100;
+                    data.clickUrl = response.data.originUrl;
+
+                    var params = {
+                        apiMethodName: "tb-service/get-privilege-link",
+                        goodsId: response.data.itemId
+                    };
+
+                    var response = dtk.execute(params);
+                    data.longTpwd = response.data.longTpwd;
+
+                    var txt =
+                        "标题:#(title)\n" +
+                        "店铺:#(shopTitle)\n" +
+                        "优惠券:#(amount)\n" +
+                        "参考价:#(finalPromotionPrice)\n" +
+                        "佣金:#(commissionAmount)\n" +
+                        "#(longTpwd)\n";
+                    outContent = enjoy.renderToString(txt, data);
+                }
+
+            } else {
+                outContent = inContent + "的内容回复";
+            }
+
+            //         // 构造响应消息对象
+            WxMpXmlOutTextMessage outTextMessage = WxMpXmlOutMessage.TEXT().content(outContent).fromUser(xmlMessage.getToUser())
+                .toUser(xmlMessage.getFromUser()).build();
+
+            return enjoy.xmlByContent(outTextMessage.toXml(), {});
+      ]]>
+        </script>
+    </api>
+
+</api-group>

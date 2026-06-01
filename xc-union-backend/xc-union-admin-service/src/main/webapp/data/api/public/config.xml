@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="config" name="1000.配置" path="/public/config">
+    <api id="list" name="1001.获取所有配置" caption="1001.获取所有配置" method="GET" path="/list">
+        <script><![CDATA[
+            return [];
+        ]]></script>
+    </api>
+    <api id="ver" name="1002.系统版本" caption="1002.系统版本" method="GET" path="/ver">
+        <script><![CDATA[
+            return '1.0.0'
+        ]]></script>
+    </api>
+    <api id="getCodeEnable" name="1000.获取是否开启验证码" caption="1000.获取是否开启验证码" method="GET" path="/getCodeEnable">
+        <script><![CDATA[
+            return false;
+        ]]></script>
+    </api>
+</api-group>

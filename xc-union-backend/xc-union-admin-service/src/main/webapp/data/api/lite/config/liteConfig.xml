@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api-group id="LITE_CONFIG" name="系统配置" path="/lite/config/liteConfig">
+    <api id="prepare" name="100.预处理" method="POST" path="prepare">
+        <script><![CDATA[
+			var id = uuid();
+			var sql = 
+			"""
+				select
+					'1' rec_valid_flag
+					,ifnull((select max(rec_sort_num) + 5 from lite_config a where a.rec_del_flag = '0'  ),5) rec_sort_num					,'0' rec_del_flag
+			        ,#{body.pid} pid
+			        from dual
+			""";
+			
+			var result = db.selectOne(sql);
+			result.put("id",id);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="prepareCond" name="101.查询预处理" method="POST" path="prepareCond">
+        <script><![CDATA[
+			return {};	
+        ]]></script>
+    </api>
+    <api id="get" name="110.查询记录" method="POST" path="get">
+        <script><![CDATA[
+			var sql = 
+			"""
+				select
+					a.*
+				from
+					lite_config a
+				where a.id = #{body.id}
+			"""
+			
+			var result = db.selectOne(sql);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="copy" name="120.复制" method="POST" path="copy">
+        <script><![CDATA[
+			var sql =
+			"""
+				select
+					a.*
+				from
+					lite_config a
+				where a.id = #{body.rowId}
+			"""
+			
+			var result = db.selectOne(sql);
+			result.put("id",uuid());
+			result.put("recSortNum",result.get("recSortNum")+1);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="list" name="130.列表" method="POST" path="list">
+        <script><![CDATA[
+			var sql = 
+			"""
+				select
+					a.*
+				from
+					lite_config a
+				where a.rec_del_flag = '0' 
+				
+			"""
+			
+			var result = db.select(sql);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="tree" name="140.树列表" method="POST" path="tree">
+        <script><![CDATA[
+			var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+			
+			var sql = 
+			"""
+				select
+					a.*
+				from
+					lite_config a
+				where a.rec_del_flag = '0' 
+			  
+				?{orderByColumn, order by a.${orderByColumn} ${direction == 0 ? 'asc' : direction == 1 ? 'desc' : ''}}
+				?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+			
+			var list = toTree(db.select(sql),'-1');
+			
+			var result = {
+				list: list,
+				total: list.getLength()
+			};
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="page" name="150.分页" method="POST" path="page">
+        <script><![CDATA[
+			var sql = 
+			"""
+				select
+					a.*
+				from
+					lite_config a
+				where a.rec_del_flag = '0'
+				?{body.pid, and a.pid =  #{body.pid}}
+				?{!body.pid, and a.type_code = 'CONFIG'}
+				?{body.keywordTxt, and (
+				 a.name_txt like concat('%',#{body.keywordTxt},'%')
+				 or a.code_txt like concat('%',#{body.keywordTxt},'%')
+				)}
+				?{orderByColumn, order by a.${orderByColumn} ${direction == 0 ? 'asc' : direction == 1 ? 'desc' : ''}}
+				?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+			
+			var result = db.page(sql);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="insert" name="200.新增" method="POST" path="insert">
+        <script><![CDATA[
+			
+			var fileds = [
+			 {fieldName:"主键",fieldCode:"id"}
+			 ,{fieldName:"父节点ID",fieldCode:"pid"}
+			 ,{fieldName:"配置类型编码",fieldCode:"typeCode"}
+			 ,{fieldName:"配置类型名称",fieldCode:"typeRef"}
+			 ,{fieldName:"配置编码",fieldCode:"codeTxt"}
+			 ,{fieldName:"配置名称",fieldCode:"nameTxt"}
+			 ,{fieldName:"配置值",fieldCode:"valueTxt"}
+			 ,{fieldName:"排序号",fieldCode:"recSortNum"}
+			 ,{fieldName:"备注",fieldCode:"recRemarksTxt"}
+			 ,{fieldName:"是否有效",fieldCode:"recValidFlag"}
+			 ,{fieldName:"是否删除",fieldCode:"recDelFlag"}
+			 ,{fieldName:"是否系统保留",fieldCode:"recSysFlag"}
+			 ,{fieldName:"创建人ID",fieldCode:"recCreateId",fieldValue:SESSION_USER.id}
+			 ,{fieldName:"创建人",fieldCode:"recCreateRef",fieldValue:SESSION_USER.nameTxt}
+			 ,{fieldName:"创建时间",fieldCode:"recCreateDt",fieldValue:now()}
+			 ,{fieldName:"更新人ID",fieldCode:"recUpdateId"}
+			 ,{fieldName:"更新人",fieldCode:"recUpdateRef"}
+			 ,{fieldName:"更新时间",fieldCode:"recUpdateDt"}
+			]
+			
+			var data = fillSqlEntity(body,fileds);
+			
+			return db.table("lite_config").primary("id").insert(data);
+        ]]></script>
+    </api>
+    <api id="update" name="300.更新" method="POST" path="update">
+        <script><![CDATA[
+			
+			var fileds = [
+			 {fieldName:"主键",fieldCode:"id"}
+			 ,{fieldName:"父节点ID",fieldCode:"pid"}
+			 ,{fieldName:"配置类型编码",fieldCode:"typeCode"}
+			 ,{fieldName:"配置类型名称",fieldCode:"typeRef"}
+			 ,{fieldName:"配置编码",fieldCode:"codeTxt"}
+			 ,{fieldName:"配置名称",fieldCode:"nameTxt"}
+			 ,{fieldName:"配置值",fieldCode:"valueTxt"}
+			 ,{fieldName:"排序号",fieldCode:"recSortNum"}
+			 ,{fieldName:"备注",fieldCode:"recRemarksTxt"}
+			 ,{fieldName:"是否有效",fieldCode:"recValidFlag"}
+			 ,{fieldName:"是否删除",fieldCode:"recDelFlag"}
+			 ,{fieldName:"是否系统保留",fieldCode:"recSysFlag"}
+			 ,{fieldName:"创建人ID",fieldCode:"recCreateId"}
+			 ,{fieldName:"创建人",fieldCode:"recCreateRef"}
+			 ,{fieldName:"创建时间",fieldCode:"recCreateDt"}
+			 ,{fieldName:"更新人ID",fieldCode:"recUpdateId",fieldValue:SESSION_USER.id}
+			 ,{fieldName:"更新人",fieldCode:"recUpdateRef",fieldValue:SESSION_USER.nameTxt}
+			 ,{fieldName:"更新时间",fieldCode:"recUpdateDt",fieldValue:now()}
+			]
+			
+			var data = fillSqlEntity(body,fileds);
+			
+			return db.table("lite_config").primary("id").withBlank().update(data);
+        ]]></script>
+    </api>
+    <api id="reorder" name="303.重新排序" method="POST" path="reorder">
+        <script><![CDATA[
+			import log
+			
+			var sql = 
+			"""
+			    select
+			        a.*
+			    from
+			        lite_config a
+			    where a.rec_del_flag = '0' 
+			     and a.pid =  #{body.pid} 
+			      
+			    ?{orderByColumn, order by a.${orderByColumn} ${direction == 0 ? 'asc' : direction == 1 ? 'desc' : ''}}
+			    ?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+			
+			var result = db.select(sql);
+			
+			var sort = 5;
+			result.each(data => {
+			    var newData = {
+			        id:data.id,
+			        recSortNum:sort
+			    }
+			    db.table("lite_config").primary("id").update(newData);
+			    sort = sort + 5;
+			})
+			
+			return 1;
+        ]]></script>
+    </api>
+    <api id="delete" name="400.删除" method="POST" path="delete">
+        <script><![CDATA[
+			
+			var result = db.table("lite_config").where().eq("id",body.id).delete();
+			
+			return result;
+			
+        ]]></script>
+    </api>
+    <api id="deletes" name="401.批量删除" method="POST" path="deletes">
+        <script><![CDATA[
+			body.ids.each(id => {
+			
+			    var result = db.table("lite_config").where().eq("id",id).delete();
+			
+			    return result;
+			})
+			
+			return 1;
+        ]]></script>
+    </api>
+    <api id="comList" name="500.组件下拉列表" method="POST" path="comList">
+        <script><![CDATA[
+			var sql = 
+			"""
+			    select
+			        a.*
+			    from
+			        lite_config a
+			    where a.rec_del_flag = '0' 
+			     
+			     ?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+			
+			var result = db.select(sql);
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="comTree" name="501.组件树列表" method="POST" path="comTree">
+        <script><![CDATA[
+			var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+			
+			var sql = 
+			"""
+			    select
+			        a.*
+			    from
+			        lite_config a
+			    where a.rec_del_flag = '0' 
+			     
+			    ?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+			
+			
+			var datas = db.select(sql);
+			datas.add(
+			    {
+			        id:'-1'
+			        ,pid:'0'
+			        ,nameTxt:'根栏目'
+			    }
+			)
+			
+			var list = toTree(datas,'0');
+			
+			var result = {
+			    list: list,
+			    total: list.getLength()
+			};
+			
+			return result;
+        ]]></script>
+    </api>
+    <api id="comTreeClass" name="502.组件树列表" method="POST" path="comTreeClass">
+        <script><![CDATA[
+			var toTree = (list,pid) => select t.*,toTree(list,t.id) children from list t where t.pid = pid;
+
+			var sql =
+			"""
+			    select
+			        a.*
+			    from
+			        lite_config a
+			    where a.rec_del_flag = '0'
+			    and a.type_code = 'CLASS'
+
+			    ?{!orderByColumn, order by a.rec_sort_num asc}
+			"""
+
+
+			var datas = db.select(sql);
+			datas.add(
+			    {
+			        id:'-1'
+			        ,pid:'0'
+			        ,nameTxt:'根栏目'
+			    }
+			)
+
+			var list = toTree(datas,'0');
+
+			var result = {
+			    list: list,
+			    total: list.getLength()
+			};
+
+			return result;
+        ]]></script>
+    </api>
+</api-group>
