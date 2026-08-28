@@ -24,12 +24,14 @@ public class DtkModule {
     }
 
     @Comment("大淘客通用接口")
-    public JSON execute(@Comment(name = "params", value = "参数") Map<String, String> params) {
+    public JSON execute(@Comment(name = "params", value = "参数") Map<String, ?> params) {
         if (config == null) {
             throw new IllegalStateException("DtkConfig 未初始化！");
         }
 
-        if (StrUtil.isBlank(params.get("url"))) {
+        Object rawUrl = params.get("url");
+        String url = rawUrl == null ? null : String.valueOf(rawUrl);
+        if (StrUtil.isBlank(url)) {
             throw new IllegalArgumentException("接口详细地址【url】为空！");
         }
 
@@ -48,20 +50,26 @@ public class DtkModule {
         });
 
         if (config.isDebug()) {
-            log.info("请求地址：{}", config.getApiUrl() + params.get("url"));
+            log.info("请求地址：{}", config.getApiUrl() + url);
             log.info("请求参数：{}", JSONUtil.formatJsonStr(JSONUtil.toJsonStr(tempParams)));
         }
 
         tempParams.put("appKey", config.getAppKey());
 
         try {
-            String result = DtkHttpUtil.sendReq(config.getApiUrl() + params.get("url"), config.getAppSecret(), tempParams);
+            String result = DtkHttpUtil.sendReq(config.getApiUrl() + url, config.getAppSecret(), tempParams);
 
             if (config.isDebug()) {
                 log.info("返回原报文：{}", result);
             }
 
-            JSON resultJson = JSONUtil.parse(result);
+            String response = result == null ? "" : result.trim();
+            if (!response.startsWith("{") && !response.startsWith("[")) {
+                throw new IllegalStateException("大淘客接口返回非 JSON 响应，检查接口路径或网关状态："
+                        + config.getApiUrl() + url);
+            }
+
+            JSON resultJson = JSONUtil.parse(response);
             if (config.isDebug()) {
                 log.info("返回报文：{}", JSONUtil.formatJsonStr(JSONUtil.toJsonStr(resultJson)));
             }

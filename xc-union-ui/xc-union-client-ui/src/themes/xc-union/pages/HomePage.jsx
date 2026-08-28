@@ -68,10 +68,10 @@ function openProductDetail(payload) {
   navigateTo('/product-detail');
 }
 
-export default function HomeDealsPage() {
+export default function HomeDealsPage({ onParse, isParsing = false }) {
   const [authed, setAuthed] = useState(() => isLoggedIn());
   const [receiveHintVisible, setReceiveHintVisible] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('520');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [channelPage, setChannelPage] = useState(0);
   const [campaignPage, setCampaignPage] = useState(0);
   const [channelTouchX, setChannelTouchX] = useState(0);
@@ -203,21 +203,19 @@ export default function HomeDealsPage() {
               <input
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !isParsing) onParse?.(searchKeyword);
+                }}
+                placeholder="粘贴商品链接或口令"
                 className="text-[13px] text-[#111111] flex-1 font-medium bg-transparent outline-none"
               />
               <span className="w-7 h-7 rounded-md border border-[#EBEBEB] bg-[#F7F8FA] flex items-center justify-center text-[#888888]"><Camera size={15} /></span>
               <button
-                onClick={() => {
-                  try {
-                    sessionStorage.setItem('xc_union_search_keyword', (searchKeyword || '').trim() || '520');
-                  } catch {
-                    // ignore
-                  }
-                  navigateTo('/query-goods');
-                }}
-                className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95"
+                onClick={() => onParse?.(searchKeyword)}
+                disabled={isParsing}
+                className="h-8 px-4 rounded-[10px] bg-[#FF0036] text-white text-[13px] font-semibold active:brightness-95 disabled:cursor-not-allowed disabled:opacity-65"
               >
-                搜索
+                {isParsing ? '解析中' : '解析'}
               </button>
             </div>
             <button onClick={() => navigateTo('/message-box')} className="relative w-8 h-8 rounded-full text-[#475467] flex items-center justify-center bg-white">

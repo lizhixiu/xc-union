@@ -41,7 +41,7 @@
             import dtk;
             import log;
             var paraMap = {};
-            paraMap.url = "/tb-service/parse-content";
+            paraMap.url = "/api/tb-service/parse-content";
             paraMap.content = body.content;
 
             var data =  dtk.execute(paraMap);

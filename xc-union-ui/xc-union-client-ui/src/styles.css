@@ -53,6 +53,152 @@ body {
   animation: fadeIn var(--motion-base) ease-out forwards;
 }
 
+.parse-chat-page {
+  flex: none;
+}
+
+.app-wrapper.chat-layout {
+  max-width: none;
+  min-height: 100vh;
+  background: #ededed;
+}
+
+.wx-chat-row {
+  animation: wxChatMessageIn 180ms ease-out both;
+}
+
+.wx-rich-message {
+  animation: wxRichCardIn 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left top;
+}
+
+.wx-text-bubble {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@keyframes wxChatMessageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wxRichCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.parse-product-title-text {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 390px) {
+  .parse-product-bubble {
+    padding: 12px;
+  }
+
+  .parse-product-title {
+    gap: 5px;
+    padding-bottom: 8px;
+  }
+
+  .parse-product-title-text {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .parse-product-body {
+    min-height: 88px;
+    gap: 10px;
+  }
+
+  .parse-product-image {
+    width: 84px;
+    height: 84px;
+  }
+
+  .parse-product-metrics {
+    margin-top: 6px;
+  }
+
+  .parse-product-metric {
+    gap: 4px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .parse-product-amount {
+    font-size: 17px;
+    line-height: 18px;
+  }
+
+  .parse-product-actions {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+}
+
+@media (max-width: 350px) {
+  .parse-product-bubble {
+    padding: 8px;
+  }
+
+  .parse-product-title {
+    padding-bottom: 6px;
+  }
+
+  .parse-product-image {
+    width: 64px;
+    height: 64px;
+  }
+
+  .parse-product-body {
+    min-height: 64px;
+    gap: 6px;
+  }
+
+  .parse-product-title-text {
+    font-size: 14px;
+  }
+
+  .parse-product-metrics {
+    margin-top: 2px;
+  }
+
+  .parse-product-title-meta,
+  .parse-product-metric {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .parse-product-amount {
+    font-size: 15px;
+    line-height: 16px;
+  }
+
+  .parse-product-metric {
+    gap: 2px;
+  }
+
+  .parse-product-actions {
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
