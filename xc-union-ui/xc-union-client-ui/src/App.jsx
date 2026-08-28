@@ -26,30 +26,45 @@ function getAppPathname() {
   if (typeof window === 'undefined') {
     return '/';
   }
+
+  const pathname = window.location.pathname;
+  const normalizedPathname = APP_BASE && APP_BASE !== '/'
+    ? (pathname === APP_BASE ? '/' : pathname.startsWith(`${APP_BASE}/`) ? pathname.slice(APP_BASE.length) : pathname)
+    : pathname;
+
   if (USE_HASH_ROUTING) {
     const hash = window.location.hash || '';
     const hashPath = hash.startsWith('#') ? hash.slice(1) : hash;
-    return hashPath.startsWith('/') ? hashPath : '/';
+    return hashPath.startsWith('/') ? hashPath : (normalizedPathname.startsWith('/') ? normalizedPathname : '/');
   }
-  if (typeof window === 'undefined') {
-    return '/';
-  }
-  const pathname = window.location.pathname;
-  if (APP_BASE && APP_BASE !== '/' && pathname.startsWith(`${APP_BASE}/`)) {
-    return pathname.slice(APP_BASE.length);
-  }
-  if (APP_BASE && APP_BASE !== '/' && pathname === APP_BASE) {
-    return '/';
-  }
-  return pathname;
+
+  return normalizedPathname.startsWith('/') ? normalizedPathname : '/';
 }
 
 function navigateTo(path) {
   if (USE_HASH_ROUTING) {
+    const isAtAppRoot = !APP_BASE || APP_BASE === '/'
+      ? window.location.pathname === '/'
+      : window.location.pathname === APP_BASE || window.location.pathname === `${APP_BASE}/`;
+    if (!isAtAppRoot) {
+      const appRoot = APP_BASE && APP_BASE !== '/' ? `${APP_BASE}/` : '/';
+      window.location.assign(`${appRoot}#${path}`);
+      return;
+    }
     window.location.hash = path;
     return;
   }
   window.location.assign(withBase(path));
+}
+
+function navigateToRebateTool() {
+  if (USE_HASH_ROUTING) {
+    window.location.hash = '/rebate/tool';
+    return;
+  }
+
+  window.history.pushState({}, '', withBase('/rebate/tool'));
+  window.dispatchEvent(new PopStateEvent('popstate'));
 }
 
 function toCurrency(value) {
@@ -93,6 +108,7 @@ function mapParseItem(raw = {}) {
     original: `¥${toCurrency(originPrice)}`,
     rebate: toCurrency((payablePrice * commissionRate) / 100),
     commissionRate,
+    desc: raw.desc ?? raw.description ?? raw.itemDesc ?? raw?.originInfo?.desc ?? '',
     cpsFullTpwd: raw.cpsFullTpwd || '',
     couponLongUrl: raw.couponLongUrl || '',
     shortUrl: raw.shortUrl || '',
@@ -151,6 +167,7 @@ export default function App() {
   const isRewardActivityRoute = appPathname === '/reward-activity';
   const isMessageBoxRoute = appPathname === '/message-box';
   const isBillionSubsidyRoute = appPathname === '/billion-subsidy';
+  const isRebateToolRoute = appPathname === '/rebate/tool';
   const isProductDetailRoute = appPathname === '/product-detail';
   const isQueryGoodsRoute = appPathname === '/query-goods';
   const [page, setPage] = useState('home');
@@ -165,7 +182,13 @@ export default function App() {
   const chatMessageCounter = useRef(0);
 
   useEffect(() => {
-    const syncRoute = () => setAppPathname(getAppPathname());
+    const syncRoute = () => {
+      const nextPath = getAppPathname();
+      setAppPathname(nextPath);
+      if (nextPath === '/') {
+        setPage('home');
+      }
+    };
     window.addEventListener('hashchange', syncRoute);
     window.addEventListener('popstate', syncRoute);
     return () => {
@@ -270,6 +293,9 @@ export default function App() {
     const nextMessageId = () => `${Date.now()}-${++chatMessageCounter.current}`;
     const replyId = nextMessageId();
     const sentAt = formatChatTime();
+    if (appPathname !== '/rebate/tool') {
+      navigateToRebateTool();
+    }
     setPage('detail');
     setChatMessages((previous) => [
       ...previous,
@@ -507,6 +533,25 @@ export default function App() {
           <div className="max-w-[1200px] mx-auto md:px-8 h-full overflow-hidden">
             <ThemeBillionSubsidyPage standalone />
           </div>
+        </div>
+      </Suspense>
+    );
+  }
+
+  if (isRebateToolRoute) {
+    return (
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">加载中...</div>}>
+        <div className="app-wrapper chat-layout">
+          <ParseChatPage
+            messages={chatMessages}
+            isParsing={loading}
+            onParse={requestParse}
+            onBack={() => {
+              setPage('home');
+              navigateTo('/');
+            }}
+            onAction={handleCopyToken}
+          />
         </div>
       </Suspense>
     );

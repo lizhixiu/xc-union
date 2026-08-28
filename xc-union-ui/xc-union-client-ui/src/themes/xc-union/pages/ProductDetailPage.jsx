@@ -26,6 +26,18 @@ const heroImages = [
   'https://img.alicdn.com/imgextra/i1/2200726807241/O1CN01zQyv9C23xwV5Qh8Jq_!!2200726807241.jpg'
 ];
 
+function getProductDescription(product) {
+  const raw = product?.desc ?? product?.description ?? product?.itemDesc ?? product?.originInfo?.desc ?? '';
+  const text = Array.isArray(raw) ? raw.filter(Boolean).join('\n') : String(raw || '');
+
+  return text
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<\/(p|div|li|h[1-6])\s*>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/\r\n?/g, '\n')
+    .trim();
+}
+
 export default function ProductDetailPage({ standalone = false }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [authed, setAuthed] = useState(() => isLoggedIn());
@@ -54,6 +66,7 @@ export default function ProductDetailPage({ standalone = false }) {
   const rebate = rebateRaw !== '' ? String(rebateRaw) : '';
   const couponText = selectedProduct?.coupon || (Number(selectedProduct?.couponPrice || 0) > 0 ? `平台券 ¥${selectedProduct.couponPrice}` : '平台优惠券');
   const couponAmount = Number(selectedProduct?.couponPrice || 0);
+  const description = getProductDescription(selectedProduct);
   const mainImage = selectedProduct?.image || heroImages[0];
   const carouselImages = [mainImage, ...heroImages.filter((img) => img !== mainImage)].slice(0, 3);
 
@@ -231,6 +244,16 @@ export default function ProductDetailPage({ standalone = false }) {
                 <button className="h-7 px-2.5 rounded-full border border-[#E4E8EF] bg-white text-[#4B5565] text-[12px] inline-flex items-center gap-0.5">店铺逛逛<CaretRight size={12} /></button>
               </div>
             </div>
+
+            {description ? (
+              <section className="border-b border-[#F0F1F4] bg-white px-4 py-3.5" aria-labelledby="product-description-title">
+                <div className="flex items-center gap-2">
+                  <span aria-hidden="true" className="h-4 w-1 rounded-full bg-[#FF4A3D]" />
+                  <h2 id="product-description-title" className="text-[15px] font-semibold leading-5 text-[#1F1F1F]">商品介绍</h2>
+                </div>
+                <p className="mt-2.5 whitespace-pre-line break-words text-[13px] leading-6 text-[#4B5563]">{description}</p>
+              </section>
+            ) : null}
           </div>
 
           <div className="fixed bottom-0 left-0 right-0 md:static bg-white border-t border-[#ECEEF2] px-3 py-2.5 z-40">
